@@ -1,0 +1,423 @@
+% Official VTI Research Technical Report VTI-RES-2026-03 | DOI: https://doi.org/10.5281/zenodo.24290286
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=0.72in,columnsep=0.24in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{enumitem}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\lstdefinelanguage{PostgresSQL}{
+  keywords={BEGIN,SELECT,INTO,STRICT,FROM,WHERE,FOR,SHARE,UPDATE,SET,AND,RETURNING,COMMIT,UNIQUE,IS,NULL},
+  sensitive=false,
+  morecomment=[l]{--},
+  morestring=[b]'
+}
+
+\lstset{
+  language=PostgresSQL,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\bfseries\color{blue!65!black},
+  commentstyle=\itshape\color{gray!70!black},
+  stringstyle=\color{teal!60!black},
+  frame=single,
+  rulecolor=\color{black!25},
+  backgroundcolor=\color{gray!4},
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  aboveskip=0.6em,
+  belowskip=0.6em,
+  xleftmargin=2pt,
+  xrightmargin=2pt
+}
+
+\setlength{\emergencystretch}{1.5em}
+
+\title{\Large\bfseries Conten\c{c}\~{a}o Formal de Raio de Explos\~{a}o, Rota\c{c}\~{a}o de Credenciais Sem Interrup\c{c}\~{a}o e Isolamento Epist\^{e}mico \emph{Zero-Trust} em Ecossistemas Corporativos Multi-Agente:\\[0.25em]
+\large Formula\c{c}\~{a}o Hipot\'{e}tica, Prova de Invariantes e Valida\c{c}\~{a}o T\'{e}cnica Frente \`{a} Literatura Cient\'{\i}fica}
+
+\author{%
+  \textbf{Caio Gon\c{c}alves}\\
+  \textit{Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)}\\
+  \small Identificador T\'{e}cnico: \texttt{VTI-RES-2026-03} (Edi\c{c}\~{a}o \texttt{v1.2}) \quad|\quad \url{https://projectos-system.github.io/vti-research/}
+}
+
+\date{Novembro de 2026}
+
+\begin{document}
+\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29}
+
+\maketitle
+
+\begin{abstract}
+\noindent A transi\c{c}\~{a}o de prot\'{o}tipos isolados baseados em Grandes Modelos de Linguagem (LLMs) para ecossistemas corporativos multi-agente em produ\c{c}\~{a}o cont\'{\i}nua introduz uma superf\'{\i}cie de ataque composta que transcende falhas puramente conversacionais. Quando um gateway cognitivo multi-tenant ($\mathcal{S}_{\mathrm{Hub}}$), um portal di\'{a}rio de ingest\~{a}o normativa e auditoria documental ($\mathcal{S}_{\mathrm{Portal}}$), um orquestrador local de agentes aut\^{o}nomos de linha de comando ($\mathcal{S}_{\mathrm{CLI}}$), microsservi\c{c}os sat\'{e}lites especializados ($\{\mathcal{S}_{\mathrm{Sat}}^{(i)}\}_{i=1}^{k}$) e uma unidade segregada de telemetria financeira ($\mathcal{S}_{\mathrm{Obs}}$) coexistem sob restri\c{c}\~{o}es severas de disponibilidade cont\'{\i}nua (\emph{zero-breakage}), emergem oito classes acopladas de vulnerabilidade: (i)~amplifica\c{c}\~{a}o de raio de explos\~{a}o (\emph{blast radius}) por compartilhamento de credenciais upstream com consumidores legados ativos; (ii)~persist\^{e}ncia de segredos em controle de vers\~{a}o, manifestos de cont\^{e}ineres em texto claro e falhas destrutivas de reimplanta\c{c}\~{a}o (\emph{destroy-before-verify}); (iii)~quebra silenciosa de capacidades multimodais (s\'{\i}ntese e transcri\c{c}\~{a}o vocal) ap\'{o}s listas restritivas de modelos (\emph{allowlists}); (iv)~escalonamento vertical de privil\'{e}gio por prefixo RBAC, refer\^{e}ncias diretas inseguras entre canais (\emph{cross-channel IDOR}) e tokens expostos em URLs de m\'{o}dulos embarcados; (v)~\emph{Confused Deputy}, vazamento de vari\'{a}veis de ambiente, persist\^{e}ncia em \texttt{.git/hooks} e inje\c{c}\~{a}o de escape de terminal (\texttt{OSC 52}) em subprocessos CLI; (vi)~deriva n\~{a}o assinada do plano de controle, diferenciais de analisadores JSON (\emph{parser differentials}), cache obsoleto p\'{o}s-revoga\c{c}\~{a}o e efeitos colaterais \'{o}rf\~{a}os sob corrida (\emph{TOCTOU}); (vii)~auto-confirma\c{c}\~{a}o sint\'{e}tica recursiva (colapso de Goodhart) e envenenamento vetorial (\emph{RAG poisoning}); e (viii)~tens\~{a}o entre imutabilidade forense (\emph{append-only}) e direito legal de elimina\c{c}\~{a}o de dados pessoais estruturados. Adotando um desenho de estudo de caso arquitetural anonimizado com formula\c{c}\~{a}o hipot\'{e}tica generalizada, formalizamos oito hip\'{o}teses falsific\'{a}veis de amea\c{c}a ($H_1$--$H_8$), derivamos oito controles \emph{fail-closed} ($C_1$--$C_8$) com invariantes formais, reportamos medi\c{c}\~{o}es emp\'{\i}ricas delimitadas e confrontamos cada controle contra 29 refer\^{e}ncias cient\'{\i}ficas e normativas verificadas, consolidando amea\c{c}as \`{a} validade e seis evolu\c{c}\~{o}es estruturais futuras (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
+
+\vspace{0.5em}
+\noindent\textbf{Palavras-chave:} Seguran\c{c}a \emph{Zero-Trust}; Sistemas Multi-Agente LLM; Conten\c{c}\~{a}o de Raio de Explos\~{a}o; Rota\c{c}\~{a}o Sem Interrup\c{c}\~{a}o; Diferenciais de Parser JSON (\texttt{RFC 8785}); \emph{Fencing Tokens} ACID; Envenenamento de RAG; Apagamento Criptogr\'{a}fico.
+\end{abstract}
+
+\section{Introdu\c{c}\~{a}o e Motiva\c{c}\~{a}o Cient\'{\i}fica}
+
+A literatura recente em seguran\c{c}a de sistemas integrados a modelos fundacionais demonstra uma mudan\c{c}a estrutural de paradigma: ataques adversariais n\~{a}o precisam derrotar o alinhamento estat\'{\i}stico interno dos pesos de um modelo quando podem explorar \emph{fronteiras de autoridade insuficientemente mediadas na arquitetura hospedeira}~\cite{R22,R25,R27}. Na edi\c{c}\~{a}o de 2025 do \emph{OWASP Top 10 for Large Language Model Applications}~\cite{R29}, riscos sist\^{e}micos como \emph{Excessive Agency} (\texttt{LLM06:2025}), \emph{Sensitive Information Disclosure} (\texttt{LLM02:2025}), \emph{Data and Model Poisoning} (\texttt{LLM04:2025}), \emph{Vector and Embedding Weaknesses} (\texttt{LLM08:2025}) e \emph{Unbounded Consumption} (\texttt{LLM10:2025}) figuram ao lado de \emph{Prompt Injection} (\texttt{LLM01:2025}).
+
+Contudo, estudos acad\^{e}micos avaliam frequentemente cada vetor em isolamento---examinando apenas vazamento de segredos em Git~\cite{R15,R20}, apenas confinamento de plugins~\cite{R25} ou apenas corrup\c{c}\~{a}o de bases RAG~\cite{R26}. Em ecossistemas corporativos reais operando 24/7 sobre obriga\c{c}\~{o}es regulat\'{o}rias, jur\'{\i}dicas e financeiras, \textbf{essas superf\'{\i}cies interagem de modo n\~{a}o-linear}:
+\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
+  \item Revogar abruptamente uma chave de API compartilhada para conter vazamento (\texttt{LLM02}) derruba integra\c{c}\~{o}es produtivas legadas caso n\~{a}o haja desacoplamento e protocolo formal de drenagem (\emph{Zero-Breakage Constraint})~\cite{R20}.
+  \item Restringir modelos habilitados (\emph{allowlists}) para conter custos (\texttt{LLM10}~\cite{R24,R29}) quebra silenciosamente canais secund\'{a}rios de voz e acessibilidade sem verifica\c{c}\~{a}o pr\'{e}-voo de capacidades.
+  \item Blindar prompts (\texttt{LLM01}) torna-se in\'{o}cuo se o banco normativo sofrer edi\c{c}\~{a}o direta fora do pipeline (\texttt{LLM08}~\cite{R26}), se o cache servir dados p\'{o}s-revoga\c{c}\~{a}o ou se transa\c{c}\~{o}es concorrentes gravarem muta\c{c}\~{o}es \'{o}rf\~{a}s~\cite{R03,R13}.
+\end{enumerate}
+
+Adotando o m\'{e}todo hipot\'{e}tico-dedutivo, este artigo: (a)~formaliza o modelo alg\'{e}brico $\mathcal{E}$ e o modelo de advers\'{a}rio sob restri\c{c}\~{a}o de disponibilidade cont\'{\i}nua; (b)~especifica oito controles \emph{fail-closed} ($C_1$--$C_8$) com invariantes verific\'{a}veis; e (c)~submete resultados emp\'{\i}ricos e fronteiras residuais ao crivo de 29 fontes prim\'{a}rias~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29}, derivando o roteiro \texttt{M-FUT-1}--\texttt{M-FUT-6}.
+
+\section{Modelo de Sistema Hipot\'{e}tico $\mathcal{E}$ e Modelo de Advers\'{a}rio}
+
+\subsection{Desenho do Estudo, Anonimiza\c{c}\~{a}o Estrita e Demarca\c{c}\~{a}o Epistemol\'{o}gica}
+
+Adota-se um \textbf{desenho de estudo de caso \'{u}nico retrospectivo anonimizado com formula\c{c}\~{a}o hipot\'{e}tica generalizada}:
+\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
+  \item \textbf{Atributos Expurgados vs.\ Invariantes Preservadas:} Todos os nomes de organiza\c{c}\~{o}es, produtos comerciais, dom\'{\i}nios DNS, sub-redes IP, identificadores de locat\'{a}rios, caminhos privados e prefixos literais de chaves foram removidos, preservando-se fielmente as \emph{rela\c{c}\~{o}es topol\'{o}gicas de confian\c{c}a}, os \emph{predicados SQL e criptogr\'{a}ficos}, os \emph{contratos de protocolo} e as \emph{medi\c{c}\~{o}es instrumentadas}.
+  \item \textbf{Proporcionalidade Epist\^{e}mica ($\text{Escopo da Alega\c{c}\~{a}o} \le \text{Escopo da Evid\^{e}ncia}$):} A Tabela~\ref{tab:epistemic_pt} delimita abstra\c{c}\~{a}o, hip\'{o}teses, controles verificados e evolu\c{c}\~{o}es prospectivas.
+  \item \textbf{Sem\^{a}ntica Universal Fail-Closed e Minimiza\c{c}\~{a}o Forense:} Todos os controles $C_1$--$C_8$ operam em falha fechada (indisponibilidade do banco prim\'{a}rio RW, falha \texttt{Ed25519}, segredo ausente no pr\'{e}-voo ou expira\c{c}\~{a}o produzem recusa determin\'{\i}stica \texttt{HTTP 403/404/422/503}, jamais \emph{bypass})~\cite{R01}, aplicando reda\c{c}\~{a}o pr\'{e}-persist\^{e}ncia nos logs.
+\end{enumerate}
+
+\begin{table*}[t]
+\centering
+\caption{Demarca\c{c}\~{a}o Epistemol\'{o}gica e Limites Estritos de Infer\^{e}ncia ($\text{Escopo da Alega\c{c}\~{a}o} \le \text{Escopo da Evid\^{e}ncia}$).}
+\label{tab:epistemic_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l l Y Y@{}}
+\toprule
+\textbf{Elemento Formal} & \textbf{Natureza Epistemol\'{o}gica} & \textbf{Base de Evid\^{e}ncia neste Estudo} & \textbf{Limite Estrito de Infer\^{e}ncia} \\
+\midrule
+Topologia $\mathcal{E}$ & Abstra\c{c}\~{a}o arquitetural anonimizada & Mapeamento estrutural de ecossistema real em produ\c{c}\~{a}o/homologa\c{c}\~{a}o & Representa uma classe relevante de topologias corporativas, n\~{a}o censo estat\'{\i}stico de mercado. \\
+\addlinespace[2pt]
+Hip\'{o}teses $H_1$--$H_8$ & Hip\'{o}teses falsific\'{a}veis de amea\c{c}a & Modelagem de superf\'{\i}cie + literatura prim\'{a}ria~\cite{R01,R15,R22,R25,R26,R28,R29} & Descrevem vulnerabilidades explor\'{a}veis sem controles; n\~{a}o alegam intrus\~{a}o externa consumada. \\
+\addlinespace[2pt]
+Controles $C_1$--$C_8$ & Controles \emph{fail-closed} verificados & Testes determin\'{\i}sticos de contrato, concorr\^{e}ncia SQL e tempo monot\^{o}nico & Efic\'{a}cia provada sob as premissas avaliadas; n\~{a}o implica imunidade irrestrita fora da TCB. \\
+\addlinespace[2pt]
+Roteiro \texttt{M-FUT-1..6} & Especifica\c{c}\~{o}es prospectivas & Confronto te\'{o}rico com lacunas residuais da literatura~\cite{R07,R08,R13,R16,R20,R27} & Projetos de engenharia para ciclos futuros; ainda n\~{a}o submetidos a benchmark pr\'{o}prio aqui. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Topologia Formal do Ecossistema Abstra\'{\i}do}
+
+Seja $\mathcal{E}$ um ecossistema distribu\'{\i}do operando sobre locat\'{a}rios $\mathcal{T}$ e dom\'{\i}nios normativos $\mathcal{D}$:
+\begin{equation}
+\mathcal{E} = \left(\mathcal{S}_{\mathrm{Hub}}, \; \mathcal{S}_{\mathrm{Portal}}, \; \mathcal{S}_{\mathrm{CLI}}, \; \{\mathcal{S}_{\mathrm{Sat}}^{(i)}\}_{i=1}^{k}, \; \mathcal{S}_{\mathrm{Obs}}\right)
+\end{equation}
+composto por cinco subsistemas (Figura~\ref{fig:topology_pt}):
+\begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=3pt]
+  \item $\mathcal{S}_{\mathrm{Hub}}$ (\emph{Core Cognitive \& Agentic Hub}): gateway multi-tenant hospedando sete fam\'{\i}lias de agentes $\mathcal{F} = \{F_1, \dots, F_7\}$ (consultoria normativa estrita, copilotos executivos, agentes comerciais, atendimento, assistentes de API, analistas SQL/BI e engenharia), apoiado no banco prim\'{a}rio $DB_{\mathrm{Hub}}$ e no motor vetorial HNSW $DB_{\mathrm{Vec}}$.
+  \item $\mathcal{S}_{\mathrm{Portal}}$ (\emph{Normative Ingestion \& Regulatory Portal}): coleta di\'{a}ria de fontes p\'{u}blicas oficiais, auditoria documental determin\'{\i}stica, c\'{a}lculos regulat\'{o}rios e m\'{o}dulos especializados embarcados via \texttt{<iframe>}.
+  \item $\mathcal{S}_{\mathrm{CLI}}$ (\emph{Autonomous CLI Orchestrator}): orquestrador local/h\'{\i}brido de subprocessos execut\'{a}veis ($a \in \{\texttt{cli}_1, \dots, \texttt{cli}_5\}$) sobre reposit\'{o}rios Git e cofres locais.
+  \item $\{\mathcal{S}_{\mathrm{Sat}}^{(i)}\}_{i=1}^{k}$ (\emph{Satellite Microservices}): servi\c{c}os verticais que demandam infer\^{e}ncia e embeddings sem justificativa arquitetural para custodiar chaves diretas de $\mathcal{P}_{\mathrm{LLM}}$.
+  \item $\mathcal{S}_{\mathrm{Obs}}$ (\emph{Observability Unit}): unidade segregada exclusiva para reconcilia\c{c}\~{a}o de custos, cotas e telemetria de drenagem perante $\mathcal{P}_{\mathrm{LLM}}$.
+\end{itemize}
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  font=\scriptsize\sffamily,
+  node distance=0.55cm and 1.1cm,
+  box/.style={draw=black!65, rounded corners=3pt, fill=blue!4, minimum width=3.3cm, minimum height=0.82cm, align=center, inner sep=4pt},
+  extbox/.style={draw=black!65, rounded corners=3pt, fill=orange!6, minimum width=3.1cm, minimum height=0.82cm, align=center, inner sep=4pt},
+  provbox/.style={draw=black!75, rounded corners=3pt, fill=teal!7, minimum width=3.2cm, minimum height=2.9cm, align=center, inner sep=5pt},
+  arr/.style={-{Stealth[length=2.2mm]}, semithick, draw=black!75},
+  biarr/.style={{Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}, semithick, draw=black!75}
+]
+  \node[extbox] (pub) at (0, 1.55) {\textbf{Widgets P\'{u}blicos}\\Canal N\~{a}o-Confi\'{a}vel};
+  \node[extbox] (emb) at (0, 0.25) {\textbf{M\'{o}dulo Embarcado}\\Quadro \texttt{iframe}};
+  \node[box]    (sat) at (0, -1.15) {$\{\mathcal{S}_{\mathrm{Sat}}^{(i)}\}_{i=1}^k$: \textbf{Sat\'{e}lites}\\(Zero Chaves Externas)};
+
+  \node[box, minimum width=4.3cm] (hub)    at (5.4, 1.55) {$\mathcal{S}_{\mathrm{Hub}}$: \textbf{Gateway Cognitivo}\\Fam\'{\i}lias $F_1 \dots F_7$ + HNSW};
+  \node[box, minimum width=4.3cm] (portal) at (5.4, 0.25) {$\mathcal{S}_{\mathrm{Portal}}$: \textbf{Portal Normativo}\\Ingest\~{a}o \& Views Certificadas};
+  \node[box, minimum width=4.3cm] (cli)    at (5.4, -0.95) {$\mathcal{S}_{\mathrm{CLI}}$: \textbf{Orquestrador CLI}\\Escudo de Subprocessos};
+  \node[box, minimum width=4.3cm] (obs)    at (5.4, -2.05) {$\mathcal{S}_{\mathrm{Obs}}$: \textbf{Observabilidade}\\Custos \& Drenagem Isolados};
+
+  \node[provbox] (pllm) at (11.2, -0.25) {\textbf{Provedor Upstream}\\$\mathcal{P}_{\mathrm{LLM}}$ \textbf{Governado}\\[0.4em]Allowlist $\mathcal{M}_{\mathrm{allowed}}$\\Chaves Disjuntas};
+
+  \draw[arr]   (pub.east) -- node[above, font=\tiny]{Isolamento 404} (hub.west);
+  \draw[biarr] (emb.east) -- node[above, font=\tiny]{Handshake S2S} (portal.west);
+  \draw[arr]   (sat.east) -- (2.4,-1.15) |- node[pos=0.72, below, font=\tiny]{Proxy S2S} (hub.south west);
+  \draw[arr]   (portal.north) -- node[right, font=\tiny]{View RO + SHA-256} (hub.south);
+
+  \draw[arr] (hub.east)    -- node[above, sloped, font=\tiny]{$\kappa_{\mathrm{Hub}}$} ([yshift=0.9cm]pllm.west);
+  \draw[arr] (portal.east) -- node[above, sloped, font=\tiny]{$\kappa_{\mathrm{Portal}}$} ([yshift=0.3cm]pllm.west);
+  \draw[arr] (cli.east)    -- node[below, sloped, font=\tiny]{$\kappa_{\mathrm{CLI}}$} ([yshift=-0.35cm]pllm.west);
+  \draw[arr] (obs.east)    -- node[below, sloped, font=\tiny]{$\kappa_{\mathrm{Obs}}$ (Admin)} ([yshift=-0.95cm]pllm.west);
+\end{tikzpicture}
+\caption{Topologia Formal \emph{Zero-Trust} do Ecossistema Corporativo Multi-Agente Abstra\'{\i}do $\mathcal{E}$.}
+\label{fig:topology_pt}
+\end{figure*}
+
+\subsection{Modelo de Advers\'{a}rio e Raio de Explos\~{a}o Ponderado}
+
+\textbf{Capacidades do Advers\'{a}rio ($\mathcal{A}$):} Consideramos quatro vetores realistas: (a)~\emph{Atacante Externo Web/Rede}, interagindo com widgets p\'{u}blicos, inspecionando hist\'{o}rico/\texttt{Referer}, forjando cabe\c{c}alhos HTTP n\~{a}o verificados (\texttt{Origin}, \texttt{x-user-login}), sondando UUIDs e disparando corridas paralelas sub-milissegundo; (b)~\emph{Advers\'{a}rio Epist\^{e}mico Indireto}, plantando payloads maliciosos em documentos externos ou arquivos lidos por $\mathcal{S}_{\mathrm{Hub}}$ ou $\mathcal{S}_{\mathrm{CLI}}$ (visando inje\c{c}\~{a}o indireta, persist\^{e}ncia em \texttt{.git/hooks}, \texttt{OSC 52} ou \emph{PoisonedRAG})~\cite{R22,R26}; (c)~\emph{Comprometimento Perif\'{e}rico Localizado} em artefato de build, \texttt{.env} legado ou sat\'{e}lite $\mathcal{S}_{\mathrm{Sat}}^{(i)}$; e (d)~\emph{Muta\c{c}\~{a}o Fora de Banda ou Corrida de Revoga\c{c}\~{a}o}, abrangendo revoga\c{c}\~{o}es concorrentes a execu\c{c}\~{o}es em voo ou edi\c{c}\~{o}es manuais diretas em banco. A Base Confi\'{a}vel (TCB) assume primitivas padr\~{a}o (\texttt{SHA-256}, \texttt{Ed25519}, \texttt{AES-256-GCM}, CSPRNG), integridade ACID do PostgreSQL prim\'{a}rio e kernel/supervisor host \'{\i}ntegro.
+
+\textbf{Raio de Explos\~{a}o Ponderado:} Para credenciais $\mathcal{K}$ e workloads $\mathcal{W} = \{w_1, \dots, w_m\}$ com criticidade $\omega_r > 0$, exposi\c{c}\~{a}o financeira $C_{\max}(w_r)$ e escalar $\lambda > 0$, sendo $\mathrm{Uses}(w_r, \kappa) \in \{0, 1\}$ o acoplamento direto:
+\begin{equation}
+\mathrm{BR}(\kappa) = \sum_{r=1}^{m} \mathrm{Uses}(w_r, \kappa) \cdot \left(\omega_r + \lambda C_{\max}(w_r)\right)
+\end{equation}
+Na \emph{Hip\'{o}tese Nula de Credencial Monol\'{\i}tica} ($\kappa_{\mathrm{shared}}$ acoplada inclusive ao consumidor legado ininterrupto $w_{\mathrm{crit}}$), $\mathrm{BR}(\kappa_{\mathrm{shared}}) = \sum_{r=1}^{m} (\omega_r + \lambda C_{\max}(w_r))$ atinge o pior caso te\'{o}rico: qualquer vazamento perif\'{e}rico exige aceitar dreno global ou derrubar $w_{\mathrm{crit}}$. A Tabela~\ref{tab:hypotheses_pt} sintetiza $H_1$--$H_8$.
+
+\begin{table*}[t]
+\centering
+\caption{S\'{\i}ntese das Oito Hip\'{o}teses Falsific\'{a}veis de Amea\c{c}a ($H_1$--$H_8$) sobre o Ecossistema $\mathcal{E}$.}
+\label{tab:hypotheses_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}c l Y@{}}
+\toprule
+\textbf{ID} & \textbf{Classe de Vulnerabilidade (\texttt{CWE} / \texttt{OWASP LLM 2025})} & \textbf{Enunciado Formal do Risco no Ecossistema $\mathcal{E}$} \\
+\midrule
+$H_1$ & Chave Upstream Compartilhada \& Bloqueio de Rota\c{c}\~{a}o (\texttt{CWE-798}, \texttt{LLM02/10}) & Compartilhar $\kappa_{\mathrm{shared}}$ acopla o raio de explos\~{a}o global e impede revoga\c{c}\~{a}o imediata quando $w_{\mathrm{crit}}$ depende do mesmo segredo. \\
+\addlinespace[2pt]
+$H_2$ & Persist\^{e}ncia VCS, Specs Abertas \& \emph{Destroy-Before-Verify} (\texttt{CWE-312/522}) & Arquivos \texttt{.env} rastreados, vari\'{a}veis em texto claro e remo\c{c}\~{a}o de pilha antes de validar segredos causam vazamento ou apag\~{a}o em deploy. \\
+\addlinespace[2pt]
+$H_3$ & Quebra Silenciosa P\'{o}s-\emph{Allowlist} Multimodal (\texttt{LLM10}, Governan\c{c}a) & Restringir o projeto a $\mathcal{M}_{\mathrm{allowed}}$ invalida chamadas vocais (\texttt{TTS/STT}) sem sondagem pr\'{e}-voo e conting\^{e}ncia homologada. \\
+\addlinespace[2pt]
+$H_4$ & Prefixo RBAC, \emph{Cross-Channel IDOR} \& Token em URL (\texttt{CWE-285/639/598}) & Regex de prefixo (\texttt{/\^{}prefix\_/i}), retomada p\'{u}blica sem filtro de canal e tickets em URL permitem escalada vertical e vazamento via \texttt{Referer}. \\
+\addlinespace[2pt]
+$H_5$ & \emph{Confused Deputy} \& Persist\^{e}ncia em CLIs (\texttt{CWE-441}, \texttt{CWE-88}, \texttt{LLM06}) & Herdar \texttt{process.env} integral exp\~{o}e segredos cruzados e permite persist\^{e}ncia em \texttt{.git/hooks/*} ou sequestro de clipboard via \texttt{OSC 52}. \\
+\addlinespace[2pt]
+$H_6$ & \emph{Parser Differentials}, Cache Obsoleto \& \emph{TOCTOU} (\texttt{CWE-436}, \texttt{CWE-367}) & Chaves JSON duplicadas divergem entre validador e executor; caches sem \'{e}poca servem dados revogados; corridas geram commits \'{o}rf\~{a}os. \\
+\addlinespace[2pt]
+$H_7$ & Colapso Recursivo de Goodhart \& \emph{PoisonedRAG} (\texttt{LLM04}, \texttt{LLM08}) & Reingerir sa\'{\i}das sint\'{e}ticas como confirma\c{c}\~{a}o independente ou editar tabelas base via SQL corrompe o acervo normativo recuperado. \\
+\addlinespace[2pt]
+$H_8$ & Vazamento de PII Estruturado vs.\ Imutabilidade Forense (\texttt{LLM02}, \texttt{LGPD/GDPR}) & Regex ing\^{e}nuas destroem c\'{o}digos contratuais ou vazam PII em vetores, e ledgers \emph{append-only} conflitam com direito de elimina\c{c}\~{a}o. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Formula\c{c}\~{a}o das Hip\'{o}teses ($H_1$--$H_8$) e Controles \emph{Fail-Closed} ($C_1$--$C_8$)}
+
+\subsection{Controle $C_1$ (para $H_1$): Particionamento por Dom\'{\i}nio, Proxy S2S Zero-Key e Janela de Drenagem}
+
+\textbf{1. Isolamento de Credenciais:} No projeto governado em $\mathcal{P}_{\mathrm{LLM}}$, as chaves s\~{a}o estritamente disjuntas:
+\begin{equation}
+\begin{aligned}
+\mathcal{K}_{\mathrm{inference}} &= \{\kappa_{\mathrm{Hub}}, \; \kappa_{\mathrm{Portal}}, \; \kappa_{\mathrm{CLI}}\}, \quad
+\mathcal{K}_{\mathrm{admin}} = \{\kappa_{\mathrm{Obs}}\},\\
+\kappa_a &\neq \kappa_b \quad (\forall a \neq b)
+\end{aligned}
+\end{equation}
+onde $\kappa_{\mathrm{Obs}}$ reside apenas em $\mathcal{S}_{\mathrm{Obs}}$ sem privil\'{e}gio de infer\^{e}ncia nos n\'{o}s de aplica\c{c}\~{a}o.
+
+\textbf{2. Zero Chaves Upstream nos Sat\'{e}lites ($\mathrm{BR}_{\mathrm{upstream}}(\mathcal{S}_{\mathrm{Sat}}^{(i)}) = 0$):} Os servi\c{c}os $\{\mathcal{S}_{\mathrm{Sat}}^{(i)}\}_{i=1}^{k}$ consomem infer\^{e}ncia e embeddings em lote ($B \le 64$) via proxy S2S autenticado em $\mathcal{S}_{\mathrm{Hub}}$, com sele\c{c}\~{a}o de modelo \texttt{LOCKED} no servidor (\texttt{ON CONFLICT DO NOTHING}).
+
+\textbf{3. Dual-Key Grace Window:} Para $w_{\mathrm{crit}}$ acoplado a $\kappa_{\mathrm{legacy}}$, a Fase~1 migra atomicamente $\mathcal{S}_{\mathrm{Hub}}, \mathcal{S}_{\mathrm{Portal}}, \mathcal{S}_{\mathrm{CLI}}$, contraindo $\mathrm{BR}(\kappa_{\mathrm{legacy}})$ a $\omega_{\mathrm{crit}} + \lambda C_{\max}(w_{\mathrm{crit}})$; a Fase~2 mant\'{e}m $\kappa_{\mathrm{legacy}}$ em \texttt{RETIRING} sob telemetria de $\mathcal{S}_{\mathrm{Obs}}$ at\'{e} $\lambda_{\mathrm{req}}(\kappa_{\mathrm{legacy}}, \Delta t) = 0$ por $\Delta t \ge \Delta_{\mathrm{drain}}$ p\'{o}s-atualiza\c{c}\~{a}o do conector, eliminando quedas na revoga\c{c}\~{a}o~\cite{R01,R16,R20}.
+
+\subsection{Controle $C_2$ (para $H_2$): Segredos Ef\^{e}meros em \texttt{tmpfs} e Trava Verify-Before-Destroy}
+
+Segredos migram para montagens imut\'{a}veis em RAM (\texttt{/run/secrets/*})~\cite{R18}. O pipeline CI/CD imp\~{o}e o predicado bloqueante pr\'{e}-voo:
+\begin{equation}
+\mathrm{PreFlightOK}(S_{\mathrm{req}}) \iff \forall s \in S_{\mathrm{req}}, \;\; s \in \mathrm{ClusterSecretStore}()
+\end{equation}
+abortando antes de qualquer comando destrutivo caso $\neg \mathrm{PreFlightOK}(S_{\mathrm{req}})$. O entrypoint remove \texttt{\textbackslash r\textbackslash n} com atribui\c{c}\~{a}o condicional ($\mathrm{len}(\mathrm{trim}(\mathrm{val})) > 0$), e est\'{a}gios legados de build truncam \texttt{.env} para zero bytes (\texttt{: > .env}) antes do empacotamento~\cite{R15,R21}.
+
+\subsection{Controle $C_3$ (para $H_3$): Sondagem Pr\'{e}-Deploy de Allowlist e Registro de Capacidades}
+
+Sob cat\'{a}logo restrito $\mathcal{M}_{\mathrm{allowed}}$ ($|\mathcal{M}_{\mathrm{allowed}}| = 49$), sondas pr\'{e}-deploy (\texttt{GET /v1/models}) validam $\mathcal{M}_{\mathrm{configured}} \subseteq \mathcal{M}_{\mathrm{allowed}}$. Em execu\c{c}\~{a}o, o \texttt{ModelCapabilityRegistry} bifurca a pol\'{\i}tica~\cite{R24,R29}: (i)~dom\'{\i}nios normativos/anal\'{\i}ticos ($F_1, F_6, F_7$) operam \emph{fail-closed} (\texttt{HTTP 422 CapabilityMismatch}), vedando downgrade silencioso e selecionando \texttt{/v1/responses} (\texttt{store: false}) sempre que \texttt{effort != 'none'}; (ii)~canais vocais (\texttt{TTS/STT}) aplicam fallback auditado restrito a $\mathcal{M}_{\mathrm{audio}} \cap \mathcal{M}_{\mathrm{allowed}}$.
+
+\subsection{Controle $C_4$ (para $H_4$): RBAC Enumerado, Isolamento de Canal e Handshake Opaco}
+
+\textbf{1. RBAC em Conjunto Fechado:} Eliminando regex por prefixo (\texttt{/\^{}prefix\_/i}), privil\'{e}gios administrativos exigem conjuntos enumerados sobre JWT assinado:
+\begin{equation}
+\mathrm{isAdmin}(r) \iff \mathrm{lower}(r) \in \mathcal{R}_{\mathrm{admin\_allow}} \setminus \mathcal{R}_{\mathrm{client\_explicit\_deny}}
+\end{equation}
+
+\textbf{2. Indistinguibilidade entre Canais:} A retomada p\'{u}blica imp\~{o}e media\c{c}\~{a}o estrita sobre o canal de cria\c{c}\~{a}o:
+\begin{equation}
+\begin{aligned}
+\mathrm{CanResumePublic}(c, \mathrm{hdr}_{\mathrm{origin}}) \iff{} & \mathrm{origin}(c) = \texttt{PUBLIC\_WIDGET}\\
+&\land\; \mathrm{agentType}(c) \neq \texttt{API\_ASSISTANT}\\
+&\land\; \mathrm{hdr}_{\mathrm{origin}} \in \mathrm{AllowedOrigins}(c)
+\end{aligned}
+\end{equation}
+retornando \texttt{HTTP 404 Not Found} uniforme em qualquer viola\c{c}\~{a}o~\cite{R01,R05}.
+
+\textbf{3. Handshake Reverso Opaco (\texttt{RFC 9700}):} M\'{o}dulos em \texttt{<iframe>} carregam \texttt{/embed/bootstrap}, geram \texttt{handshakeNonce} via CSPRNG, recebem em mem\'{o}ria um ticket opaco $t_{\mathrm{opaque}}$ (\texttt{TTL = 60 s}) via \texttt{postMessage} e resgatam-no por canal S2S autenticado em tempo constante (\texttt{timingSafeEqual}) mediante instru\c{c}\~{a}o SQL condicional at\^{o}mica~\cite{R28}:
+\begin{lstlisting}
+UPDATE embedded_opaque_tickets
+   SET consumed_at = statement_timestamp()
+ WHERE token_hash = $1
+   AND consumed_at IS NULL
+   AND expires_at > statement_timestamp()
+   AND handshake_nonce = $2
+   AND embed_origin = $3
+RETURNING ticket_id, user_id, tool_scope;
+\end{lstlisting}
+onde \texttt{statement\_timestamp()} evita distor\c{c}\~{o}es de transa\c{c}\~{o}es longas, \texttt{rowCount === 1} \'{e} validado antes do commit (\texttt{ROLLBACK} caso contr\'{a}rio) e o token restrito (\texttt{scope = 'embedded\_module'}) s\'{o} \'{e} emitido ap\'{o}s o \texttt{COMMIT}.
+
+\subsection{Controle $C_5$ (para $H_5$): Execution Shield para Agentes Aut\^{o}nomos de CLI}
+
+Subprocessos $a \in \{\texttt{cli}_1, \dots, \texttt{cli}_5\}$ s\~{a}o confinados contra inje\c{c}\~{a}o indireta~\cite{R22,R25} via proje\c{c}\~{a}o m\'{\i}nima:
+\begin{equation}
+\mathrm{Env}(a) = \left(\mathrm{Env}_{\mathrm{host}} \upharpoonright \mathcal{A}_{\mathrm{sys\_safe}}\right) \cup \mathrm{Creds}_{\mathrm{authorized}}(a) \setminus \mathcal{B}_{\mathrm{hard\_blocked}}
+\end{equation}
+removendo tokens de UI, segredos de nuvem/banco e vetores de sequestro (\texttt{NODE\_OPTIONS}, \texttt{GIT\_SSH\_COMMAND}, \texttt{GIT\_ASKPASS}, \texttt{GIT\_CONFIG\_*}). Snapshots \texttt{SHA-256} revertem atomicamente muta\c{c}\~{o}es em \texttt{.git/config} e \texttt{.git/hooks/*} antes de qualquer comando \texttt{git} do host (invocado com \texttt{-c core.hooksPath= -c core.fsmonitor=false -c protocol.file.allow=never}). Fluxos de terminal filtram \texttt{OSC 52} e \texttt{DCS/APC/PM}, e registros de auditoria $R_n$ usam enquadramento bin\'{a}rio injetivo~\cite{R04}:
+\begin{multline}
+H_n = \mathrm{SHA256}\Bigl(\texttt{audit:ledger:v1\textbackslash 0} \parallel H_{n-1}^{[32\text{B}]} \\
+\parallel \mathrm{uint64\_be}\!\left(\lvert \mathrm{JCS}(R_n) \rvert_{\mathrm{bytes}}\right) \parallel \mathrm{JCS}(R_n)\Bigr)
+\end{multline}
+ancorando $(n, H_n)$ em banco supervisor inacess\'{\i}vel ao subprocesso CLI.
+
+\subsection{Controle $C_6$ (para $H_6$): Guarda L\'{e}xica JSON, Cache por \'{E}poca e Fencing ACID}
+
+\textbf{1. Assinatura Anti-Parser-Differential:} O texto JSON bruto \'{e} varrido antes da AST, abortando (\texttt{ERR\_DUPLICATE\_JSON\_KEY}) diante de chaves repetidas~\cite{R12,R19} e exigindo inteiros decimais can\^{o}nicos de 64 bits ($\le 2^{64}-1$) antes da canonicaliza\c{c}\~{a}o \texttt{RFC 8785} JCS~\cite{R17} e assinatura \texttt{Ed25519}~\cite{R11} sobre $m = (\mathrm{issuer}, \mathrm{audience}, \mathrm{schema\_version}, \mathrm{epoch}, \mathrm{iat}, \mathrm{exp}, \mathrm{key\_id}, \mathrm{payload\_hash})$.
+
+\textbf{2. Cache Isolado por \'{E}poca ($O(1)$):}
+\begin{multline}
+K_{\mathrm{cache}} = \mathrm{SHA256}\Bigl(\mathrm{JCS}\bigl(\mathrm{tenant}, \mathrm{callerRole}, \mathrm{scope},\\
+\mathrm{epoch}_{\mathrm{manifest}}, \mathrm{epoch}_{\mathrm{authz}}, \mathrm{epoch}_{\mathrm{revoc}}, \mathrm{queryNorm}\bigr)\Bigr)
+\end{multline}
+
+\textbf{3. Revoga\c{c}\~{a}o em Voo e Serializa\c{c}\~{a}o Expl\'{\i}cita \texttt{CP-2B}:} Para eliminar muta\c{c}\~{o}es \'{o}rf\~{a}s e ambiguidades \texttt{EvalPlanQual} em \texttt{READ COMMITTED}~\cite{R03,R13}, todas as escritas obedecem \`{a} ordem global de bloqueios \texttt{control\_plane\_state} $\to$ \texttt{resource\_target} com guarda monot\^{o}nica $e_{\mathrm{req}}$ (\texttt{\$2}):
+\begin{lstlisting}
+BEGIN;
+SELECT current_revocation_epoch INTO STRICT v_curr_epoch
+  FROM control_plane_state
+ WHERE singleton_id = 1
+   FOR SHARE;
+
+UPDATE resource_target
+   SET state = $1,
+       applied_epoch = $2
+ WHERE id = $3
+   AND $2 = v_curr_epoch
+   AND applied_epoch < $2
+RETURNING id, applied_epoch;
+COMMIT;
+\end{lstlisting}
+Revoga\c{c}\~{o}es administrativas disputam diretamente \texttt{singleton\_id = 1}; trabalhadores atrasados obt\^{e}m \texttt{rowCount = 0} e executam \texttt{ROLLBACK} com zero commits \'{o}rf\~{a}os locais.
+
+\subsection{Controle $C_7$ (para $H_7$): Linhagem Ac\'{\i}clica, View SHA-256 em Leitura e Dupla Assinatura}
+
+Contra colapso sint\'{e}tico~\cite{R23} e \emph{PoisonedRAG}~\cite{R26}, artefatos candidatos trazem grafo de linhagem HMAC-JCS validado em $O(|V| + |E|)$ pelo algoritmo de Tarjan~\cite{R02}, exigindo fonte oficial prim\'{a}ria (\texttt{coleta\_oficial\_id IS NOT NULL}). $\mathcal{S}_{\mathrm{Hub}}$ l\^{e} $\mathcal{S}_{\mathrm{Portal}}$ exclusivamente via role somente-leitura (\texttt{default\_transaction\_read\_only = on}) sobre views contratuais:
+\begin{equation}
+\begin{aligned}
+\mathrm{Eligible}(d) \iff{} & (\mathrm{score}_{\mathrm{audit}}(d) = 100) \land \mathrm{hasOfficialSource}(d)\\
+&\land \neg\mathrm{hasOpenDiscrepancy}(d)\\
+&\land \bigl(\mathrm{SHA256}(\mathrm{canonical}(d)) = d.\mathrm{certified\_hash}\bigr)
+\end{aligned}
+\end{equation}
+expulsando em \texttt{0 ms} qualquer edi\c{c}\~{a}o SQL direta na tabela base. Diretrizes sens\'{\i}veis exigem dupla assinatura humana (\texttt{CHECK (reviewer\_a\_id <> reviewer\_b\_id)} sobre \texttt{version\_sha256}) com fila limitada a $\varrho_q \le 0,80$~\cite{R08}.
+
+\subsection{Controle $C_8$ (para $H_8$): Desidentifica\c{c}\~{a}o M\'{o}dulo 11 e Crypto-Erasure por Titular}
+
+O filtro pr\'{e}-indexa\c{c}\~{a}o valida algebricamente d\'{\i}gitos verificadores de 11/14 d\'{\i}gitos em aritm\'{e}tica \texttt{M\'{o}dulo 11} (rejeitando repeti\c{c}\~{o}es $\texttt{d}^{11}$ e preservando c\'{o}digos contratuais leg\'{\i}timos), chaves fiscais de 44 d\'{\i}gitos, e-mails e telefones antes dos embeddings. Dados revers\'{\i}veis do titular $u$ usam \texttt{AES-256-GCM} (tag 128 bits) com chave individual $\mathrm{DEK}_u \in \{0,1\}^{256}$ envelopada por $\mathrm{KEK}$~\cite{R06,R09}: (a)~nonces CSPRNG de 96 bits imp\~{o}em rota\c{c}\~{a}o em $q_{\max} \le 2^{32}$ ($q(q-1)/2^{97} \le 2^{-33}$, \texttt{NIST SP 800-38D}~\cite{R09}); (b)~$\mathrm{AAD} = \mathrm{JCS}(\mathrm{schema\_v}, \mathrm{purpose}, \mathrm{key\_id}, \mathrm{tenant\_id}, \mathrm{subject\_id}, \mathrm{record\_id})$ \'{e} reconstru\'{\i}do de contexto confi\'{a}vel; e (c)~na exclus\~{a}o legal, a destrui\c{c}\~{a}o efetiva de todas as c\'{o}pias recuper\'{a}veis de $\mathrm{DEK}_u$ torna criptogramas hist\'{o}ricos computacionalmente irrecuper\'{a}veis~\cite{R10,R14}, gravando recibo \emph{append-only} (\texttt{SQLSTATE 55000}).
+
+\section{Observa\c{c}\~{o}es Emp\'{\i}ricas Delimitadas}
+
+Executaram-se baterias determin\'{\i}sticas de contrato, corridas S2S paralelas sub-milissegundo, inje\c{c}\~{o}es em \texttt{.git/hooks} e \texttt{OSC 52}, 20 escritas simult\^{a}neas CAS de manifesto, revoga\c{c}\~{o}es concorrentes contra \texttt{CP-2B}, muta\c{c}\~{a}o SQL direta de 1 caractere e buscas P95 sobre 374.252 vetores HNSW sob ingest\~{a}o paralela (Tabela~\ref{tab:empirical_pt}). Amortizar a criptografia assim\'{e}trica \texttt{Ed25519} no boot (\texttt{250,48 ms} para 11 manifestos) mant\'{e}m o custo local de CPU por turno abaixo de \texttt{0,70 ms} e o impacto vetorial em \texttt{+2,852 ms} (\texttt{0,19\%}).
+
+\begin{table*}[t]
+\centering
+\caption{S\'{\i}ntese das Observa\c{c}\~{o}es Emp\'{\i}ricas Delimitadas de Concorr\^{e}ncia, Criptografia e Lat\^{e}ncia.}
+\label{tab:empirical_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l Y c l@{}}
+\toprule
+\textbf{Controle Avaliado} & \textbf{M\'{e}trica Experimental Instrumentada} & \textbf{Resultado Observado} & \textbf{Invariante Verificada} \\
+\midrule
+$C_1$ --- Raio nos Sat\'{e}lites & Chaves upstream presentes em $\{\mathcal{S}_{\mathrm{Sat}}^{(i)}\}$ & \textbf{0 chaves} (100\% S2S) & $\mathrm{BR}_{\mathrm{upstream}}(\mathcal{S}_{\mathrm{Sat}}^{(i)}) = 0$ \\
+$C_1$ --- Rota\c{c}\~{a}o \emph{Zero-Breakage} & Quedas em consumidores cr\'{\i}ticos na segrega\c{c}\~{a}o & \textbf{0 interrup\c{c}\~{o}es} & Continuidade \texttt{HTTP 200} \\
+$C_2$ --- Trava CI \& \texttt{tmpfs} & Segredos em texto claro na spec do orquestrador & \textbf{0 abertos} (100\% \texttt{/run/secrets}) & Isolamento RAM + pr\'{e}-voo \\
+$C_4$ --- Isolamento Canal \& \texttt{iframe} & Sondagens p\'{u}blicas internas / tokens em URLs & \textbf{100\% 404 / 0 em URL} & Conformidade \texttt{RFC 9700} \\
+$C_5$ --- Escudo de Execu\c{c}\~{a}o CLI & Vazamentos entre agentes / hooks sobreviventes & \textbf{0 vazamentos / 100\% restaurados} & Confinamento por turno \\
+$C_6$ --- Boot \texttt{Ed25519 + JCS} & Valida\c{c}\~{a}o na inicializa\c{c}\~{a}o de 11 manifestos & \textbf{250,48 ms} (0 ms/turno) & Amortiza\c{c}\~{a}o \emph{fail-closed} \\
+$C_6$ --- Governan\c{c}a Viva RW & Propaga\c{c}\~{a}o de bloqueio/modelo no prim\'{a}rio RW & \textbf{374 ms} ($\le 2.000\text{ ms}$) & Converg\^{e}ncia sub-segundo \\
+$C_6$ --- CAS \& Idempot\^{e}ncia & 20 escritas simult\^{a}neas / 5 cliques paralelos & \textbf{20/20 ordenadas / 5$\to$1 escrita} & Zero \emph{lost update} \\
+$C_6$ --- \texttt{CP-2B} \& Rollback & Commits \'{o}rf\~{a}os sob revoga\c{c}\~{a}o / rollback can\'{a}rio & \textbf{0 \'{o}rf\~{a}os / 0,195 ms} & Serializa\c{c}\~{a}o ACID estrita \\
+$C_7$ --- Adultera\c{c}\~{a}o SQL Direta & Muta\c{c}\~{a}o manual de 1 caractere na tabela base & \textbf{Expuls\~{a}o em 0 ms} & Hash \texttt{SHA-256} em leitura \\
+$C_7$ --- Lat\^{e}ncia Vetorial HNSW & Impacto P95 em 374.252 vetores sob ingest\~{a}o & \textbf{+2,852 ms} (\textbf{0,19\%}) & Isolamento \emph{serving} ($\le 3\%$) \\
+$C_8$ --- M\'{o}dulo 11 \& Shredding & Res\'{\i}duos PII estruturados / leitura p\'{o}s-shredding & \textbf{0 res\'{\i}duos / 100\% opaco} & Filtro alg\'{e}brico \& shredding \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Valida\c{c}\~{a}o Cr\'{\i}tica Frente \`{a} Literatura e Roteiro (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
+
+Os controles $C_1$--$C_8$ fecham formalmente: (1)~diferenciais de parser JSON por chaves duplicadas~\cite{R11,R12,R17,R19} ($C_6$); (2)~vazamento de tokens em URLs/hist\'{o}rico/\texttt{Referer}~\cite{R28} ($C_4$); e (3)~\emph{split-brain} local no banco PostgreSQL prim\'{a}rio~\cite{R13} ($C_6$/\texttt{CP-2B}). A Tabela~\ref{tab:mfut_pt} especifica seis evolu\c{c}\~{o}es futuras (\texttt{M-FUT-1}--\texttt{M-FUT-6}) e a Tabela~\ref{tab:traceability_pt} consolida a rastreabilidade cient\'{\i}fica perante \texttt{[R01]}--\texttt{[R29]}.
+
+\begin{table*}[t]
+\centering
+\caption{Seis Fronteiras Residuais e Evolu\c{c}\~{o}es Estruturais Especificadas (\texttt{M-FUT-1} a \texttt{M-FUT-6}).}
+\label{tab:mfut_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}c Y l Y@{}}
+\toprule
+\textbf{C\'{o}digo} & \textbf{Fronteira Residual Identificada na Literatura} & \textbf{Base Prim\'{a}ria} & \textbf{Evolu\c{c}\~{a}o Arquitetural (Pr\'{o}ximo Ciclo)} \\
+\midrule
+\texttt{M-FUT-1} & Segredos em \texttt{/run/secrets} exigem \emph{rolling update} p/ rota\c{c}\~{a}o; chaves S2S est\'{a}ticas sofrem risco de replay sob comprometimento de mem\'{o}ria. & NIST SP 800-207~\cite{R16}; RFC 9700~\cite{R28} & \textbf{mTLS interno} (X.509 SPIFFE/SPIRE ef\^{e}mero) ou tokens \textbf{DPoP} nas rotas S2S + rota\c{c}\~{a}o a quente em janela dupla. \\
+\addlinespace[2pt]
+\texttt{M-FUT-2} & Desindexar \texttt{.env} no \texttt{HEAD} e truncar no builder n\~{a}o apaga commits antigos retidos em \texttt{.git/objects}. & Meli et al.~\cite{R15}; Basak et al.~\cite{R20} & Saneamento retroativo auditado (\texttt{git filter-repo}) + rota\c{c}\~{a}o de 100\% das chaves hist\'{o}ricas + \textbf{BuildKit} \texttt{--mount=type=secret}. \\
+\addlinespace[2pt]
+\texttt{M-FUT-3} & Restringir ferramentas permitidas n\~{a}o impede que inje\c{c}\~{a}o indireta exfiltre dados nos \emph{argumentos} de ferramenta leg\'{\i}tima. & \emph{CaMeL}~\cite{R27}; Greshake et al.~\cite{R22} & Etiquetas de \textbf{proveni\^{e}ncia e taint capabilities} impedindo evid\^{e}ncias n\~{a}o-confi\'{a}veis em destinat\'{a}rios/URLs sem confirma\c{c}\~{a}o fora do LLM. \\
+\addlinespace[2pt]
+\texttt{M-FUT-4} & \texttt{M\'{o}dulo 11} filtra IDs exatos, mas combina\c{c}\~{o}es narrativas raras podem violar $k$-anonimato ou sofrer invers\~{a}o vetorial. & Sweeney~\cite{R07}; OWASP \texttt{LLM08}~\cite{R29} & \textbf{NER local + generaliza\c{c}\~{a}o monet\'{a}ria/geogr\'{a}fica} pr\'{e}-vetoriza\c{c}\~{a}o com particionamento estrito de cole\c{c}\~{o}es por locat\'{a}rio. \\
+\addlinespace[2pt]
+\texttt{M-FUT-5} & \texttt{CP-2B} reverte muta\c{c}\~{o}es SQL locais, mas APIs HTTP externas de terceiros n\~{a}o participam do \texttt{ROLLBACK} ap\'{o}s envio TCP. & Kleppmann~\cite{R13}; Lamport~\cite{R03} & \textbf{Transactional Outbox} com janela curta cancel\'{a}vel (\texttt{2--5 s}) e sagas idempotentes de compensa\c{c}\~{a}o. \\
+\addlinespace[2pt]
+\texttt{M-FUT-6} & Limitar fila ($\varrho_q \le 0,80$) evita sobrecarga, mas revisores experientes sofrem queda longitudinal de vigil\^{a}ncia. & Parasuraman \& Manzey~\cite{R08} & Inje\c{c}\~{a}o cega cont\'{\i}nua de \textbf{itens-can\'{a}rio semeados} (\texttt{2\%--3\%} do fluxo) nas filas de dupla assinatura humana. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\caption{Matriz de Rastreabilidade Cient\'{\i}fica Vinculando Hip\'{o}teses e Controles \`{a}s Fontes Verificadas (\texttt{[R01]}--\texttt{[R29]}).}
+\label{tab:traceability_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l l Y@{}}
+\toprule
+\textbf{Hip\'{o}tese \& Controle} & \textbf{Fontes Prim\'{a}rias} & \textbf{Escopo Exato Sustentado pela Literatura} \\
+\midrule
+$H_1, C_1$ --- Segrega\c{c}\~{a}o, Proxy S2S \& Drenagem & \cite{R01,R16,R20} & M\'{\i}nimo privil\'{e}gio, Policy Enforcement Point central e rota\c{c}\~{a}o sem queda. \\
+$H_2, C_2$ --- Segredos \texttt{tmpfs} \& Trava CI & \cite{R15,R18,R21} & Persist\^{e}ncia longitudinal em Git, limites de scanners est\'{a}ticos e cust\'{o}dia vol\'{a}til. \\
+$H_3, C_3$ --- Sondagem Allowlist \& Capacidades & \cite{R24,R29} & Governan\c{c}a pr\'{e}-deploy de modelos de terceiros e continuidade multimodal. \\
+$H_4, C_4$ --- RBAC Enumerado \& \texttt{iframe} Opaco & \cite{R01,R05,R28} & Media\c{c}\~{a}o completa, bloqueio de Confused Deputy e OAuth BCP sem tokens em URL. \\
+$H_5, C_5$ --- Escudo CLI \& Hash Injetivo & \cite{R04,R22,R25,R27} & Isolamento de execu\c{c}\~{a}o ag\^{e}ntica, framing bin\'{a}rio de hash e fronteira sem\^{a}ntica. \\
+$H_6, C_6$ --- JCS, Ed25519 \& \texttt{CP-2B} ACID & \cite{R03,R11,R12,R13,R17,R19} & Diferenciais de chaves duplicadas JSON, assinatura can\^{o}nica e fencing tokens. \\
+$H_7, C_7$ --- DAG de Tarjan \& View SHA-256 & \cite{R02,R08,R23,R26} & Detec\c{c}\~{a}o linear de ciclos, anti-colapso sint\'{e}tico, defesa \emph{PoisonedRAG} e revis\~{a}o dupla. \\
+$H_8, C_8$ --- M\'{o}dulo 11 \& Crypto-Erasure AEAD & \cite{R06,R07,R09,R10,R14,R29} & GCM com nonce limitado e AAD can\^{o}nico, apagamento condicional e $k$-anonimato. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Amea\c{c}as \`{a} Validade}
+
+\textbf{Validade de Construto:} A conformidade com $C_1$--$C_8$ institui media\c{c}\~{a}o contextual cont\'{\i}nua e conten\c{c}\~{a}o de dano~\cite{R16}, n\~{a}o imunidade incondicional. Cadeias de hash ($C_5$) garantem detec\c{c}\~{a}o de adultera\c{c}\~{a}o condicionada \`{a} prote\c{c}\~{a}o da \^{a}ncora no supervisor, e o apagamento criptogr\'{a}fico ($C_8$) requer destrui\c{c}\~{a}o efetiva de todas as c\'{o}pias recuper\'{a}veis de $\mathrm{DEK}_u$ em cofres, mem\'{o}ria, swap e backups~\cite{R10}.
+
+\textbf{Validade Interna:} Como m\'{u}ltiplas camadas atuam em paralelo (ex.: proje\c{c}\~{a}o de vari\'{a}veis + restaura\c{c}\~{a}o \texttt{SHA-256} de \texttt{.git} + filtro \texttt{OSC 52} em $C_5$), a aus\^{e}ncia de viola\c{c}\~{o}es reflete a efic\'{a}cia conjunta assumindo integridade do kernel e da cadeia de suprimentos.
+
+\textbf{Validade Externa:} As lat\^{e}ncias refletem uma topologia regulat\'{o}ria sobre PostgreSQL ACID prim\'{a}rio e 374.252 vetores HNSW; bancos n\~{a}o-transacionais ou modelos locais exigem recalibra\c{c}\~{a}o.
+
+\textbf{Validade de Conclus\~{a}o e Reprodutibilidade:} Preservando-se o sigilo industrial dos reposit\'{o}rios originais, a reprodutibilidade externa \'{e} garantida pelos predicados alg\'{e}bricos fechados, transa\c{c}\~{o}es SQL expl\'{\i}citas, normas criptogr\'{a}ficas~\cite{R09,R11,R17} e rastreabilidade integral perante~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29}.
+
+\section{Conclus\~{a}o}
+
+Proteger ecossistemas corporativos multi-agente em opera\c{c}\~{a}o 24/7 exige integrar isolamento distribu\'{\i}do, criptografia can\^{o}nica e governan\c{c}a epist\^{e}mica. A combina\c{c}\~{a}o de particionamento de chaves com drenagem sem queda ($C_1, C_2$), governan\c{c}a multimodal pr\'{e}-voo ($C_3$), RBAC enumerado e handshakes opacos sem URL ($C_4$), confinamento de subprocessos CLI ($C_5$), contratos assinados sem ambiguidade l\'{e}xica com cache por \'{e}poca e \emph{fencing tokens} ACID ($C_6$), proveni\^{e}ncia ac\'{\i}clica verificada em leitura ($C_7$) e desidentifica\c{c}\~{a}o \texttt{M\'{o}dulo 11} conciliada com apagamento criptogr\'{a}fico por titular ($C_8$) estabelece uma arquitetura \emph{Zero-Trust} audit\'{a}vel com sobrecarga inferior a \texttt{1 ms} em CPU local e \texttt{0,2\%} na busca vetorial, delineando seis evolu\c{c}\~{o}es estruturais (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
+
+\section*{Declara\c{c}\~{a}o de Engenharia Simbi\'{o}tica Humano-IA, Verifica\c{c}\~{a}o Determin\'{\i}stica e Mapeamento CRediT Adaptado (Conformidade ACM / IEEE / COPE)}
+
+Em estrita observ\^{a}ncia \`{a}s diretrizes do \textbf{COPE}, da \textbf{ACM} (\emph{Policy on Authorship}, 2023) e do \textbf{IEEE} (\emph{PSPB Operations Manual}), sistemas computacionais e modelos generativos n\~{a}o det\^{e}m autoria cient\'{\i}fica nem responsabilidade \'{e}tica ou legal. \textbf{Caio Gon\c{c}alves} figura como \textbf{\'{u}nico autor formal}, assumindo responsabilidade integral por todas as formula\c{c}\~{o}es, especifica\c{c}\~{o}es arquiteturais, evid\^{e}ncias emp\'{\i}ricas e conclus\~{o}es. Sob governan\c{c}a estrita \emph{Human-in-the-Loop}: (1)~\textbf{Caio Gon\c{c}alves} (\emph{Principal Investigator \& Chief Systems Architect, VTI Research}) conduziu \emph{Conceitua\c{c}\~{a}o, Metodologia, Arquitetura de Seguran\c{c}a, Supervis\~{a}o Cient\'{\i}fica, Valida\c{c}\~{a}o, Administra\c{c}\~{a}o do Projeto e Reda\c{c}\~{a}o Final}; (2)~duas rodadas n\~{a}o-autorais de cr\'{\i}tica adversarial foram realizadas com \emph{modelos independentes de racioc\'{\i}nio de fronteira e compactos de m\'{u}ltiplas fam\'{\i}lias} (\emph{independent cross-family frontier and compact reasoning models}) para tensionar casos de borda (\texttt{statement\_timestamp()} pr\'{e}-commit em $C_4$, framing bin\'{a}rio \texttt{uint64\_be} em $C_5$, serializa\c{c}\~{a}o expl\'{\i}cita \texttt{FOR SHARE} em \texttt{CP-2B} $C_6$ e limites de nonce CSPRNG em $C_8$), sendo todas as revis\~{o}es auditadas e verificadas deterministicamente pelo autor humano; e (3)~todas as 29 refer\^{e}ncias, predicados SQL e invariantes de anonimiza\c{c}\~{a}o estrita foram verificados deterministicamente antes da homologa\c{c}\~{a}o.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

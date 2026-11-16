@@ -1,0 +1,226 @@
+% Official VTI Research Technical Report VTI-RES-2026-02 | DOI: https://doi.org/10.5281/zenodo.24290284
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage[margin=0.72in,columnsep=0.24in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+
+\setlength{\emergencystretch}{2em}
+
+\title{\textbf{A Dual-Axis Bitemporal Neuro-Cognitive Architecture: Tripartite Executive-Epistemic Governance and Override Failure Eradication in Long-Horizon Agentic Systems (\texttt{MemoryOS})}\\[0.4em]
+\large Technical \& Scientific Monograph \texttt{VTI-RES-2026-02}}
+
+\author{\textbf{Caio Gon\c{c}alves}\\
+\small Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)\\
+\small \href{https://projectos-system.github.io/vti-research/}{\texttt{https://projectos-system.github.io/vti-research/}}}
+
+\date{November 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Large Language Model (LLM) agentic systems suffer systematic degradation over extended operational horizons due to three fundamental classes of cognitive failure: non-uniform long-context attention decay (\emph{Lost in the Middle}), statistical override of newly enacted rules by high-frequency historical priors (\emph{Override Failure}), and persistent memory pollution from transient runtime artifacts (\emph{Contaminated Mindware}). Motivated by a precursor forensic audit across $20$ real-world queries in a production enterprise tax, fiscal, and labor advisory platform ($\mathcal{S}_{\mathrm{Hub}}$)---where generative assistants lacking epistemic governance exhibited a $20\%$ ($4/20$) critical failure rate---this paper formalizes the \textbf{Dual-Axis Bitemporal Neuro-Cognitive Architecture of \texttt{MemoryOS}} within the \textbf{VTI OS System} ecosystem. The architecture couples five functional memory tiers plus a cryptographically quarantined aversive store (\textbf{Axis~1}) with a tripartite executive governance framework inspired by Keith E. Stanovich (\textbf{Axis~2}: Autonomous Mind, Algorithmic Mind grounded in deterministic oracles, and Reflective Mind structured into two-phase blind physical auditing and cross-family collegiate deliberation). Grounded in \textbf{32 unique peer-reviewed scientific studies} and statutory data-protection mandates, the model introduces: (i) append-only cognitive records over Snodgrass half-open bitemporal intervals $[\texttt{valid\_from}, \texttt{valid\_to}) \times [\texttt{tx\_from}, \texttt{tx\_to})$ with linear-time Tarjan SCC acyclicity verification in $O(|V| + |E|)$; (ii) a tri-state epistemic quarantine sealed by domain-separated SHA-256 Merkle Trees; (iii) a multidimensional post-RRF epistemic reranker assigning an infinite half-life ($T_{1/2} = \infty$) to active canonical rules; (iv) an 8-dimensional conflict-monitoring matrix (\texttt{dACC}); and (v) an idempotent offline consolidation cycle ($f(f(S)) = f(S)$). Evaluated on a reproducible $N = 50$ bitemporal conflict \emph{Golden Benchmark}, the epistemic reranker elevated $\mathrm{NDCG@5}$ from $0.5764$ to $1.0000$ ($+73.49\%$) and $\mathrm{MRR}$ from $0.4000$ to $1.0000$ ($+150.00\%$), reducing revocation override failures from $40/50$ to $0/50$ ($\mathrm{CI}_{95\%}^{\mathrm{Wilson}} \approx [0.9289, 1.0000]$) at a monotonic $\mathrm{P95}$ latency of $0.34\,\mathrm{ms}$ ($0.44\,\mathrm{ms}$ under complex enterprise load).
+
+\vspace{0.4em}
+\noindent\textbf{Keywords:} Agentic Cognitive Architecture; Bitemporal Databases; Stanovich Tripartite Theory; Epistemic Governance; Reciprocal Rank Fusion; Merkle Trees; \texttt{MemoryOS}.
+\end{abstract}
+
+\section{Introduction and Long-Horizon Cognitive Failure Modes}
+
+The transition of Large Language Models (LLMs) from stateless chat interfaces into autonomous software engineering, regulatory analysis, and enterprise decision-making agents exposes a structural gap between \emph{local generative fluency} and \emph{long-horizon epistemic consistency}. While modern Transformer architectures synthesize coherent prose within isolated turns, multi-session operation across evolving schemas and statutory amendments suffers predictable reliability decay across three primary failure modes:
+
+\begin{enumerate}[leftmargin=*,nosep,itemsep=2pt]
+    \item \textbf{Long-Context Attention Decay (\emph{Lost in the Middle}):} Expanding nominal context windows does not yield uniform recall. Liu et al.~\cite{E03} proved that LLM attention exhibits a U-shaped curve favoring primacy and recency boundaries while severely attenuating middle-positioned tokens. Concatenating raw session logs inflates latency and dilutes critical safety constraints~\cite{E01,E02,E04}.
+    \item \textbf{Statistical Override of Enacted Rules (\emph{Override Failure}):} In non-stationary domains (tax law, labor statutes, evolving software architectures), truth is parameterized by validity intervals $[v_{\mathrm{from}}, v_{\mathrm{to}})$. When a widely cited legacy rule $d_{\mathrm{old}}$ is formally superseded by a newly enacted canonical rule $d_{\mathrm{new}}$, parametric priors $P_{\theta}(y \mid q)$ remain heavily skewed toward $d_{\mathrm{old}}$. Conventional RAG engines using lexical/vector similarity or uniform recency decay~\cite{E08} allow high-density superseded documents or recent logs mentioning legacy rules to override the active norm---instantiating Keith E. Stanovich's \emph{Override Failure}~\cite{E20,E21}.
+    \item \textbf{Persistent Memory Pollution (\emph{Contaminated Mindware}):} Agents storing verbal self-reflections~\cite{E18} without epistemic quarantine routinely promote transient runtime glitches (momentary DNS failures, ephemeral port locks, truncated stack traces) into permanent system-prompt prohibitions, creating what Stanovich terms \emph{Contaminated Mindware}~\cite{E20,E22}.
+\end{enumerate}
+
+Crucially, intrinsic verbal prompting cannot resolve these pathologies: Huang et al.~\cite{E28} demonstrated that LLMs cannot reliably self-correct reasoning without external grounded signals, frequently amplifying confirmation bias (\emph{Myside Bias}). Reliable error correction requires deterministic tool-interactive critiquing~\cite{E29} beyond ungrounded iterative refinement~\cite{E30}, complemented by multi-agent adversarial debate~\cite{E31} and deliberate tree search~\cite{E32}.
+
+\subsection{Contributions}
+Implemented and verified in \textbf{\texttt{MemoryOS}} (\textbf{VTI OS System}), this work contributes: (1)~a formal Dual-Axis Neuro-Cognitive Architecture coupling 5+1 memory tiers with Stanovich's tripartite governance across 32 peer-reviewed studies~\cite{E01,E21}; (2)~an append-only Snodgrass bitemporal store~\cite{E12} with $O(|V|+|E|)$ Tarjan SCC cycle prevention~\cite{E13}; (3)~a post-RRF epistemic reranker with residual boost-only fusion and canonical infinite half-life ($T_{1/2}=\infty$); (4)~a tri-state quarantine and domain-separated SHA-256 Merkle Evidence Store~\cite{E19} paired with an idempotent sleep consolidator $f(f(S))=f(S)$; (5)~three metacognitive rings routed by an 8D \texttt{dACC} conflict matrix, including a two-phase blind \texttt{Shadow Auditor} and Asymmetric Surface \texttt{Barrier P4.1}; and (6)~reproducible evaluation on an $N=50$ \emph{Golden Benchmark}.
+
+\section{Precursor Empirical Study: Override Failure and Mindware Gap}
+
+Prior to formulating \texttt{MemoryOS}, a forensic audit was conducted across $N_{\mathrm{pre}} = 20$ real-world queries spanning Fiscal, Tax, Labor, and Social-Security domains in a production enterprise tax, fiscal, and labor advisory platform ($\mathcal{S}_{\mathrm{Hub}}$). Evaluating a conventional semantic-RAG pipeline lacking bitemporal validity gates and deterministic post-condition oracles revealed a \textbf{20\% critical failure rate ($4/20$)}:
+
+\begin{itemize}[leftmargin=*,nosep,itemsep=3pt]
+    \item \textbf{Override Failure (Queries 3, 9, and 17 --- Constitutional Amendment No.~141/2026):} Queried on the newly enacted 42-hour constitutional workweek cap, the \texttt{6x1} shift schedule, and domestic workers, the assistant denied the enactment of \texttt{EC 141/2026} or treated it as a pending bill, enforcing the superseded historical 44-hour rule due to overwhelming pre-2026 statistical priors and ungoverned lexical overlap.
+    \item \textbf{Mindware Gap (Query 15 --- Social-Security Classification \texttt{CNAE 9430-8/00}):} Lacking an exact statutory lookup oracle, the LLM substituted probabilistic pattern matching~\cite{E24} and hallucinated codes \texttt{FPAS 566}, \texttt{Third-Parties 0099}, and rate \texttt{4.5\%}, whereas binding statutory law (\texttt{IN RFB No.~2,110/2022} and \texttt{LC No.~187/2021}) mandates \texttt{FPAS 515} (\texttt{Third-Parties 0115}, \texttt{5.8\%}) under the general regime or \texttt{FPAS 639} (\texttt{0.0\%}) strictly under active CEBAS certification.
+\end{itemize}
+
+\begin{table*}[t]
+\centering
+\caption{Structural Correspondence Matrix of the Dual-Axis \texttt{MemoryOS} Architecture Across the 10 Cognitive Pillars.}
+\label{tab:pillars}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}c c l l X c@{}}
+\toprule
+\textbf{Pillar} & \textbf{Axis} & \textbf{Cognitive Concept} & \textbf{Functional Brain Correlate} & \textbf{Core \texttt{MemoryOS} Engineering Modules} & \textbf{Refs.} \\
+\midrule
+P1 & Axis 1 & Working Memory \& Paging & Dorsolateral PFC (\texttt{dlPFC}) & \texttt{context\_assembler.js}, \texttt{Context Budget Controller}, primacy/recency placement & \cite{E01,E02,E03,E04} \\
+P2 & Axis 1 & Episodic Hybrid Retrieval & Hippocampus (multi-cue recall) & \texttt{rrf\_search\_engine.js} (4-way RRF) + \texttt{epistemic\_reranker.js} ($T_{1/2}=\infty$) & \cite{E05,E06,E07,E08} \\
+P3 & Axis 1 & Offline Consolidation (CLS) & Neocortex \& REM/SWS Replay & \texttt{dream\_scheduler.js} ($f(f(S))=f(S)$), \texttt{associative\_graph.js} & \cite{E09,E10,E11} \\
+P4 & Axis 1 & Bitemporal Lineage \& DAG & Ventromedial PFC (\texttt{vmPFC}) & \texttt{fact\_history\_manager.js}, Snodgrass intervals + Tarjan SCC $O(|V|+|E|)$ & \cite{E12,E13,E14} \\
+P5 & Axis 1 & Skills \& Regulated Aversion & Cerebellum + \texttt{vmPFC}-Amygdala & \texttt{procedural\_skills\_manager.js}, \texttt{reflection\_manager.js}, SHA-256 Merkle Store & \cite{E15,E16,E17,E18,E19} \\
+P6 & Axis 2 & Tripartite Mind \& Dysrationalia & Type 1 vs. Algorithmic/Reflective & \texttt{biomimetic\_projector.js}, tripartite separation of generation and verification & \cite{E20,E21,E22,E23,E24} \\
+P7 & Axis 2 & Conflict Monitoring (\texttt{dACC}) & Dorsal Anterior Cingulate (\texttt{dACC}) & \texttt{council\_risk\_matrix.js} ($R_{\mathrm{total}} = \sum_{j=1}^8 w_j d_j$), \texttt{canary\_governor.js} & \cite{E25,E26,E27} \\
+P8 & Axis 2 & Tool Oracles \& Blind Audit & Lateral PFC (anti-Myside Bias) & Ring 1 AST/Mod-11/Git oracles + Ring 2 two-phase \texttt{reflective\_monitor\_service.js} & \cite{E28,E29,E30} \\
+P9 & Axis 2 & Cross-Family Council Debate & Frontopolar Cortex (BA10) & Ring 3 cross-family frontier deliberation + dual-key HMAC emergency bypass & \cite{E31,E32} \\
+P10 & Axis 2 & Asymmetric Surface (\texttt{P4.1}) & Thalamocortical Filter & \texttt{sanitizeCorporateSurfaceDto} strict allowlist + LGPD data minimization & \cite{E21,N01} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Formal Dual-Axis Architecture and the 10 Cognitive Pillars}
+
+Let an agentic system $\mathcal{A}$ operate across discrete sessions $s_1, \dots, s_m$. \texttt{MemoryOS} decomposes $\mathcal{A} = \langle \mathcal{M}_{\mathrm{Axis\,1}}, \mathcal{G}_{\mathrm{Axis\,2}} \rangle$ into \textbf{Axis~1} (5+1 memory tiers: Working, Episodic, Bitemporal Semantic, Local Project Scope \texttt{.agents/PROJECT\_MEMORY.md}, Procedural \texttt{SKILLS.md}, and Quarantined Aversive \texttt{DEAD\_ENDS.md} + Merkle Store) and \textbf{Axis~2} (Stanovich's Autonomous, Algorithmic, and Reflective governance rings), summarized in Table~\ref{tab:pillars}.
+
+\subsection{Pillar 1: Working Memory and Primacy-Recency Paging}
+Grounded in Baddeley's bounded working memory~\cite{E01,E02}, Liu et al.'s U-shaped long-context attention profile~\cite{E03}, and MemGPT's virtual context paging~\cite{E04}, \texttt{backend/maestro/context\_assembler.js} solves a priority-ordered allocation over candidate blocks $\mathcal{B} = \{b_1, \dots, b_m\}$ subject to $\sum_{b_i \in \mathcal{S}} \ell(b_i) \le B_{\max}$. Safety invariants and validated \texttt{DEAD\_ENDS.md} constraints occupy the primacy prefix; active phase goals and canonical records occupy the recency suffix; and external artifacts are isolated inside \texttt{<retrieved\_evidence readonly="true">} tags with nested-delimiter escaping to prevent indirect prompt injection.
+
+\subsection{Pillar 2: 4-Way Hybrid RRF and Post-RRF Epistemic Reranker}
+Modeling hippocampal multi-cue recall~\cite{E05}, \texttt{backend/utils/rrf\_search\_engine.js} fuses four channels $V = \{\text{fts5}, \text{vector}, \text{entity}, \text{graph}\}$ using BM25~\cite{E06} ($w_{\text{fts5}}=1.0$), dense cosine similarity ($w_{\text{vector}}=1.0$), IDF entity scores ($w_{\text{entity}}=0.8$), and associative triples ($w_{\text{graph}}=0.6$) via weighted Reciprocal Rank Fusion~\cite{E07} ($k = 60$). Over executed channels $V_{\mathrm{exec}} \subseteq V$, the raw RRF score and exact theoretical ceiling are:
+\begin{equation}
+S_{\mathrm{rrf}}^{\mathrm{raw}}(q,d) = \sum_{v \in V_{\mathrm{exec}}} \frac{w_v}{k + \mathrm{rank}_v(d)}, \quad
+C_{\mathrm{RRF}}(V_{\mathrm{exec}}) = \frac{\sum_{v \in V_{\mathrm{exec}}} w_v}{k + 1}
+\end{equation}
+yielding normalized adherence $S_{\mathrm{rrf}}(q,d) = \mathrm{clamp}(S_{\mathrm{rrf}}^{\mathrm{raw}}(q,d) / C_{\mathrm{RRF}}(V_{\mathrm{exec}}), 0, 1)$.
+
+To overcome uniform temporal decay~\cite{E08} (under which a 2-year-old enacted statute decays to $(1 + 0.05 \times 730)^{-1} \approx 0.0267$ and loses to a 30-minute debug log), \texttt{MemoryOS} introduces a gated post-RRF epistemic reranking family. While its general conceptual formulation separates admissibility gates from internal relevance, importance $I(d)$, and decay $D(d, t_{\mathrm{ref}})$:
+\begin{equation}
+\begin{aligned}
+\mathrm{Score}_{\mathrm{conc}}(q,d,t_{\mathrm{ref}}) &= \mathbb{I}(S_{\mathrm{sem}} \ge \theta_{\min}) \cdot F_{\mathrm{valid}}(d, t_{\mathrm{ref}}) \\
+&\quad \cdot A(d, \mathrm{intent}) \cdot \bigl[\alpha S_{\mathrm{rrf}} + \beta I(d) + \gamma D(d, t_{\mathrm{ref}})\bigr],
+\end{aligned}
+\end{equation}
+the production kernel (\texttt{backend/utils/epistemic\_reranker.js}) enforces exact multiplicative nullification of decayed logs coupled with governed Residual \emph{Boost-Only} Fusion:
+\begin{equation}
+\begin{aligned}
+S_{\mathrm{final}}(q,d,t_{\mathrm{ref}}) &= \mathbb{I}\!\bigl(S_{\mathrm{rrf}}(q,d) \ge \theta_{\min}(\mathrm{intent})\bigr) \cdot S_{\mathrm{rank}}(q,d) \\
+&\quad \cdot F_{\mathrm{valid}}(d, t_{\mathrm{ref}}, \mathrm{intent}) \cdot A(d, \mathrm{intent}) \cdot C(d) \cdot D(d, t_{\mathrm{ref}}).
+\end{aligned}
+\label{eq:sfinal}
+\end{equation}
+
+Here: (1)~$\theta_{\min}(\text{normative}) = 0.15$ and $\theta_{\min}(\text{other}) = 0.08$ reject off-topic high-authority documents; (2)~given secondary ordinal score $S_B \in [0,1]$, gain $\gamma_B = 0.35$, and boundary switch $g_B \in \{0,1\}$ (locked to $g_B \equiv 0$ on corporate business surfaces), residual fusion computes:
+\begin{equation}
+S_{\mathrm{rank}}(q,d) = S_{\mathrm{rrf}}(q,d) + \gamma_B \, g_B \, \bigl(1 - S_{\mathrm{rrf}}(q,d)\bigr) S_B(q,d).
+\end{equation}
+\begin{proposition}[Monotonic Non-Degradation]
+For all $S_{\mathrm{rrf}}, S_B, \gamma_B \in [0,1]$ and $g_B \in \{0,1\}$, $S_{\mathrm{rrf}}(q,d) \le S_{\mathrm{rank}}(q,d) \le 1$.
+\end{proposition}
+\begin{proof}
+Non-negativity of $\gamma_B g_B (1 - S_{\mathrm{rrf}}) S_B$ implies $S_{\mathrm{rank}} \ge S_{\mathrm{rrf}}$, while $\gamma_B g_B S_B \le 1$ yields $S_{\mathrm{rank}} \le S_{\mathrm{rrf}} + (1 - S_{\mathrm{rrf}}) = 1$.
+\end{proof}
+(3)~$F_{\mathrm{valid}}(d, t_{\mathrm{ref}}, \mathrm{intent}) = 1.0$ iff $\mathrm{status}(d)=\text{validated}$ and $v_{\mathrm{from}}(d) \le t_{\mathrm{ref}} < v_{\mathrm{to}}^{*}(d)$ ($0.85$ for explicit historical lineage; $0.0$ otherwise in strict normative mode); (4)~$A(d, \text{normative}) = 1.0 + 0.5(\mathrm{clamp}(a(d), 0.8, 1.5)-0.8)/0.7 \in [1.0, 1.5]$, and $A \equiv 1.0$ for non-normative intents; $C(d) \in [0,1]$; and (5)~tier-conditioned exponential decay over elapsed days $\Delta t$ is:
+\begin{equation}
+D(d, t_{\mathrm{ref}}) = \exp\!\left(-\frac{\ln 2}{T_{1/2}(\tau(d))} \Delta t\right),
+\end{equation}
+with $T_{1/2}(\text{canonical}) = +\infty \implies D \equiv 1.0$, $T_{1/2}(\text{project\_fact})=180\text{d}$, $T_{1/2}(\text{skill})=90\text{d}$, $T_{1/2}(\text{episodic/insight})=30\text{d}$, and $T_{1/2}(\text{log\_evidence})=3\text{d}$. Ties resolve deterministically by $(S_{\mathrm{final}} \downarrow, S_{\mathrm{rrf}} \downarrow, \mathrm{id}_{\mathrm{lex}} \uparrow)$.
+
+\subsection{Pillar 3: Complementary Learning Systems and Idempotent Sleep}
+Following McClelland et al.~\cite{E09}, Diekelmann \& Born~\cite{E10}, and HippoRAG~\cite{E11}, \texttt{backend/utils/dream\_scheduler.js} executes offline consolidation guarded by OS wake-drift cooldowns ($>45\,\mathrm{s}$) and a zero-token SQLite \emph{Delta Check}. Let $\Sigma(S) = (R_{\mathrm{cog}}, L_{\mathrm{exp}}, F_{\mathrm{sem}})$ denote canonical logical database state. At fixed reference time $t_0$, operator $f_{t_0}$ (\texttt{runIdempotentEpistemicDreamCycle}) transitions contaminated lessons to \texttt{rejected}, transient quarantines $>48\,\mathrm{h}$ to \texttt{expired}, and elapsed validated records ($v_{\mathrm{to}} \le t_0$) to \texttt{needs\_revalidation}, never auto-promoting quarantined items. Because entry and target states are disjoint, $f_{t_0}$ is an exact algebraic projection:
+\begin{equation}
+\forall S, \forall t_0: \quad f_{t_0}\bigl(f_{t_0}(S)\bigr) = f_{t_0}(S),
+\end{equation}
+verified via SHA-256 state digest equality $\mathcal{H}(\Sigma(f_{t_0}(f_{t_0}(S)))) = \mathcal{H}(\Sigma(f_{t_0}(S)))$.
+
+\subsection{Pillar 4: Snodgrass Append-Only Bitemporality and Tarjan SCC}
+Grounded in Snodgrass \& Ahn~\cite{E12} and temporal reasoning over dynamic graphs~\cite{E14}, \texttt{backend/utils/fact\_history\_manager.js} models \texttt{cognitive\_records} over orthogonal right-half-open intervals $[v_{\mathrm{from}}, v_{\mathrm{to}}) \times [t_{\mathrm{from}}, t_{\mathrm{to}})$. A point-in-time query at $(t_{\mathrm{ref}}, t_{\mathrm{tx}})$ returns:
+\begin{equation}
+\begin{aligned}
+\mathcal{R}(t_{\mathrm{ref}}, t_{\mathrm{tx}}) &= \bigl\{ d \in \mathcal{D}_{\mathrm{cog}} \;\big|\; \mathrm{status}(d)=\text{validated} \\
+&\quad \land v_{\mathrm{from}}(d) \le t_{\mathrm{ref}} < v_{\mathrm{to}}^{*}(d) \land t_{\mathrm{from}}(d) \le t_{\mathrm{tx}} < t_{\mathrm{to}}^{*}(d) \bigr\}.
+\end{aligned}
+\end{equation}
+Under serialized SQLite \texttt{BEGIN IMMEDIATE} transactions, linking successor $d_{\mathrm{succ}}$ to predecessor $d_{\mathrm{pred}}$ atomically closes $v_{\mathrm{to}}(d_{\mathrm{pred}}) \leftarrow v_{\mathrm{from}}(d_{\mathrm{succ}})$ ($v_{\mathrm{from}}(d_{\mathrm{succ}}) > v_{\mathrm{from}}(d_{\mathrm{pred}})$) and executes Tarjan's depth-first SCC algorithm~\cite{E13} over $G=(V,E)$:
+\begin{equation}
+\begin{aligned}
+\mathrm{lowlink}[u] = \min\bigl(&\{\mathrm{index}[u]\} \cup \{\mathrm{lowlink}[w] \mid (u,w) \in E_{\mathrm{tree}}\} \\
+&\cup \{\mathrm{index}[w] \mid (u,w) \in E_{\mathrm{back}} \land w \in \mathrm{Stack}\}\bigr).
+\end{aligned}
+\end{equation}
+Any SCC with $|C|>1$ or self-loop $(u,u)\in E$ raises \texttt{CyclicDependencyException} in $\Theta(|V|+|E|)$ time, guaranteeing a strict DAG.
+
+\subsection{Pillar 5: Non-Declarative Skills, Quarantine, and Merkle Store}
+Combining Squire's non-declarative taxonomy~\cite{E15}, LeDoux's regulated threat circuits~\cite{E16}, Voyager skill libraries~\cite{E17}, and Reflexion~\cite{E18} with Merkle's cryptographic trees~\cite{E19}, \texttt{MemoryOS} caps \texttt{SKILLS.md} at $2,500$ tokens and governs experiential failures via state space $Q = \{\text{quarantined}, \text{validated}, \text{rejected}, \text{expired}, \text{needs\_revalidation}\}$. Raw failures enter \texttt{quarantined}; promotion to \texttt{validated} (exported to \texttt{DEAD\_ENDS.md} $\le 1,000$ tokens) requires non-transience and recurrence $\ge 2$ across distinct sessions. Meanwhile, \texttt{backend/utils/evidence\_store.js} scrubs secrets and Modulo-11 PII~\cite{N01} and seals off-prompt JSONL records via domain-separated SHA-256 hashes:
+\begin{align}
+h_i^{\mathrm{leaf}} &= \mathrm{SHA256}\bigl(\texttt{"mos:merkle:leaf:v1:"} \,\|\, \mathrm{canon}(r_i)\bigr), \\
+h_{u,v}^{\mathrm{node}} &= \mathrm{SHA256}\bigl(\texttt{"mos:merkle:node:v1:"} \,\|\, h_u \,\|\, \texttt{":"} \,\|\, h_v\bigr),
+\end{align}
+preventing second-preimage height confusion and supporting $\Theta(\log_2 N)$ inclusion proofs even after expired raw payloads are purged (\texttt{payload\_purged = 1}).
+
+\subsection{Pillars 6--10: Stanovich Tripartite Governance, 8D \texttt{dACC} Matrix, Two-Phase Blind Audit, Cross-Family Council, and \texttt{Barrier P4.1}}
+Extending dual-process theory~\cite{E23,E24}, Stanovich~\cite{E20,E21,E22} separates Type~1 Autonomous generation from Type~2 Algorithmic decoupling and Reflective epistemic regulation. Inspired by \texttt{dACC} conflict monitoring~\cite{E25}, fast conflict detection~\cite{E26}, and higher-order inductive biases~\cite{E27}, \texttt{backend/maestro/council\_risk\_matrix.js} computes in $<1\,\mathrm{ms}$:
+\begin{equation}
+R_{\mathrm{total}}(\mathbf{d}) = \sum_{j=1}^{8} w_j d_j, \quad d_j \in [0,4], \quad R_{\mathrm{total}} \in [0, 49.6],
+\end{equation}
+over Reversibility ($1.5$), Blast Radius ($1.2$), Data Sensitivity ($2.0$), Privileges/DDL ($1.8$), Memory Persistence ($1.6$), Financial/Legal Impact ($1.8$), Contract Breakage ($1.4$), and Missing Test Evidence ($1.2$), alongside absolute triggers $\mathcal{T}_{\mathrm{abs}} = \{\texttt{DDL\_MIGRATION}, \texttt{AUTH\_OR\_PRODUCTION\_CREDENTIALS}, \texttt{EVIDENCE\_STORE\_MUTATION}, \texttt{CORPORATE\_EPIC\_PRODUCTION\_RELEASE}\}$. Tasks route to \textbf{Level~1} ($R_{\mathrm{total}} < 8.0 \to$ Ring~1 symbolic AST/Mod-11/Git oracles~\cite{E29}), \textbf{Level~2} ($8.0 \le R_{\mathrm{total}} < 16.0 \to$ Rings~1+2), or \textbf{Level~3} ($R_{\mathrm{total}} \ge 16.0 \lor \mathcal{T}\cap\mathcal{T}_{\mathrm{abs}}\neq\varnothing \to$ Rings~1+2+3).
+
+In \textbf{Ring~2} (\texttt{reflective\_monitor\_service.js}), to defeat rhetorical judge bias~\cite{E28}, Phase~A (\texttt{evaluatePhysicalEvidenceBlind}) inspects exclusively disk/runner artifacts $\mathcal{E}_{\mathrm{phys}}$ (throwing an isolation exception if agent prose is passed) and freezes $V_A$ with seal $\sigma_A = \mathrm{SHA256}(\texttt{"mos:shadow\_auditor:v1:"} \,\|\, \mathrm{JSON}(V_A))$; Phase~B then verifies $\sigma_A$ and confronts verbal claims $c_{\mathrm{verbal}}$, raising \texttt{UnverifiedClaimException} upon contradiction. In \textbf{Ring~3}, independent commercial frontier and compact model families engage in cross-family debate~\cite{E31,E32}; emergency human bypass requires dual distinct HMAC-SHA256 signatures ($k_A \neq k_B$), $\mathrm{TTL} \le 900\,\mathrm{s}$, and hard non-bypassability on DDL or production credentials. Finally, \textbf{Pillar~10} (\texttt{biomimetic\_projector.js}) enforces \texttt{Barrier P4.1}~\cite{E21,N01}, projecting corporate outputs onto a strict 9-field allowlist while blocking 100\% of internal telemetry keys.
+
+\begin{table*}[t]
+\centering
+\caption{Global and Cluster-Stratified Performance on the Reproducible \emph{Golden Benchmark} ($N = 50$, \texttt{run\_epistemic\_benchmark.js}).}
+\label{tab:results}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}X c c c c c c c@{}}
+\toprule
+\textbf{Cognitive Evaluation Cluster ($10$ queries each)} & \textbf{Legacy $\mathrm{NDCG@5}$} & \textbf{Legacy $\mathrm{MRR}$} & \textbf{Legacy $\mathrm{OFR}$} & \textbf{Epistemic $\mathrm{NDCG@5}$} & \textbf{Epistemic $\mathrm{MRR}$} & \textbf{Epistemic $\mathrm{OFR}$} & \textbf{Relative Gain} \\
+\midrule
+$C_1$: Normative \& Architectural Succession (\texttt{Q01--Q10}) & $0.5000$ & $0.3333$ & $10/10$ & $\mathbf{1.0000}$ & $\mathbf{1.0000}$ & $\mathbf{0/10}$ & $+100.00\%$ \\
+$C_2$: $2\text{y}$ Canonical Longevity vs. Logs (\texttt{Q11--Q20}) & $0.5413$ & $0.3333$ & $10/10$ & $\mathbf{1.0000}$ & $\mathbf{1.0000}$ & $\mathbf{0/10}$ & $+84.74\%$ \\
+$C_3$: Pre/Post-Reform Point-in-Time (\texttt{Q21--Q30}) & $0.6309$ & $0.5000$ & $10/10$ & $\mathbf{1.0000}$ & $\mathbf{1.0000}$ & $\mathbf{0/10}$ & $+58.50\%$ \\
+$C_4$: Semantic Gate $\theta_{\min}$ \& Quarantine (\texttt{Q31--Q40}) & $0.5000$ & $0.3333$ & $10/10$ & $\mathbf{1.0000}$ & $\mathbf{1.0000}$ & $\mathbf{0/10}$ & $+100.00\%$ \\
+$C_5$: Empirical Diagnostics ($A=1.0$, \texttt{Q41--Q50}) & $0.7098$ & $0.5000$ & $0/10^*$ & $\mathbf{1.0000}$ & $\mathbf{1.0000}$ & $\mathbf{0/10}$ & $+40.88\%$ \\
+\midrule
+\textbf{Global Aggregate ($N = 50$, Bootstrap $p < 0.001$)} & $\mathbf{0.5764}$ & $\mathbf{0.4000}$ & $\mathbf{40/50}$ & $\mathbf{1.0000}$ & $\mathbf{1.0000}$ & $\mathbf{0/50}$ & $\mathbf{+73.49\%}$ \\
+\bottomrule
+\end{tabularx}
+\vspace{0.25em}
+\par\raggedright\scriptsize $^*$In $C_5$, the legacy rank-1 item was an outdated 25-day stack trace with partial relevance ($\mathrm{rel}=1$), displacing the verified root-cause fact ($\mathrm{rel}=3$) to rank~2; epistemic half-lives ($180\text{d}$ vs. $3\text{d}$) restored optimal ranking. Isolated reranker monotonic latency: $\mathrm{P95} = 0.34\,\mathrm{ms}$; complex enterprise E2E load: $\mathrm{P95} = 0.44\,\mathrm{ms}$ (median total governance overhead $+5.43\,\mathrm{ms}$).
+\end{table*}
+
+\section{Experimental Protocol ($N = 50$) and Empirical Results}
+
+To evaluate whether post-RRF epistemic reranking eliminates \emph{Override Failures} without latency penalties, \texttt{backend/benchmarks/run\_epistemic\_benchmark.js} evaluates $N = 50$ paired queries across five cognitive clusters ($C_1$--$C_5$) with graded relevance $\mathrm{rel} \in \{0, 1, 3\}$ ($\mathrm{rel}=3$: active canonical/verified record at $t_{\mathrm{ref}}$; $\mathrm{rel}=1$: valid supplementary context; $\mathrm{rel}=0$: superseded, pre-enactment, off-topic, or quarantined). We measure $\mathrm{NDCG@5}$, $\mathrm{MRR}$, and Override Failure Rate $\mathrm{OFR}(Q) = |Q|^{-1}\sum_{q \in Q}\mathbb{I}(\mathrm{rel}(q,d_1)=0)$, comparing the legacy baseline (\texttt{triad\_ranking\_engine.js}, $\lambda = 0.05$) against \texttt{epistemic\_reranker.js}, with 1,000-iteration paired Bootstrap (\texttt{Mulberry32}, \texttt{seed = 20261111}) and nanosecond monotonic timing (\texttt{process.hrtime.bigint()}).
+
+As shown in Table~\ref{tab:results}, the epistemic reranker elevated global $\mathrm{NDCG@5}$ from $0.5764$ to $1.0000$ ($+73.49\%$, absolute gain $+0.4236$, paired Bootstrap $95\%$ CI strictly $>0$, $p < 0.001$) and $\mathrm{MRR}$ from $0.4000$ to $1.0000$ ($+150.00\%$), eradicating override failures from $40/50$ ($80.00\%$) to $0/50$ ($0.00\%$) with zero canonical regressions at $\mathrm{P95} = 0.34\,\mathrm{ms}$. Under a 12-battery end-to-end corporate due-diligence workload, reranker latency remained $\mathrm{P95} = 0.44\,\mathrm{ms}$, bitemporal SQLite queries achieved $\mathrm{P95} = 0.86\,\mathrm{ms}$, and total median governance overhead was $+5.43\,\mathrm{ms}$ ($0.068\%$ of an $8\,\mathrm{s}$ LLM turn). Statistically, $50/50$ corresponds to $\mathrm{CI}_{95\%}^{\mathrm{Wilson}} \approx [0.9289, 1.0000]$, demonstrating deterministic verification over structured bitemporal records rather than unbounded perfection on untagged open-web text.
+
+\section{Epistemological Boundaries and Threats to Validity}
+
+\subsection{Boundaries of Biomimetic Analogy}
+(1)~\emph{Functional Control Isomorphism, Not Phenomenal Consciousness:} Brain correlates denote cybernetic control homomorphisms, attributing zero subjective states or biophysical synaptic equivalence to software. (2)~\emph{Mandatory External Oracles:} Epistemic rationality relies on deterministic code verifiers (SQLite bitemporal predicates, Tarjan SCC, \texttt{node --check}, test runners, SHA-256/HMAC), never verbal LLM self-critique~\cite{E28}. (3)~\emph{Context-Conditioned Council Independence:} Ring~3 frontier models depend on complete \emph{Pre-Flight Context Assembly} for private post-cutoff facts.
+
+\subsection{Threats to Empirical Validity}
+\textbf{Construct Validity:} $\mathrm{NDCG@5}$ and $\mathrm{MRR}$ evaluate retrieval ordering (necessary but not sufficient if downstream synthesis ignores context); local $\mathrm{P95}$ excludes network latency during Ring~3 escalations. \textbf{Internal Validity:} Exact nullification via $F_{\mathrm{valid}}$ depends on accurate upstream extraction of $[\texttt{valid\_from}, \texttt{valid\_to})$ intervals. \textbf{External Validity:} $N=50$ models structured legal/engineering governance; tacit semantic shifts in open-web corpora require multi-annotator blind holdouts. \textbf{Conclusion \& Ecological Validity:} While Bootstrap significance is strong ($p<0.001$), $N=50$ bounds power for $<2\%$ tail events, and static benchmarks are therefore paired with multi-turn E2E suites enforced by the blind \texttt{Shadow Auditor}.
+
+\section{Conclusion}
+
+By unifying 5+1 bitemporal and Merkle-quarantined memory tiers with Keith E. Stanovich's tripartite executive governance, \texttt{MemoryOS} provides a mathematically grounded, sub-millisecond control plane that resolves \emph{Lost in the Middle}, \emph{Override Failure}, and \emph{Contaminated Mindware} in long-horizon autonomous systems.
+
+\section*{Transparent Disclosure of Symbiotic Human-AI Engineering, Deterministic Verification, and Adapted CRediT Mapping (ACM / IEEE / COPE Compliance)}
+
+In strict compliance with \textbf{COPE}, \textbf{ACM}, and \textbf{IEEE} authorship policies---under which generative AI systems cannot hold authorship or bear ethical/legal accountability---\textbf{Caio Gon\c{c}alves} (\emph{Principal Investigator \& Chief Systems Architect, VTI Research}) is the sole formal author of this paper and assumes full responsibility for all mathematical formulations, empirical claims, citations, and software artifacts (\emph{CRediT}: Conceptualization, Methodology, Software Architecture, Formal Analysis, Validation, Investigation, Data Curation, Writing --- Original Draft \& Review/Editing, Supervision). Under the \texttt{MemoryOS} / \texttt{VTI OS System} \emph{Human-in-the-Loop} protocol, independent families of modern commercial frontier and low-latency compact models served strictly as audited engineering instruments for adversarial edge-case review, oracle-verified code/test synthesis, and bilingual manuscript editing. Every bibliographic entry (\cite{E01}--\cite{E32}, \cite{N01}) carries a verified DOI or arXiv identifier, and 100\% of empirical metrics derive from deterministic benchmark execution (\texttt{run\_epistemic\_benchmark.js}, seed \texttt{20261111}).
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

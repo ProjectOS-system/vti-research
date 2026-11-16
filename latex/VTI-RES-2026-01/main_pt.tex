@@ -1,0 +1,304 @@
+% Official VTI Research Technical Report VTI-RES-2026-01 | DOI: https://doi.org/10.5281/zenodo.24290282
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[margin=0.72in,columnsep=0.24in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,babel}
+\usepackage[hidelinks,breaklinks=true]{hyperref}
+\usepackage{url}
+
+\newtheorem{theorem}{Teorema}
+\newtheorem{proposition}{Proposi\c{c}\~ao}
+\newtheorem{definition}{Defini\c{c}\~ao}
+
+\definecolor{vtiblue}{RGB}{18,56,110}
+\definecolor{vtislate}{RGB}{242,245,250}
+
+\title{\vspace{-1.2em}\textbf{Engenharia de \emph{Harness} Cognitivo, Simbiose Cognitiva Humano-IA e Paridade Operacional Condicionada: Arquitetura Formal Multi-Plano para Sistemas Ag\^enticos Corporativos de Alta Precis\~ao}}
+
+\author{
+  \textbf{Caio Gon\c{c}alves}\\
+  \small Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)\\
+  \small Relat\'orio T\'ecnico \texttt{VTI-RES-2026-01} $\cdot$ \url{https://projectos-system.github.io/vti-research/}
+}
+
+\date{Novembro de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A implanta\c{c}\~ao de intelig\^encia artificial ag\^entica em dom\'inios institucionais de alta responsabilidade patrimonial---abrangendo consultoria tribut\'aria federal e estadual, contabilidade societ\'aria (\texttt{CPC/NBC TG/IFRS}), apura\c{c}\~ao de Imposto de Renda, Reforma Tribut\'aria (\texttt{IBS/CBS}), Substitui\c{c}\~ao Tribut\'aria (\texttt{ICMS-ST}), contencioso processual, legisla\c{c}\~ao trabalhista/previdenci\'aria, engenharia aut\^onoma de software e superf\'icies executivas e comerciais---enfrenta uma tens\~ao estrutural entre o custo computacional de modelos de fronteira, as omiss\~oes normativas de segunda ordem em modelos compactos e a governan\c{c}a viva da simbiose \emph{Human-in-the-Loop}. A partir de um experimento controlado em medidas repetidas ($5 \times 20 = 100$ execu\c{c}\~oes ponta a ponta) conduzido sobre o \textbf{Enterprise Advisory \& Commercial Agent Hub} ($\mathcal{S}_{\mathrm{Hub}}$, operando sobre um acervo brasileiro real de $374.252$ vetores sem\^anticos e $396.176$ atos normativos) em conjunto com a auditoria arquitetural do \textbf{MemoryOS} ($\mathcal{S}_{\mathrm{Mem}}$, integrante do \texttt{VTI OS System}) e da \textbf{Automated Regulatory Ingestion \& Editorial Auditing Platform} ($\mathcal{S}_{\mathrm{Reg}}$, monitorando $43$ fontes oficiais di\'arias), demonstramos empiricamente que escalar o racioc\'inio livre interno (\texttt{reasoning.effort} de \texttt{low} para \texttt{medium} e \texttt{high}) em modelos compactos (\texttt{Tier-W Compact Reasoning Model}, \texttt{W-Compact}) n\~ao supre lacunas de \emph{mindware} estatut\'ario e induz o fen\^omeno de \textbf{\emph{Sub-Parametric Overthinking}}: sob cobertura parcial de or\'aculo na Consulta 8, a delibera\c{c}\~ao intermedi\'aria ($1.143$ tokens ocultos) degradou a acur\'acia de $20/20$ para $19/20$ ao racionalizar contra a prova documental recuperada, enquanto o modo \texttt{high} ($36.593$ tokens ocultos) elevou a lat\^encia m\'edia em $+76,4\%$ frente ao modo \texttt{low} ($27,62\text{ s}$ vs.\ $15,66\text{ s}$) sem recuperar a exce\c{c}\~ao previdenci\'aria de segunda ordem da Consulta 7 (\texttt{CEBAS 20\%}). Fundamentados na Teoria Tripartite da Mente de Stanovich, em invariantes energ\'eticos da fisiologia cognitiva comparada e nos avan\c{c}os em \emph{Harness Engineering} e complementaridade humano-IA, formalizamos o \textbf{Cognitive Harness Parity Engine (\texttt{HPE v3.0})} em quatro planos desacoplados e oito modelos matem\'aticos (\texttt{M1--M8}): paridade pareada n\~ao-compensat\'oria ($G_s = C_s T_s S_s \in \{0,1\}$, provando $n_j^* = 736$ e $1.125$ sob Holm-7), satura\c{c}\~ao dupla exponencial limitada (\texttt{M2}), fus\~ao residual \emph{Boost-Only} com sele\c{c}\~ao submodular exata de \emph{Micro-Cards} (\texttt{M3}), roteamento lexicogr\'afico Tri-Rota sob Prazo Monot\^onico Compartilhado e auditoria \texttt{AIPW} (\texttt{M4}), compila\c{c}\~ao de blueprints \texttt{Ed25519}/\texttt{RFC 8785 JCS} nas sete fam\'ilias \texttt{F1--F7} (\texttt{M5}), metabolismo bitemporal ass\'incrono sob ordem parcial jur\'idica $\preceq_{\mathrm{jur}}$ (\texttt{M6}), naturalidade condicionada e voz \texttt{AST SSML} (\texttt{M7}), e simbiose Humano-IA com quatro checkpoints de revoga\c{c}\~ao em voo \texttt{CP-1..3}, filas erg\'odicas ($\varrho_q \le 0,80 < 1$), ACL f\'isica SQL sob \texttt{Two-Person Rule} e ciclo Anti-Goodhart verificado por DAG (\texttt{M8}), certificado em $13$ baterias E2E (\texttt{B1--B13}).
+\end{abstract}
+
+\noindent\textbf{Palavras-chave:} Engenharia de \emph{Harness}; Sistemas Compostos de IA; Simbiose Humano-IA; Racionalidade Epist\^emica de Stanovich; \emph{Sub-Parametric Overthinking}; Compila\c{c}\~ao de Blueprints; Governan\c{c}a Anti-Goodhart.
+
+\section{Introdu\c{c}\~ao e Estado da Arte Cient\'ifico}
+
+A transi\c{c}\~ao da IA generativa de assistentes conversacionais abertos para infraestruturas institucionais audit\'aveis deslocou o eixo da engenharia de sistemas da contagem isolada de par\^ametros para a terna acoplada $(H_{\mathrm{op}}, m, H)$ formada por especialista humano, modelo de linguagem e \emph{harness} cognitivo externo \cite{zaharia2024shift,khattab2024dspy,bansal2021does}. Em dom\'inios regidos por direito positivo estrito, normas cont\'abeis cogentes e al\c{c}adas comerciais---onde uma al\'iquota invertida, norma revogada ou desconto fora de al\c{c}ada gera passivo imediato---distinguir capacidade algor\'itmica intr\'inseca, ancoragem determin\'istica externa e soberania intencional humana \'e essencial.
+
+Sete vertentes cient\'ificas (2020--2026) sustentam esta arquitetura:
+\begin{enumerate}[leftmargin=*,nosep]
+  \item \textbf{Eleva\c{c}\~ao de Complexidade para o \emph{Harness}:} Yang et al.\ \cite{yang2026better} demonstraram em $21$ pares tarefa-modelo que modelos compactos caem para $31,4\%$ em \emph{harnesses} desenhados para modelos \emph{frontier}, mas saltam para $89,7\%$ ($+58,3$ p.p.) a $4\%$ do custo quando a estrutura da tarefa \'e transferida para valida\c{c}\~oes determin\'isticas no \emph{harness}.
+  \item \textbf{Compila\c{c}\~ao Declarativa e Interfaces Computacionais:} Pipelines declarativos \cite{khattab2024dspy} e interfaces computador-agente \cite{jimenez2024swebench,yang2024sweagent} produzem multiplicadores $>6\times$ sobre os mesmos pesos base com menor consumo contextual.
+  \item \textbf{Deriva em Contextos Longos e Planejamento Livre:} Perda posicional \cite{liu2024lost} e cadeias livres desancoradas acumulam desvios de premissa em modelos compactos sem verifica\c{c}\~ao intermedi\'aria.
+  \item \textbf{Cr\'itica Mediada por Or\'aculos vs.\ Autocr\'itica Intr\'inseca:} Enquanto ciclos puramente internos falham em corrigir racioc\'inio \cite{huang2024large}, cr\'itica interativa com ferramentas determin\'isticas \cite{gou2024critic} e verifica\c{c}\~ao independente \cite{du2024improving} convergem de modo confi\'avel.
+  \item \textbf{Alucina\c{c}\~oes em RAG Jur\'idico e Bitemporalidade:} Magesh et al.\ \cite{magesh2025hallucination} mediram $17\%$--$33\%$ de alucina\c{c}\~oes em sistemas jur\'idicos comerciais diante de hierarquia normativa, vig\^encia bitemporal \cite{jensen1999temporal,kulkarni2012temporal} ou exce\c{c}\~oes estatut\'arias de segunda ordem.
+  \item \textbf{Cascatas Econ\^omicas e R\'otulos Seletivos:} Roteadores de custo \cite{chen2023frugalgpt,ong2025routellm} exigem filtros n\~ao-compensat\'orios de cauda e estima\c{c}\~ao contrafactual duplamente robusta \cite{lakkaraju2017selective,robins1994estimation}.
+  \item \textbf{Complementaridade Humano-IA e Governan\c{c}a Anti-Goodhart:} Equipes complementares ($\operatorname{Perf}(H_{\mathrm{op}}+M) > \max\{\operatorname{Perf}(H_{\mathrm{op}}),\operatorname{Perf}(M)\}$) dependem de carga supervis\'oria humana limitada \cite{parasuraman2000model,amershi2019guidelines,wilder2020learning,bansal2021does} e corre\c{c}\~ao estrutural no c\'odigo-fonte em vez de remendos manuais em banco, prevenindo a Lei de Goodhart \cite{goodhart1975problems,strathern1997improving}.
+\end{enumerate}
+
+Sob a Teoria Tripartite da Mente de Stanovich \cite{stanovich2009what,stanovich2011rationality,stanovich2016rationality,evans2013dual,deneys2023advancing}, escalar \texttt{reasoning.effort} amplia apenas a simula\c{c}\~ao serial da \emph{Mente Algor\'itmica}, sem sintetizar \emph{Mindware} estatut\'ario ausente, substituir a \emph{Mente Reflexiva} ou dispensar a \emph{Soberania Intencional Humana}.
+
+\subsection{Limites Epistemol\'ogicos da Analogia Fisiol\'ogica e Padroniza\c{c}\~ao Experimental}
+
+O enc\'efalo humano opera sob or\c{c}amento estrito ($\sim 20\text{ W}$) via express\~ao g\^enica seletiva, arcos reflexos medulares/cerebelares, monitoramento de conflito no \texttt{dACC} antes do recrutamento pr\'e-frontal \cite{attwell2001energy,botvinick2001conflict,baddeley2000episodic} e sistemas complementares de aprendizagem \cite{mcclelland1995why,gutierrez2024hipporag}. Neste estudo, a fisiologia atua estritamente como heur\'istica modular, vocabul\'ario arquitetural interno e fonte de invariantes de isolamento: n\~ao se postula equival\^encia biol\'ogica, nenhuma prova matem\'atica \'e substitu\'ida por met\'afora e a proje\c{c}\~ao de observabilidade \'e unidirecional, sem termos anat\^omicos em schemas, APIs ou prompts.
+
+\paragraph{Ecossistemas Corporativos e Tiers Normalizados.}
+O estudo abrange tr\^es plataformas produtivas integradas: (1) \textbf{MemoryOS} ($\mathcal{S}_{\mathrm{Mem}}$, no \texttt{VTI OS System}), provendo mem\'oria bitemporal h\'ibrida e governan\c{c}a epist\^emica multi-modelo; (2) \textbf{Enterprise Advisory \& Commercial Agent Hub} ($\mathcal{S}_{\mathrm{Hub}}$), atendendo consultoria tribut\'aria, cont\'abil, trabalhista e processual junto a agentes comerciais/executivos sobre $374.252$ vetores sem\^anticos e $396.176$ atos normativos; e (3) \textbf{Automated Regulatory Ingestion \& Editorial Auditing Platform} ($\mathcal{S}_{\mathrm{Reg}}$), monitorando $43$ fontes oficiais di\'arias brasileiras. Os modelos avaliados s\~ao padronizados pelo gateway corporativo (sobre OpenAI Responses API \texttt{/v1/responses} e Google GenAI \texttt{thinkingConfig}):
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Tier-W Compact Reasoning Model (\texttt{W-Compact}):} US\$ $0,10 / 10^6$ input e US\$ $0,50 / 10^6$ output em tabela p\'ublica (US\$ $0,40 / 10^6$ na faixa contratual de volume);
+  \item \textbf{Tier-F Frontier Reasoning Model (\texttt{F-Frontier}):} US\$ $2,00 / 10^6$ input e US\$ $10,00 / 10^6$ output em tabela p\'ublica (US\$ $8,00 / 10^6$ na faixa contratual de volume).
+\end{itemize}
+
+\begin{table*}[t]
+\centering
+\caption{Benchmark Pareado em Medidas Repetidas sobre $\mathcal{S}_{\mathrm{Hub}}$ ($5$ Perfis $\times$ $20$ Consultas Auditadas $= 100$ Execu\c{c}\~oes).}
+\label{tab:benchmark_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{l c c c c r r c r}
+\toprule
+\textbf{Perfil Pareado ($n=20$)} & \textbf{Transporte} & \textbf{Tese Central} & \textbf{Q7 (\texttt{CEBAS 20\%})} & \textbf{Q8 (\texttt{FPAS 507})} & \textbf{Tok.\ Ocultos} & \textbf{Tok.\ Vis.} & \textbf{Lat\^encia M\'edia (LLM)} & \textbf{Custo 20Q (65k/ano)} \\
+\midrule
+1. \texttt{F-Frontier} (\texttt{low}, Baseline) & \texttt{/v1/responses} & $20/20$ & Capturou & $0$ err (\texttt{507}) & \emph{embutido} & $10.426$ & $22,99\text{ s}$ ($10,63\text{ s}$) & US\$ $0,9362$ (\$3.042,64) \\
+2. \texttt{W-Compact} (\texttt{none}) & \texttt{/v1/chat/comp.} & $20/20^*$ & Omitiu & $0$ err (\texttt{507}) & $0$ & $6.767$ & $15,23\text{ s}$ ($4,91\text{ s}$) & US\$ $0,0451$ (\$146,69) \\
+\textbf{3. \texttt{W-Compact} (\texttt{low}, \'Otimo)} & \texttt{/v1/responses} & $\mathbf{20/20}$ & Omitiu & $\mathbf{0}$ \textbf{err (\texttt{507})} & $\mathbf{1.311}$ & $6.734$ & $\mathbf{15,66\text{ s}}$ ($\mathbf{6,26\text{ s}}$) & \textbf{US\$ $\mathbf{0,0457}$ (\$148,40)} \\
+4. \texttt{W-Compact} (\texttt{medium}) & \texttt{/v1/responses} & $19/20$ & Negou & \textbf{Errou (\texttt{515})} & $15.289$ & $6.942$ & $15,88\text{ s}$ ($12,48\text{ s}$) & US\$ $0,0528$ (\$171,70) \\
+5. \texttt{W-Compact} (\texttt{high}) & \texttt{/v1/responses} & $20/20^{**}$ & Negou & $0$ err (\texttt{507}) & $36.593$ & $6.914$ & $27,62\text{ s}$ ($21,60\text{ s}$) & US\$ $0,0633$ (\$205,80) \\
+\bottomrule
+\end{tabularx}
+\vspace{0.2em}
+\par\raggedright\scriptsize $^*$1 truncamento sint\'atico na Q19 ($150$ tokens). $^{**}$Cabe\c{c}alho residual (\texttt{\#\#\# Sources:}) na Q13 e picos de at\'e $55,0\text{ s}$ (Q10).
+\end{table*}
+
+\section{Evid\^encia Emp\'irica Precursora e Modelos \texttt{M1--M2}}
+
+\subsection{Benchmark Pareado ($5 \times 20 = 100$) e \emph{Sub-Parametric Overthinking}}
+
+A Tabela~\ref{tab:benchmark_pt} sintetiza o benchmark em medidas repetidas sobre $N=20$ consultas trabalhistas e previdenci\'arias reais. Estatisticamente, as $100$ execu\c{c}\~oes comp\~oem blocos pareados ($N=20$ unidades independentes) e, pelo limite exato unilateral de Clopper--Pearson a $97,5\%$ \cite{clopper1934use}, $0/20$ falhas limita o erro populacional apenas em $p_U = 1 - 0,025^{1/20} \approx 0,1684$. Mecanisticamente, o contraste entre as Consultas 7, 8 e 15 isola tr\^es leis:
+\begin{enumerate}[leftmargin=*,nosep]
+  \item \textbf{Invari\^ancia da Lacuna de 2\textordfeminine\ Ordem (\texttt{Q7}):} Na contrata\c{c}\~ao de aut\^onomo por entidade assistencial, a ponte para a reten\c{c}\~ao condicional \texttt{CEBAS 20\%} (\texttt{art.\ 37, I, ``b'', IN RFB 2.110/2022}) estava ausente na busca lexical e nos pesos de \texttt{W-Compact}; elevar os tokens ocultos de $275$ (\texttt{low}) para $3.106$ (\texttt{high}, $35,15\text{ s}$) n\~ao supriu a omiss\~ao.
+  \item \textbf{Sub-Parametric Overthinking (\texttt{Q8}):} No \texttt{CNAE 0910-6/00}, o cat\'alogo piloto de 4 linhas retornou \texttt{NAO\_MAPEADO}. \texttt{W-Compact (low)} preservou o documento recuperado (\texttt{FPAS 507}), enquanto \texttt{medium} ($1.143$ tokens ocultos) racionalizou por analogia falsa (\emph{``apoio \'e servi\c{c}o $\Rightarrow$ FPAS 515''}), caindo para $19/20$.
+  \item \textbf{Sufici\^encia da Pr\'otese Determin\'istica (\texttt{Q15}):} No \texttt{CNAE 9430-8/00}, coberto localmente nos quatro cen\'arios (\texttt{515, 566, 523, 639/CEBAS}), todos os perfis de \texttt{W-Compact} igualaram \texttt{F-Frontier}.
+\end{enumerate}
+
+\subsection{Modelo \texttt{M1}: Paridade N\~ao-Compensat\'oria e Teorema Amostral}
+
+Para $s \in \{c, f\}$ com $c=(m_{\mathrm{W}}, H_{\mathrm{HPE}})$ e $f=(m_{\mathrm{F}}, H_{\mathrm{base}})$, cada resposta recebe gates bin\'arios bloqueantes de corre\c{c}\~ao material $C_s \in \{0,1\}$, validade bitemporal $T_s \in \{0,1\}$ e conformidade de seguran\c{c}a/superf\'icie $S_s \in \{0,1\}$ (\texttt{UNKNOWN} implica $G_s=0$):
+\begin{align}
+G_s(q,\omega) &= C_s(q,\omega)\cdot T_s(q,t_{\mathrm{ref}},\omega)\cdot S_s(q,\omega) \in \{0,1\}, \\
+V_s(q,\omega) &= \sum_{k \in \{E,F,A,U\}} \alpha_k m_{k,s}(q,\omega), \quad Q_s = G_s \cdot V_s,
+\end{align}
+com $\alpha_k \ge 0$, $\sum_k \alpha_k = 1$. Em cada estrato $j \in \{1,\dots,J\}$, definindo $p_{s,j}=\mathbb{E}_j[G_s]$, $u_{s,j}=\mathbb{E}_j[Q_s]$ e $v_{s,j}^{\cap}=\mathbb{E}_j[V_s \mid G_c=1 \land G_f=1]$, a Paridade Operacional Condicionada exige:
+\begin{equation}
+\begin{aligned}
+\operatorname{LCB}_{1-\alpha_{G,j}}(p_{c,j}-p_{f,j}) &\ge -\delta_{\mathrm{hard},j}, \\
+\operatorname{LCB}_{1-\alpha_U}(u_c-u_f) &\ge -\varepsilon_p, \quad
+\operatorname{LCB}_{1-\alpha_V}(v_c^{\cap}-v_f^{\cap}) \ge -\varepsilon_{\mathrm{soft}}.
+\end{aligned}
+\end{equation}
+
+\begin{theorem}[Limite Inferior Exato de Tamanho Amostral]
+Para certificar margem n\~ao-compensat\'oria $\delta_{\mathrm{hard},j} \in (0,1)$ ao n\'ivel unilateral local $\alpha_{j,\mathrm{local}} \in (0,1)$ mesmo sob zero discord\^ancias adversas ($n_{01,j}=0$), o tamanho amostral m\'inimo de pares independentes $n_j$ satisfaz:
+\begin{equation}
+n_j \ge n_j^* = \left\lceil \frac{\ln(\alpha_{j,\mathrm{local}})}{\ln(1 - \delta_{\mathrm{hard},j})} \right\rceil.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Quando $G_{f,i}=1$ para todo $i$ e $n_{01,j}=0$, o teto exato de Clopper--Pearson \cite{clopper1934use} para $\theta_j = \mathbb{P}(G_c=0,G_f=1)$ resolve $(1-\theta_U)^{n_j}=\alpha_{j,\mathrm{local}}$, logo $\operatorname{LCB} = -(1-\alpha_{j,\mathrm{local}}^{1/n_j}) \ge -\delta_{\mathrm{hard},j} \iff n_j \ge \ln(\alpha_{j,\mathrm{local}})/\ln(1-\delta_{\mathrm{hard},j})$. Para $\alpha_{j,\mathrm{local}}=0,025$ e $\delta_{\mathrm{hard},j}=0,005$, $n_j^* = \lceil 735,93 \rceil = 736$; sob Holm--Bonferroni \cite{holm1979simple} em $J=7$ dom\'inios ($\alpha_{j,\mathrm{local}}=0,025/7$), $n_j^* = \lceil 1.124,39 \rceil = 1.125$.
+\end{proof}
+
+\subsection{Modelo \texttt{M2}: Satura\c{c}\~ao Dupla Exponencial Limitada}
+
+Sendo $\Omega(q,H) \in [0,1]$ o \'indice de ancoragem determin\'istica e $\Delta_{\mathrm{prior}}(m,q) \ge 0$ a diverg\^encia do prior associativo, com $\tau_{v,m},\tau_{d,m},\tau_{\nu,m} > 0$ e $A_m,B_m,\nu_m \ge 0$ finitos, a evid\^encia latente $z_m$ e a acur\'acia sobre $e \ge 0$ obedecem a:
+\begin{align}
+z_m(q,e,H) &= z_{0,m} + A_m\Omega\!\left(1 - e^{-e/\tau_{v,m}}\right) \nonumber\\
+           &\quad - B_m(1-\Omega)\Delta_{\mathrm{prior}}\!\left(1 - e^{-e/\tau_{d,m}}\right), \\
+P_{\mathrm{acerto}}(m,e,H) &= \Phi\!\left(\frac{z_m(q,e,H)}{\sqrt{1 + \nu_m(1 - e^{-e/\tau_{\nu,m}})}}\right).
+\end{align}
+Quando $e \to \infty$, $P_{\mathrm{acerto}}$ converge para ass\'intota finita em $(0,1)$. Se $\tau_{v,m} < \tau_{d,m}$ sob $0 < \Omega < 1$, $\partial z_m/\partial e$ inverte de positivo perto da origem (\texttt{low}) para negativo em $e$ intermedi\'ario (\texttt{medium}, \texttt{Q8}), ao passo que $\Omega \to 1$ sob or\'aculos certificados anula $(1-\Omega)$.
+
+\section{Diagn\'ostico Arquitetural de Lacunas em Sistemas Compostos}
+
+A inspe\c{c}\~ao forense em $\mathcal{S}_{\mathrm{Hub}}$, $\mathcal{S}_{\mathrm{Mem}}$ e $\mathcal{S}_{\mathrm{Reg}}$ identificou quatro classes de lacunas: (1) cobertura assim\'etrica de or\'aculos determin\'isticos entre dom\'inios estatut\'arios densos e busca restrita \`a 1\textordfeminine\ ordem; (2) deriva na replica\c{c}\~ao de templates sem fam\'ilias can\^onicas travadas (\texttt{F1--F7}) nem revoga\c{c}\~ao autom\'atica de ferramentas; (3) amplifica\c{c}\~ao multiplicativa de timeouts ($T_{\mathrm{worst}} \approx N_{\mathrm{keys}} \times \mathrm{timeoutMs} \times N_{\mathrm{providers}}$) e roteamento desacoplado de escores p\'os-RRF; e (4) caches de $30\text{ s}$ sem checkpoints de revoga\c{c}\~ao em voo, coexist\^encia sem ordem parcial entre orienta\c{c}\~oes hist\'oricas (\texttt{P4}) e lei prim\'aria (\texttt{P0/P1}), e necessidade de ACL f\'isica SQL, limite erg\'odico de filas humanas e outbox regulat\'oria Anti-Goodhart.
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  font=\scriptsize,
+  plane/.style={draw=vtiblue, thick, rounded corners=3pt, fill=vtislate, align=left, inner sep=5pt},
+  arr/.style={-{Stealth[length=2mm]}, thick, draw=vtiblue}
+]
+\node[plane, text width=0.96\textwidth] (hp) at (0, 2.55) {
+  \textbf{4. HUMAN SYMBIOSIS \& GOVERNANCE PLANE (\texttt{M8})} --- Travas Soberanas na UI (\texttt{D1} Financeira, \texttt{D2} RBAC) $\cdot$ \texttt{PlatformLlmRuntimeSnapshot} \texttt{Ed25519} no Prim\'ario RW $\cdot$ \textbf{4 Checkpoints em Voo (\texttt{CP-1..3})} $\cdot$ C\'erebro Comercial Vivo (ACL F\'isica SQL + \texttt{Two-Person Rule}) $\cdot$ Filas Erg\'odicas ($0 < \varrho_q \le 0,80 < 1$) $\cdot$ Ciclo Regulat\'orio Anti-Goodhart (Zero SQL Manual + Linhagem Ac\'iclica DAG)
+};
+
+\node[plane, text width=0.30\textwidth, minimum height=2.2cm] (cp) at (-6.0, 0) {
+  \textbf{1. CONTROL PLANE (\texttt{M5})}\\[2pt]
+  $\bullet$ 7 Fam\'ilias \texttt{F1--F7} (tetos \texttt{LOCKED})\\
+  $\bullet$ Operador total \texttt{compileField} (24 casos)\\
+  $\bullet$ \texttt{RFC 8785 JCS} + \texttt{uint64} + \texttt{Ed25519}\\
+  $\bullet$ CAS ACID + Epoch \texttt{SEQUENCE}
+};
+
+\node[plane, text width=0.31\textwidth, minimum height=2.2cm] (dp) at (0.0, 0) {
+  \textbf{2. ASYNC DATA PLANE (\texttt{M6})}\\[2pt]
+  $\bullet$ 43 Fontes Oficiais Di\'arias ($\mathcal{S}_{\mathrm{Reg}}$)\\
+  $\bullet$ Anonimiza\c{c}\~ao LGPD Pr\'e-\'Indice ($\mathcal{S}_{\mathrm{Hub}}$)\\
+  $\bullet$ Ordem Parcial Jur\'idica $\preceq_{\mathrm{jur}}$ (\texttt{P0--P6})\\
+  $\bullet$ \texttt{snapshot\_epoch} At\^omico ($0\text{ ms}$ turno)
+};
+
+\node[plane, text width=0.31\textwidth, minimum height=2.2cm] (ep) at (6.0, 0) {
+  \textbf{3. SYNC EXECUTION PLANE (\texttt{M1--M4, M7})}\\[2pt]
+  $\bullet$ Manifestos e 11 Or\'aculos $O(1)$ em RAM\\
+  $\bullet$ Fus\~ao Boost-Only + $|S|\le 2$ Cards\\
+  $\bullet$ Roteador Tri-Rota (\texttt{W/F/H}) + Deadline\\
+  $\bullet$ Claim Slots \& Voz Neural \texttt{AST SSML}
+};
+
+\draw[arr] (hp.south -| cp.north) -- (cp.north);
+\draw[arr] (hp.south -| dp.north) -- (dp.north);
+\draw[arr] (hp.south -| ep.north) -- (ep.north);
+\draw[arr] (cp.east) -- (ep.west);
+\draw[arr] (dp.east) -- (ep.west);
+\end{tikzpicture}
+\caption{Arquitetura desacoplada em quatro planos do \textbf{Cognitive Harness Parity Engine (\texttt{HPE v3.0})} nos ecossistemas $\mathcal{S}_{\mathrm{Mem}}$, $\mathcal{S}_{\mathrm{Hub}}$ e $\mathcal{S}_{\mathrm{Reg}}$.}
+\label{fig:architecture_pt}
+\end{figure*}
+
+\section{Arquitetura Formal do \texttt{HPE v3.0} (\texttt{M3--M8})}
+
+A Figura~\ref{fig:architecture_pt} ilustra os quatro planos ortogonais do \texttt{HPE v3.0}.
+
+\subsection{Modelo \texttt{M3}: Fus\~ao Residual \emph{Boost-Only}, Micro-Cards Submodulares e 11 Or\'aculos Bitemporais}
+
+O grafo $\mathcal{G}_{\mathrm{bridge}}$ particiona arestas em Classe A (\texttt{SAFE\_SYNONYM} na trilha prim\'aria $L_P$), Classe B (\texttt{CANDIDATE\_HYPOTHESIS} em trilha paralela isolada $L_B$) e Classe C (\texttt{CONDITIONAL\_CONCLUSION} exigindo confirma\c{c}\~ao f\'atica expl\'icita). Dados o escore prim\'ario calibrado p\'os-RRF \cite{cormack2009reciprocal} $S_P(d,q) \in [0,1]$, o escore de ponte $S_B(d,q) \in [0,1]$, $\gamma \in [0,1]$ ($\gamma=0,35$) e a trava de superf\'icie $g_B(q) \in \{0,1\}$ ($g_B \equiv 0$ em fam\'ilias executivas/comerciais), o ranqueamento segue:
+\begin{equation}
+S_{\mathrm{rank}}(d,q) = S_P(d,q) + \gamma g_B(q)\bigl[1 - S_P(d,q)\bigr]S_B(d,q),
+\end{equation}
+assegurando $S_{\mathrm{rank}} \ge S_P$ e zero dilui\c{c}\~ao quando $S_B=0$. Os \emph{Micro-Cards} s\~ao selecionados sobre $\mathcal{F}(q)$ impondo $|S|\le 2$, $\max_{\tau \in \mathcal{T}} T_\tau(\operatorname{serialize}(S)) \le 320$ tokens multi-tokenizer e zero conflito via enumera\c{c}\~ao exata maximizando cobertura submodular \cite{nemhauser1978analysis}:
+\begin{equation}
+S^*(q) = \arg\max_{S \in \mathcal{F}(q)} \left[\sum_{c \in S} u(c,q) - \!\!\sum_{\{a,b\}\subseteq S}\!\! \rho(a,b,q) + \beta \operatorname{Coverage}(S,q)\right].
+\end{equation}
+
+Todos os $11$ motores determin\'isticos validam no boot um \texttt{OracleManifestV1} assinado em \texttt{Ed25519} (\texttt{expected\_row\_count === actual\_row\_count}, janelas bitemporais e retorno \texttt{UNKNOWN} vedando analogia), acoplados ao \texttt{ModelCapabilityRegistry} (sem \emph{downgrade} silencioso) e \`a resolu\c{c}\~ao can\^onica p\'os-regex em 5 categorias.
+
+\subsection{Modelo \texttt{M4}: Prazo Monot\^onico Compartilhado, Roteador Tri-Rota e \texttt{AIPW}}
+
+Na entrada da requisi\c{c}\~ao fixa-se $t_{\mathrm{deadline}} = t_{\mathrm{monotonic\_now}} + T_{\mathrm{global}}$, truncando cada tentativa por $t_{\mathrm{attempt}}^{(r)} = \min(t_{\mathrm{config}}^{(r)}, t_{\mathrm{deadline}} - t_{\mathrm{monotonic\_now}} - t_{\mathrm{reserve}})$ com \texttt{AbortSignal} composto ($<50\text{ ms}$). O roteamento sobre $\mathcal{A}=\{W,F,H\}$ procede lexicograficamente: (1) curto-circuito ontol\'ogico para $H$ em \texttt{NORMA\_NAO\_PUBLICADA}; (2) filtragem posterior $\mathcal{A}_{\mathrm{safe}}(X) = \{a \in \{W,F,H\} : Q_{0,95}(p_{\mathrm{err}}(a \mid X,\mathcal{D})) \le \rho_{\mathrm{domain}}\}$ com fechamento $a^*(X)=H$ se vazio; e (3) minimiza\c{c}\~ao monet\'aria homog\^enea em $\mathcal{A}_{\mathrm{safe}}(X)$:
+\begin{equation}
+\begin{aligned}
+a^*(X) = \arg\min_{a \in \mathcal{A}_{\mathrm{safe}}(X)} \Bigl[&C_{\mathrm{api}}(a,X) + C_{\mathrm{compute}}(a,X) \\
+&+ v_{\mathrm{lat}}(X)\operatorname{Lat}_{\mathrm{P95}}(a,X) + D_{\mathrm{delay},a} + D_{\mathrm{omission},a}\Bigr].
+\end{aligned}
+\end{equation}
+Para evitar vi\'es de r\'otulos seletivos \cite{lakkaraju2017selective}, a explora\c{c}\~ao segura em $\mathcal{A}_{\mathrm{safe}}^{\mathrm{explore}}(X) \subseteq \mathcal{A}_{\mathrm{safe}}(X)$ ($\pi(a\mid X)\ge 0,05$) \'e auditada contra r\'otulo independente $y^*$ via \texttt{AIPW} com \emph{cross-fitting} \cite{robins1994estimation}:
+\begin{equation}
+\widehat{R}_{\mathrm{AIPW}}(a) = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}_a(X_i) + \frac{\mathbb{I}\{A_i=a\}}{\pi(a\mid X_i)}\bigl(\ell(y_{A_i},y_i^*) - \hat{\mu}_a(X_i)\bigr)\right],
+\end{equation}
+em fila isolada (\texttt{MAX\_SHADOW\_QUEUE = 64}, \texttt{Drop-Newest}). Superf\'icies executivas e comerciais aplicam $9$ est\'agios cumulativos \emph{default-deny}.
+
+\subsection{Modelo \texttt{M5}: Compila\c{c}\~ao Gen\'otipo-Fen\'otipo nas 7 Fam\'ilias (\texttt{F1--F7})}
+
+Cada blueprint vincula-se a uma fam\'ilia can\^onica imut\'avel: \texttt{F1} (\texttt{INSTITUTIONAL\_ADVISORY}), \texttt{F2} (\texttt{EXECUTIVE\_COPILOT}, $g_B\equiv 0$, P95 $\le 5,5\text{ s}$), \texttt{F3} (\texttt{COMMERCIAL\_REVENUE}, $g_B\equiv 0$, P95 $\le 4,5\text{ s}$), \texttt{F4} (\texttt{CUSTOMER\_CARE\_SAC}, P95 $\le 4,0\text{ s}$), \texttt{F5} (\texttt{OPERATIONAL\_API}, P95 $\le 2,5\text{ s}$), \texttt{F6} (\texttt{ANALYTICAL\_BI\_SQL}, CTEs \emph{read-only}, P95 $\le 9,0\text{ s}$) ou \texttt{F7} (\texttt{AUTONOMOUS\_ENGINEERING}). Atributos s\~ao tipados em \texttt{GovernedValue<T>} sobre Fam\'ilia $F_k$, Blueprint $B_k \in \{\texttt{DEFAULT}(v_B),\texttt{LOCKED}(v_B)\}$, Tenant $T_k \in \{\texttt{Absent},\texttt{INHERIT},\texttt{OVERRIDE}(v_T),\texttt{LOCKED}(v_T)\}$ e Agente $A_k \in \{\texttt{Absent},\texttt{INHERIT},\texttt{OVERRIDE}(v_A)\}$. O parser streaming rejeita chaves JSON duplicadas (\texttt{ERR\_DUPLICATE\_JSON\_KEY}), pro\'ibe valor em \texttt{INHERIT} e veda trava na folha $A_k$. Nos $2\times 4\times 3 = 24$ casos cartesianos, \texttt{compileField} resolve a heran\c{c}a de forma total e pura (casos 1--11, 13--14, 16--17 produzem valores v\'alidos; casos 12, 15, 18--24 abortam \emph{fail-closed}). O manifesto \'e serializado em \texttt{RFC 8785 JCS} \cite{rundgren2020jcs} com \texttt{uint64} em strings decimais (\texttt{\^{}(?:0|[1-9][0-9]\{0,19\})\$}), assinado via \texttt{Ed25519} \cite{josefsson2017eddsa}, ativado em transa\c{c}\~ao ACID \'unica CAS + ledger via \texttt{SEQUENCE} monot\^onica e lido em RAM $O(1)$.
+
+\subsection{Modelo \texttt{M6}: Metabolismo Bitemporal Ass\'incrono (\texttt{P0--P6}) e $\preceq_{\mathrm{jur}}$}
+
+Com impacto de $0\text{ ms}$ no turno s\'incrono, \texttt{M6} unifica as $43$ fontes di\'arias de $\mathcal{S}_{\mathrm{Reg}}$ ao fluxo desidentificado (LGPD) de $\mathcal{S}_{\mathrm{Hub}}$ nas classes \texttt{P0} (Constitui\c{c}\~ao/Leis Complementares), \texttt{P1} (Leis Ordin\'arias/Decretos/INs), \texttt{P2} (Decis\~oes judiciais por \texttt{claim\_id} com \texttt{proceduralStatus}, alcance e modula\c{c}\~ao), \texttt{P3} (briefings regulat\'orios auditados, subordinados a \texttt{P0--P2}), \texttt{P4} (consultas humanas hist\'oricas contextuais, proibidas de revogar \texttt{P0--P2}), \texttt{P5} (fatos comerciais) e \texttt{P6} (mem\'oria de sess\~ao). A ordem parcial jur\'idica estrita $c_1 \prec_{\mathrm{jur}} c_2$ vigora na mesma compet\^encia constitucional e dispositivo sob hierarquia, \emph{lex specialis}, \emph{lex posterior} eficaz (respeitada a n\~ao-repristina\c{c}\~ao) ou suspens\~ao \texttt{P2} ativa; \emph{claims} incompar\'aveis emitem \texttt{CONFLICTING\_CLAIMS}. Vetores e cat\'alogos compartilham \texttt{snapshot\_epoch} fixado na entrada, distinguindo-se formalmente anonimiza\c{c}\~ao irrevers\'ivel pr\'e-\'indice de \emph{crypto-shredding}.
+
+\subsection{Modelo \texttt{M7}: Naturalidade Condicionada, Claim Slots, \texttt{AST SSML} e Homeostase}
+
+A avalia\c{c}\~ao humana cega estratificada imp\~oe $\operatorname{LCB}_{1-\alpha}(\Delta N_{f,c,i}) \ge -\delta_{N,f,c}$ ($\alpha_{\mathrm{Krippendorff}}\ge 0,75$; $\delta_N=0,02$ em \texttt{F1}, $0,01$ em \texttt{F2--F4}) sob sete princ\'ipios anti-robotiza\c{c}\~ao. O verificador p\'os-gera\c{c}\~ao valida \texttt{ImmutableClaimAtom} (\texttt{decimal.js} e polaridade de\^ontica), acionando fallback determin\'istico sem mutar slots validados, enquanto a voz neural compila \texttt{AST SSML} verificada por \emph{round-trip} \texttt{TTS->ASR}. A homeostase isola pools de ingest\~ao, pro\'ibe \'indices B-tree em \texttt{collection\_id} sobre cole\c{c}\~oes dominantes \texttt{pgvector} e governa \emph{leases} monot\^onicos locais via \texttt{hrtime} (\texttt{HTTP 503 SAFE\_DEGRADATION} sob parti\c{c}\~ao).
+
+\subsection{Modelo \texttt{M8}: Simbiose Humano-IA, Checkpoints, Filas Erg\'odicas e DAG Anti-Goodhart}
+
+\paragraph{Submodelo \texttt{M8.1} (Governan\c{c}a Viva de LLM e \texttt{CP-1..3}).}
+Edi\c{c}\~oes na UI gravam \texttt{PlatformLlmRuntimeSnapshot} assinado em \texttt{Ed25519} no prim\'ario RW ($\le 2\text{ s}$; \texttt{HTTP 503} sob \emph{staleness}, vedada leitura em r\'eplica defasada). Dadas a Trava Financeira $D_1$ e a Trava RBAC $D_2$, $\mathcal{C}_{\mathrm{pol}} = \operatorname{orderedDistinct}([m_{\mathrm{default}}] \mathbin{\Vert} \texttt{cascadeOrder}) \setminus \texttt{disabledModels}$ remove modelos \texttt{isFlagship} quando $D_1=\texttt{false}$, conciliando pins administrativos com $\mathcal{A}_{\mathrm{safe}}(X)$ sem jamais induzir alucina\c{c}\~ao fora de $\mathcal{A}_{\mathrm{safe}}(X)$ nem violar $D_1=\texttt{false}$ (desviando para $H$). Quatro checkpoints interceptam revoga\c{c}\~oes em voo: \texttt{CP-1} (pr\'e-HTTP/retry), \texttt{CP-2A} (pr\'e-argumentos de tool), \texttt{CP-2B} (\texttt{fencing\_token} ACID SQL / outbox ERP idempotente) e \texttt{CP-3} (buffer integral em \texttt{F1} e gate por frame SSE).
+
+\paragraph{Submodelo \texttt{M8.2} (Filas Erg\'odicas e ACL Comercial).}
+Com intensidade $\varrho_q = \lambda_H/(c_q\mu_H)$, o erro humano efetivo respeita:
+\begin{equation}
+p_{\mathrm{err}}^{(H)}(X,\varrho_q) = \operatorname{clip}\!\bigl(p_{H,0}(X) + \kappa_{\mathrm{fatigue}}\phi(\varrho_q) + \kappa_{\mathrm{bias}}(X),\, 0,\, 1\bigr),
+\end{equation}
+sob $0 < \varrho_q \le \varrho_{\max} = 0,80 < 1$. Acima de $\varrho_{\max}$, declara-se \texttt{QUEUE\_SATURATED} com zero auto-aprova\c{c}\~oes de descontos supervisionados. O C\'erebro Comercial imp\~oe ACL f\'isica SQL pr\'e-busca com \texttt{authorization\_epoch}, encapsulamento \texttt{<untrusted\_commercial\_evidence>}, \texttt{Two-Person Rule} materialmente independente (\texttt{approver\_person\_id !== author\_person\_id}) e idempot\^encia de 5 tuplas.
+
+\paragraph{Submodelo \texttt{M8.3} (Ciclo Regulat\'orio Anti-Goodhart).}
+Edi\c{c}\~oes SQL manuais em $\mathcal{S}_{\mathrm{Reg}}$ s\~ao proibidas; diverg\^encias exigem corre\c{c}\~ao no c\'odigo do \emph{harness} e reprocessamento rastre\'avel. A tabela \texttt{reg\_hpe\_certified\_outbox} admite $m$ em \texttt{P3} se e somente se:
+\begin{equation}
+\begin{aligned}
+\operatorname{Certified}_{P3}(m) \iff\;& (m.\texttt{status}=\text{'publicado'}) \land c.\texttt{tipo\_fonte\_oficial} \\
+&\land (\operatorname{score}(m)=100) \land \neg\texttt{open\_audit}(m) \land \operatorname{ValidDAG}(G_{\mathrm{lin}}(m)),
+\end{aligned}
+\end{equation}
+onde a verifica\c{c}\~ao linear de Tarjan \cite{tarjan1972depth} bloqueia ciclos, adultera\c{c}\~ao de \texttt{row\_lineage\_hmac} e auto-confirma\c{c}\~ao sint\'etica. Extra\c{c}\~oes num\'ericas ingressam em quarentena \texttt{PENDING\_DUAL\_HUMAN\_SIGN} como \texttt{OracleCandidateV1}.
+
+\begin{table*}[t]
+\centering
+\caption{Demarca\c{c}\~ao Epistemol\'ogica em Quatro Camadas das Evid\^encias P\'os-Implementa\c{c}\~ao ($\mathcal{S}_{\mathrm{Hub}}$, $\mathcal{S}_{\mathrm{Mem}}$ e $\mathcal{S}_{\mathrm{Reg}}$).}
+\label{tab:epistemic_pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{l p{3.6cm} p{4.2cm} X}
+\toprule
+\textbf{Camada Epistemol\'ogica} & \textbf{Unidade Experimental \& Escopo} & \textbf{Resultado P\'os-Implementa\c{c}\~ao} & \textbf{Fronteira Estrita de Infer\^encia V\'alida} \\
+\midrule
+\textbf{1. Especificado Ex Ante} & Modelos \texttt{M1--M8}, tabela de 24 casos de \texttt{M5}, 30 casos \texttt{B13}. & Congelado antes da codifica\c{c}\~ao das Ondas 1--5; zero relaxamento p\'os-hoc. & Define invariantes formais; n\~ao constitui prova emp\'irica isolada. \\
+\addlinespace[2pt]
+\textbf{2. Verificado Deterministicamente} & $\mathcal{S}_{\mathrm{Hub}}$ ($93/93$ Jest, $30/30$ \texttt{B13}), $\mathcal{S}_{\mathrm{Mem}}$ ($24/24$ Vitest), $\mathcal{S}_{\mathrm{Reg}}$ ($31/31$ Jest), Stage A ($13/13$). & \textbf{100\% PASS} ($148/148$ su\'ites + $30/30$ cen\'arios \texttt{B13}; $0$ skips/falhas). & Comprova conformidade determin\'istica aos contratos testados; n\~ao estima acur\'acia aberta in\'edita. \\
+\addlinespace[2pt]
+\textbf{3. Benchmark Pareado Emp\'irico} & $N=20$ consultas reais independentes $\times$ $K=5$ perfis ($100$ execu\c{c}\~oes). & \texttt{F-Frontier}: $20/20$ ($22,99\text{ s}$); \texttt{W-Compact (low)}: $20/20$ tese ($15,66\text{ s}$); \texttt{medium}: $19/20$. & Unidade amostral de generaliza\c{c}\~ao tem\'atica \'e $N=20$ (evita pseudorrepeti\c{c}\~ao $N=100$). \\
+\addlinespace[2pt]
+\textbf{4A. Demonstrativo E2E} & $N=6$ fluxos compostos reais; rubrica $m=5$ nos Casos 1--2. & Caso 1: \texttt{W} cru $0/5$ ($9,65\text{ s}$) vs.\ \textbf{\texttt{W+HPE} $5/5$ ($3,36\text{ s}$)} vs.\ \texttt{F} $5/5$ ($9,83\text{ s}$); gate ontol.\ $0,964\text{ ms}$. & Subcrit\'erios intra-turno ($m=5$) s\~ao correlacionados; prova construtiva de mecanismo, n\~ao $5$ ensaios i.i.d. \\
+\addlinespace[2pt]
+\textbf{4B. Observacional Stage B} & \texttt{AIPW} ass\'incrono ($\pi \ge 0,05$, $n_j \ge 1.125$ Holm-7) + Governador Can\'ario. & \texttt{ShadowAipwRunner} ativo + can\'ario progressivo (\emph{rollback} $0,195\text{ ms}$) com CS \emph{anytime-valid} \cite{howard2021time}. & Regime observacional sob propens\~oes conhecidas; barreira cont\'inua em produ\c{c}\~ao. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Protocolo Experimental (\texttt{B1--B13}), Resultados e Amea\c{c}as \`a Validade}
+
+\subsection{Baterias \texttt{B1--B13} e Resultados em Quatro Camadas}
+
+A certifica\c{c}\~ao compreende o Stage A ($13$ baterias E2E \texttt{B1--B13}: \texttt{B1} $20\text{Q}+40$ par\'afrases; \texttt{B2} $10.000$ amostras de propriedades \texttt{M3} e $N=140$ multi-dom\'inio; \texttt{B3} $11$ manifestos \texttt{OracleManifestV1}; \texttt{B4} HNSW \texttt{EXPLAIN} e teto multi-tokenizer $\le 320$ tokens; \texttt{B5} \texttt{CapabilityMismatchError} cross-provider; \texttt{B6} deadline monot\^onico $<50\text{ ms}$; \texttt{B7} curto-circuito ontol\'ogico e isolamento sombra \texttt{AIPW}; \texttt{B8} auditoria negativa dos 9 est\'agios; \texttt{B9} $24$ casos de \texttt{compileField}, JCS \texttt{uint64}, \texttt{Ed25519} e CAS ACID; \texttt{B10} ordem parcial jur\'idica $\preceq_{\mathrm{jur}}$ e LGPD; \texttt{B11} naturalidade cega e \emph{round-trip} \texttt{AST SSML}; \texttt{B12} ingest\~ao concorrente P95 $\le +3\%$ e expira\c{c}\~ao \texttt{503}; e \texttt{B13} os $30$ cen\'arios execut\'aveis de simbiose \texttt{B13.01--B13.30}) e o Stage B confirmat\'orio \cite{howard2021time}. A Tabela~\ref{tab:epistemic_pt} reporta as evid\^encias sob proporcionalidade estrita ($\text{Escopo da Alega\c{c}\~ao} \le \text{Escopo da Evid\^encia}$).
+
+\subsection{Lat\^encia Monot\^onica e Sensibilidade Econ\^omica ($M = 100.000$ Consultas)}
+
+A instrumenta\c{c}\~ao local via \texttt{hrtime} registrou $250,48\text{ ms}$ no boot criptogr\'afico dos $11$ or\'aculos, \emph{hot-path} s\'incrono em RAM com $\mathrm{P50}=0,342\text{ ms}$ ($\mathrm{P95}=0,697\text{ ms}$), $5$ or\'aculos fiscais combinados em $\mathrm{P50}=0,0945\text{ ms}$, curto-circuito ontol\'ogico em $0,964\text{ ms}$, \emph{rollback} can\'ario em $0,195\text{ ms}$ e impacto de ingest\~ao paralela limitado a $+2,852\text{ ms}$ no P95 sobre $374.252$ vetores HNSW.
+
+Em $M=100.000$ consultas t\'ecnicas ($\bar{t}_{\mathrm{in}}=5.979$, $\bar{t}_{\mathrm{out}}^{(W)}=398$, $\bar{t}_{\mathrm{out}}^{(F)}=787$) com fra\c{c}\~ao de escalonamento $\pi_F \in [0,1]$, o custo $C_{100k}(\pi_F) = 10^5[(1-\pi_F)c^{(W)} + \pi_F c^{(F)}]$ resulta (contratual $|$ tabela p\'ublica): baseline puro \texttt{F-Frontier} ($\pi_F=1,00$): US\$ $1.825,40$ $|$ US\$ $1.982,80$; rota pura \texttt{W-Compact + HPE} ($\pi_F=0,00$): US\$ $75,71$ ($-95,85\%$) $|$ US\$ $79,69$ ($-95,98\%$); mix governado de refer\^encia ($\pi_F=0,15$): \textbf{US\$ $\mathbf{338,16}$ ($\mathbf{-81,47\%}$)} $|$ \textbf{US\$ $\mathbf{365,16}$ ($\mathbf{-81,58\%}$)}; mix conservador ($\pi_F=0,30$): US\$ $600,62$ ($-67,10\%$) $|$ US\$ $650,62$ ($-67,19\%$).
+
+\subsection{Amea\c{c}as \`a Validade}
+
+\emph{Validade interna:} varia\c{c}\~oes de rede upstream s\~ao mitigadas pela separa\c{c}\~ao monot\^onica via \texttt{hrtime} e agendamento intercalado \texttt{ABBA}. \emph{Validade de construto:} rubricas normativas discretas n\~ao esgotam nuances pragm\'aticas multi-turno, endere\c{c}adas por avalia\c{c}\~ao humana cega ($\alpha_{\mathrm{Krippendorff}} \ge 0,75$) em \texttt{B11}. \emph{Validade externa:} a paridade depende dos $11$ or\'aculos bitemporais brasileiros; jurisdi\c{c}\~oes sem cat\'alogo convergem conservadoramente para \texttt{F-Frontier} ou $H$. \emph{Validade de conclus\~ao estat\'istica:} amostras mecan\'isticas compactas ($N=20$, $N=6$) motivam sequ\^encias de confian\c{c}a \emph{anytime-valid} permanentes ($n_j \ge 1.125$) no Stage B em produ\c{c}\~ao.
+
+\section{Conclus\~ao}
+
+Escalar cadeias livres de delibera\c{c}\~ao interna em modelos compactos n\~ao sintetiza \emph{mindware} estatut\'ario ausente e induz \emph{Sub-Parametric Overthinking} sob cobertura determin\'istica parcial. Ao transferir completude normativa, vig\^encia bitemporal, diferencia\c{c}\~ao criptogr\'afica de blueprints (\texttt{F1--F7}) e soberania viva \emph{Human-in-the-Loop} para os quatro planos desacoplados do \texttt{HPE v3.0}, sistemas compostos corporativos atingem paridade operacional n\~ao-compensat\'oria condicionada com redu\c{c}\~ao de custo $>81\%$, preservando estruturalmente a autoridade executiva humana e a auditabilidade Anti-Goodhart.
+
+\section*{Declara\c{c}\~ao de Engenharia Simbi\'otica Humano-IA, Verifica\c{c}\~ao Determin\'istica e Mapeamento CRediT Adaptado (Conformidade ACM / IEEE / COPE)}
+
+Em estrita conformidade com as diretrizes editoriais de autoria e transpar\^encia da \textbf{ACM} (\emph{Policy on Authorship}, 2023), do \textbf{IEEE} e do \textbf{COPE}, ferramentas automatizadas e LLMs n\~ao preenchem requisitos de autoria cient\'ifica nem assumem responsabilidade \'etica ou jur\'idica. \textbf{Caio Gon\c{c}alves} \'e o \'unico autor humano deste artigo e responde integralmente pela validade intelectual, demonstra\c{c}\~oes matem\'aticas, integridade emp\'irica e conformidade \'etica da obra (\emph{CRediT: Conceptualization, Methodology, Software Architecture, Supervision, Validation, Writing -- Review \& Editing}). Sob o protocolo auditado de engenharia simbi\'otica do \textbf{MemoryOS}: (i) onze rodadas independentes de cr\'itica adversarial multi-modelo (inst\^ancias \texttt{Tier-F} e \texttt{Tier-W} em provedores distintos) atuaram como instrumento formal de \emph{stress-testing} sobre rascunhos preliminares de \texttt{M1--M8}, sendo cada apontamento demonstrado e filtrado pelo autor humano; e (ii) agentes especializados de engenharia auxiliaram na inspe\c{c}\~ao est\'atica, codifica\c{c}\~ao de testes, execu\c{c}\~ao de benchmarks e composi\c{c}\~ao tipogr\'afica \LaTeX\ sob supervis\~ao humana direta, com verifica\c{c}\~ao determin\'istica integral em $148/148$ su\'ites automatizadas, $30/30$ cen\'arios \texttt{B13} ($0$ falhas) e confer\^encia individual de $100\%$ dos DOIs/arXiv/RFCs citados.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

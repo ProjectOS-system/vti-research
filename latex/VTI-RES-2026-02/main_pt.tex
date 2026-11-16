@@ -1,0 +1,225 @@
+% Official VTI Research Technical Report VTI-RES-2026-02 | DOI: https://doi.org/10.5281/zenodo.24290284
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[margin=0.72in,columnsep=0.24in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{proposicao}{Proposi\c{c}\~ao}
+\newtheorem{definicao}{Defini\c{c}\~ao}
+
+\setlength{\emergencystretch}{2em}
+
+\title{\textbf{Arquitetura Neuro-Cognitiva Bitemporal de Duplo Eixo: Governan\c{c}a Executivo-Epist\^emica Tripartite e Erradica\c{c}\~ao de Falhas de Sobreposi\c{c}\~ao em Sistemas Ag\^enticos de Longo Horizonte (\texttt{MemoryOS})}\\[0.4em]
+\large Monografia T\'ecnica e Cient\'ifica \texttt{VTI-RES-2026-02}}
+
+\author{\textbf{Caio Gon\c{c}alves}\\
+\small Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)\\
+\small \href{https://projectos-system.github.io/vti-research/}{\texttt{https://projectos-system.github.io/vti-research/}}}
+
+\date{Novembro de 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Sistemas ag\^enticos baseados em Grandes Modelos de Linguagem (\emph{Large Language Models} --- LLMs) sofrem degrada\c{c}\~ao sistem\'atica em horizontes operacionais longos devido a tr\^es classes fundamentais de falha cognitiva: atenua\c{c}\~ao de aten\c{c}\~ao no miolo de janelas extensas (\emph{Lost in the Middle}), sobreposi\c{c}\~ao estat\'istica indevida de regras rec\'em-promulgadas por fatos hist\'oricos de alta frequ\^encia no pr\'e-treinamento (\emph{Override Failure}) e polui\c{c}\~ao da mem\'oria persistente por artefatos transit\'orios de tempo de execu\c{c}\~ao (\emph{Contaminated Mindware}). Motivado por um estudo forense precursor sobre $20$ consultas reais em uma plataforma corporativa de consultoria fiscal, tribut\'aria e trabalhista em produ\c{c}\~ao ($\mathcal{S}_{\mathrm{Hub}}$) --- no qual assistentes generativos sem governan\c{c}a epist\^emica apresentaram $20\%$ ($4/20$) de falhas cr\'iticas ---, este artigo formaliza a \textbf{Arquitetura Neuro-Cognitiva Bitemporal de Duplo Eixo do \texttt{MemoryOS}} no ecossistema \textbf{VTI OS System}. O modelo acopla cinco camadas funcionais de mem\'oria e um reposit\'orio aversivo regulado por quarentena criptogr\'afica (\textbf{Eixo~1}) a uma governan\c{c}a executiva tripartite inspirada em Keith E. Stanovich (\textbf{Eixo~2}: Mente Aut\^onoma, Mente Algor\'itmica ancorada em or\'aculos determin\'isticos e Mente Reflexiva estruturada em auditoria f\'isica cega de duas fases e delibera\c{c}\~ao colegiada entre fam\'ilias independentes de modelos). Fundamentada em \textbf{32 estudos cient\'ificos revisados por pares} e na legisla\c{c}\~ao de prote\c{c}\~ao de dados, a arquitetura introduz: (i) registros cognitivos \emph{append-only} sobre intervalos bitemporais semi-abertos de Snodgrass $[\texttt{valid\_from}, \texttt{valid\_to}) \times [\texttt{tx\_from}, \texttt{tx\_to})$ com verifica\c{c}\~ao linear de aciclicidade via Tarjan SCC em $O(|V| + |E|)$; (ii) quarentena epist\^emica triestatal selada por \'Arvores de Merkle SHA-256 com separa\c{c}\~ao de dom\'inio; (iii) um reranker epist\^emico multidimensional p\'os-RRF com meia-vida infinita ($T_{1/2} = \infty$) para regras can\^onicas vigentes; (iv) uma matriz de monitoramento de conflito em 8 dimens\~oes (\texttt{dACC}); e (v) um ciclo de consolida\c{c}\~ao noturna idempotente ($f(f(S)) = f(S)$). Avaliado sobre um \emph{Golden Benchmark} reprodut\'ivel de $N = 50$ consultas sujeitas a choque de vig\^encia temporal, o reranker epist\^emico elevou o $\mathrm{NDCG@5}$ de $0{,}5764$ para $1{,}0000$ ($+73{,}49\%$) e o $\mathrm{MRR}$ de $0{,}4000$ para $1{,}0000$ ($+150{,}00\%$), reduzindo falhas de revoga\c{c}\~ao de $40/50$ para $0/50$ ($\mathrm{IC}_{95\%}^{\mathrm{Wilson}} \approx [0{,}9289; 1{,}0000]$) com lat\^encia monot\^onica $\mathrm{P95} = 0{,}34\,\mathrm{ms}$ ($0{,}44\,\mathrm{ms}$ em carga corporativa complexa).
+
+\vspace{0.4em}
+\noindent\textbf{Palavras-chave:} Arquitetura Cognitiva Ag\^entica; Bancos de Dados Bitemporais; Teoria Tripartite de Stanovich; Governan\c{c}a Epist\^emica; \emph{Reciprocal Rank Fusion}; \'Arvores de Merkle; \texttt{MemoryOS}.
+\end{abstract}
+
+\section{Introdu\c{c}\~ao e Modos de Falha em Longo Horizonte}
+
+A transi\c{c}\~ao dos Grandes Modelos de Linguagem (LLMs) de interfaces conversacionais sem estado para agentes aut\^onomos de engenharia de software, conformidade regulat\'oria e decis\~ao corporativa exp\^os uma assimetria estrutural entre \emph{flu\^encia gerativa local} e \emph{consist\^encia epist\^emica em longo horizonte}. Embora arquiteturas \emph{Transformer} contempor\^aneas exibam alta coes\~ao textual em turnos isolados, a opera\c{c}\~ao continuada ao longo de m\'ultiplas sess\~oes, muta\c{c}\~oes de esquemas e revoga\c{c}\~oes normativas revela tr\^es patologias cognitivas prim\'arias:
+
+\begin{enumerate}[leftmargin=*,nosep,itemsep=2pt]
+    \item \textbf{Degrada\c{c}\~ao Atencional em Janelas Longas (\emph{Lost in the Middle}):} A expans\~ao nominal da janela de contexto n\~ao implica recupera\c{c}\~ao uniforme. Liu et al.~\cite{E03} demonstraram que modelos de linguagem apresentam curva de aten\c{c}\~ao em ``U'', privilegiando o in\'icio (primazia) e o final imediato (rec\^encia) enquanto atenuam severamente tokens no miolo do prompt, diluindo invariantes de seguran\c{c}a~\cite{E01,E02,E04}.
+    \item \textbf{Falha de Sobreposi\c{c}\~ao Estat\'istica (\emph{Override Failure}):} Em dom\'inios n\~ao-estacion\'arios (direito tribut\'ario, legisla\c{c}\~ao trabalhista e arquitetura evolutiva de software), a validade de uma regra \'e parametrizada por intervalos $[v_{\mathrm{from}}, v_{\mathrm{to}})$. Quando uma norma hist\'orica $d_{\mathrm{old}}$ \'e revogada por uma decis\~ao can\^onica recente $d_{\mathrm{new}}$, o prior param\'etrico $P_{\theta}(y \mid q)$ permanece enviesado para $d_{\mathrm{old}}$. Motores RAG convencionais com decaimento uniforme~\cite{E08} permitem que textos revogados de alta densidade lexical suprimam a regra vigente --- instanciando o \emph{Override Failure} de Keith E. Stanovich~\cite{E20,E21}.
+    \item \textbf{Polui\c{c}\~ao de Mem\'oria Persistente (\emph{Contaminated Mindware}):} Agentes com refor\c{c}o verbal epis\'odico~\cite{E18} sem quarentena epist\^emica cristalizam erros transit\'orios de tempo de execu\c{c}\~ao (oscila\c{c}\~oes de DNS, bloqueios ef\^emeros de porta, \emph{stack traces} truncados) como proibi\c{c}\~oes permanentes, formando \emph{Contaminated Mindware}~\cite{E20,E22}.
+\end{enumerate}
+
+Ademais, instru\c{c}\~oes puramente verbais de autocr\'itica n\~ao corrigem essas falhas: Huang et al.~\cite{E28} comprovaram que LLMs n\~ao realizam autocorre\c{c}\~ao intr\'inseca confi\'avel de racioc\'inio sem sinal externo verific\'avel, agravando o \emph{Myside Bias}. A corre\c{c}\~ao efetiva exige cr\'itica interativa ancorada em ferramentas determin\'isticas~\cite{E29} para al\'em do refinamento textual iterativo~\cite{E30}, aliada ao debate adversarial entre agentes independentes~\cite{E31} e \`a busca deliberativa em \'arvore~\cite{E32}.
+
+\subsection{Contribui\c{c}\~oes}
+Implementado e validado no \textbf{\texttt{MemoryOS}} (\textbf{VTI OS System}), este artigo apresenta: (1)~a formaliza\c{c}\~ao da Arquitetura Neuro-Cognitiva de Duplo Eixo unificando 5+1 camadas de mem\'oria \`a governan\c{c}a tripartite de Stanovich sobre 32 estudos verificados~\cite{E01,E21}; (2)~um n\'ucleo bitemporal \emph{append-only} de Snodgrass~\cite{E12} com verifica\c{c}\~ao linear de aciclicidade Tarjan SCC em $O(|V|+|E|)$~\cite{E13}; (3)~um reranker epist\^emico p\'os-RRF com fus\~ao residual \emph{Boost-Only} e meia-vida infinita can\^onica ($T_{1/2}=\infty$); (4)~quarentena triestatal e \emph{Forensic Evidence Store} em \'Arvore de Merkle SHA-256 com separa\c{c}\~ao de dom\'inio~\cite{E19} somadas \`a consolida\c{c}\~ao idempotente $f(f(S))=f(S)$; (5)~tr\^es an\'eis metacognitivos regidos pela Matriz 8D (\texttt{dACC}), incluindo o \texttt{Shadow Auditor} cego em 2 fases e a \texttt{Barreira P4.1}; e (6)~avalia\c{c}\~ao reprodut\'ivel em um \emph{Golden Benchmark} de $N=50$ consultas.
+
+\section{Estudo Emp\'irico Precursor: Override Failure e Mindware Gap}
+
+Antes da formula\c{c}\~ao do modelo bitemporal, uma auditoria forense sobre $N_{\mathrm{pre}} = 20$ consultas reais das \'areas Fiscal, Tribut\'aria, Trabalhista e Previdenci\'aria em uma plataforma corporativa de consultoria fiscal, tribut\'aria e trabalhista em produ\c{c}\~ao ($\mathcal{S}_{\mathrm{Hub}}$) revelou \textbf{20\% de falhas cr\'iticas ($4/20$)} em um pipeline RAG sem\^antico desprovido de governan\c{c}a epist\^emica:
+
+\begin{itemize}[leftmargin=*,nosep,itemsep=3pt]
+    \item \textbf{Override Failure (Consultas 3, 9 e 17 --- Emenda Constitucional n\textordmasculine~141/2026):} Questionado sobre o novo teto constitucional de 42h semanais, escala \texttt{6x1} e trabalho dom\'estico, o modelo negou a publica\c{c}\~ao da \texttt{EC 141/2026} ou tratou-a como PEC em tramita\c{c}\~ao, aplicando a regra revogada de 44h semanais devido ao peso estat\'istico massivo de textos pr\'e-2026.
+    \item \textbf{Mindware Gap (Consulta 15 --- Enquadramento Previdenci\'ario \texttt{CNAE 9430-8/00}):} Sem acesso a or\'aculo cadastral determin\'istico, o modelo incorreu em substitui\c{c}\~ao heur\'istica de atributo~\cite{E24} e alucinou \texttt{FPAS 566}, \texttt{Terceiros 0099} e al\'iquota de \texttt{4,5\%}, violando a \texttt{IN RFB n\textordmasculine~2.110/2022} e a \texttt{LC n\textordmasculine~187/2021}, que exigem \texttt{FPAS 515} (\texttt{Terceiros 0115}, \texttt{5,8\%}) na regra geral ou \texttt{FPAS 639} (\texttt{0,0\%}) sob CEBAS ativo.
+\end{itemize}
+
+\begin{table*}[t]
+\centering
+\caption{Matriz de Correspond\^encia Estrutural da Arquitetura de Duplo Eixo do \texttt{MemoryOS} nos 10 Pilares Cognitivos.}
+\label{tab:pilares}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}c c l l X c@{}}
+\toprule
+\textbf{Pilar} & \textbf{Eixo} & \textbf{Conceito Cognitivo} & \textbf{Correlato Funcional Cerebral} & \textbf{M\'odulos Nucleares no \texttt{MemoryOS}} & \textbf{Refs.} \\
+\midrule
+P1 & Eixo 1 & Mem\'oria de Trabalho \& Pagina\c{c}\~ao & C\'ortex Pr\'e-Frontal Dorsolateral (\texttt{dlPFC}) & \texttt{context\_assembler.js}, \texttt{Context Budget Controller}, primazia/rec\^encia & \cite{E01,E02,E03,E04} \\
+P2 & Eixo 1 & Busca Epis\'odica H\'ibrida 4-Vias & Hipocampo (recupera\c{c}\~ao multi-pista) & \texttt{rrf\_search\_engine.js} (RRF 4-vias) + \texttt{epistemic\_reranker.js} ($T_{1/2}=\infty$) & \cite{E05,E06,E07,E08} \\
+P3 & Eixo 1 & Consolida\c{c}\~ao no Sono (CLS) & Neoc\'ortex \& Replay no Sono REM/SWS & \texttt{dream\_scheduler.js} ($f(f(S))=f(S)$), \texttt{associative\_graph.js} & \cite{E09,E10,E11} \\
+P4 & Eixo 1 & Bitemporalidade \& DAG de Tarjan & C\'ortex Pr\'e-Frontal Ventromedial (\texttt{vmPFC}) & \texttt{fact\_history\_manager.js}, intervalos de Snodgrass + Tarjan SCC $O(|V|+|E|)$ & \cite{E12,E13,E14} \\
+P5 & Eixo 1 & Skills \& Avers\~ao Quarentenada & Cerebelo + Am\'igdala regulada pelo \texttt{vmPFC} & \texttt{procedural\_skills\_manager.js}, \texttt{reflection\_manager.js}, Merkle SHA-256 & \cite{E15,E16,E17,E18,E19} \\
+P6 & Eixo 2 & Mente Tripartite \& Disracionalidade & Tipo 1 vs. Algor\'itmica e Reflexiva Tipo 2 & \texttt{biomimetic\_projector.js}, separa\c{c}\~ao entre gera\c{c}\~ao e verifica\c{c}\~ao & \cite{E20,E21,E22,E23,E24} \\
+P7 & Eixo 2 & Monitoramento de Conflito (\texttt{dACC}) & Cingulado Anterior Dorsal (\texttt{dACC}) & \texttt{council\_risk\_matrix.js} ($R_{\mathrm{total}} = \sum_{j=1}^8 w_j d_j$), \texttt{canary\_governor.js} & \cite{E25,E26,E27} \\
+P8 & Eixo 2 & Or\'aculos \& Auditoria Cega 2-Fases & C\'ortex Pr\'e-Frontal Lateral (anti-Myside Bias) & Anel 1 (AST/Mod-11/Git) + Anel 2 (\texttt{reflective\_monitor\_service.js}) & \cite{E28,E29,E30} \\
+P9 & Eixo 2 & Debate Colegiado Cross-Family & C\'ortex Frontopolar (\'Area 10 de Brodmann) & Anel 3 multi-fam\'ilia de fronteira + bypass com dupla chave HMAC & \cite{E31,E32} \\
+P10 & Eixo 2 & Superf\'icie Assim\'etrica (\texttt{P4.1}) & Filtro T\'alamo-Cortical & \texttt{sanitizeCorporateSurfaceDto} (allowlist estrita) + minimiza\c{c}\~ao LGPD & \cite{E21,N01} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Arquitetura Formal de Duplo Eixo e os 10 Pilares Cognitivos}
+
+Seja $\mathcal{A}$ um sistema ag\^entico operando em sess\~oes sucessivas $s_1, \dots, s_m$. O \texttt{MemoryOS} decomp\~oe $\mathcal{A} = \langle \mathcal{M}_{\mathrm{Eixo\,1}}, \mathcal{G}_{\mathrm{Eixo\,2}} \rangle$ no \textbf{Eixo~1} (5+1 camadas de mem\'oria: Trabalho, Epis\'odica, Sem\^antica Bitemporal, Escopo Local de Projeto \texttt{.agents/PROJECT\_MEMORY.md}, Procedimental \texttt{SKILLS.md} e Aversiva Quarentenada \texttt{DEAD\_ENDS.md} + Merkle Store) e no \textbf{Eixo~2} (governan\c{c}a tripartite de Stanovich), conforme a Tabela~\ref{tab:pilares}.
+
+\subsection{Pilar 1: Mem\'oria de Trabalho e Pagina\c{c}\~ao Primazia-Rec\^encia}
+Fundamentado na capacidade limitada da mem\'oria de trabalho de Baddeley~\cite{E01,E02}, na curva em ``U'' de Liu et al.~\cite{E03} e na pagina\c{c}\~ao hier\'arquica do MemGPT~\cite{E04}, \texttt{backend/maestro/context\_assembler.js} maximiza $\sum_{b_i \in \mathcal{S}} p(b_i)$ sujeito a $\sum_{b_i \in \mathcal{S}} \ell(b_i) \le B_{\max}$. Invariantes cr\'iticos e restri\c{c}\~oes validadas de \texttt{DEAD\_ENDS.md} ocupam o prefixo de primazia; objetivos imediatos e regras can\^onicas ocupam o sufixo de rec\^encia; e evid\^encias externas s\~ao isoladas em \texttt{<retrieved\_evidence readonly="true">} com escape determin\'istico contra inje\c{c}\~ao indireta de prompt.
+
+\subsection{Pilar 2: Fus\~ao RRF 4-Vias e Reranker Epist\^emico P\'os-RRF}
+Inspirado na mem\'oria epis\'odica de Tulving~\cite{E05}, \texttt{backend/utils/rrf\_search\_engine.js} funde quatro vias $V = \{\text{fts5}, \text{vector}, \text{entity}, \text{graph}\}$ combinando BM25~\cite{E06} ($w_{\text{fts5}}=1{,}0$), similaridade vetorial ($w_{\text{vector}}=1{,}0$), entidades IDF ($w_{\text{entity}}=0{,}8$) e triplas relacionais ($w_{\text{graph}}=0{,}6$) via \emph{Reciprocal Rank Fusion}~\cite{E07} ($k = 60$):
+\begin{equation}
+S_{\mathrm{rrf}}^{\mathrm{raw}}(q,d) = \sum_{v \in V_{\mathrm{exec}}} \frac{w_v}{k + \mathrm{rank}_v(d)}, \quad
+C_{\mathrm{RRF}}(V_{\mathrm{exec}}) = \frac{\sum_{v \in V_{\mathrm{exec}}} w_v}{k + 1},
+\end{equation}
+normalizando $S_{\mathrm{rrf}}(q,d) = \mathrm{clamp}(S_{\mathrm{rrf}}^{\mathrm{raw}}(q,d) / C_{\mathrm{RRF}}(V_{\mathrm{exec}}), 0, 1)$.
+
+Para superar o decaimento uniforme~\cite{E08} (sob o qual uma emenda promulgada h\'a $730$ dias decai para $(1 + 0{,}05 \times 730)^{-1} \approx 0{,}0267$ e perde para logs de $30$ minutos), o \texttt{MemoryOS} define a fam\'ilia funcional de reranking epist\^emico p\'os-RRF. Enquanto sua forma conceitual explicita os port\~oes de admissibilidade sobre relev\^ancia, import\^ancia $I(d)$ e decaimento $D(d, t_{\mathrm{ref}})$:
+\begin{equation}
+\begin{aligned}
+\mathrm{Score}_{\mathrm{conc}}(q,d,t_{\mathrm{ref}}) &= \mathbb{I}(S_{\mathrm{sem}} \ge \theta_{\min}) \cdot F_{\mathrm{validade}}(d, t_{\mathrm{ref}}) \\
+&\quad \cdot A(d, \mathrm{intent}) \cdot \bigl[\alpha S_{\mathrm{rrf}} + \beta I(d) + \gamma D(d, t_{\mathrm{ref}})\bigr],
+\end{aligned}
+\end{equation}
+o n\'ucleo de produ\c{c}\~ao (\texttt{backend/utils/epistemic\_reranker.js}) adota a forma multiplicativa fechada com Fus\~ao Residual \emph{Boost-Only}:
+\begin{equation}
+\begin{aligned}
+S_{\mathrm{final}}(q,d,t_{\mathrm{ref}}) &= \mathbb{I}\!\bigl(S_{\mathrm{rrf}}(q,d) \ge \theta_{\min}(\mathrm{intent})\bigr) \cdot S_{\mathrm{rank}}(q,d) \\
+&\quad \cdot F_{\mathrm{validade}}(d, t_{\mathrm{ref}}, \mathrm{intent}) \cdot A(d, \mathrm{intent}) \cdot C(d) \cdot D(d, t_{\mathrm{ref}}).
+\end{aligned}
+\end{equation}
+
+Aqui: (1)~$\theta_{\min}(\text{normativa}) = 0{,}15$ e $\theta_{\min}(\text{demais}) = 0{,}08$ barram documentos fora de t\'opico com alta autoridade; (2)~dado escore ordinal secund\'ario $S_B \in [0,1]$, ganho $\gamma_B = 0{,}35$ e trava de fronteira $g_B \in \{0,1\}$ ($g_B \equiv 0$ em superf\'icies corporativas), a fus\~ao residual calcula:
+\begin{equation}
+S_{\mathrm{rank}}(q,d) = S_{\mathrm{rrf}}(q,d) + \gamma_B \, g_B \, \bigl(1 - S_{\mathrm{rrf}}(q,d)\bigr) S_B(q,d).
+\end{equation}
+\begin{proposicao}[N\~ao-Degrada\c{c}\~ao Monot\^onica]
+Para quaisquer $S_{\mathrm{rrf}}, S_B, \gamma_B \in [0,1]$ e $g_B \in \{0,1\}$, tem-se $S_{\mathrm{rrf}}(q,d) \le S_{\mathrm{rank}}(q,d) \le 1$.
+\end{proposicao}
+\begin{proof}
+A n\~ao-negatividade de $\gamma_B g_B (1 - S_{\mathrm{rrf}}) S_B$ garante $S_{\mathrm{rank}} \ge S_{\mathrm{rrf}}$, enquanto $\gamma_B g_B S_B \le 1$ implica $S_{\mathrm{rank}} \le S_{\mathrm{rrf}} + (1 - S_{\mathrm{rrf}}) = 1$.
+\end{proof}
+(3)~$F_{\mathrm{validade}}(d, t_{\mathrm{ref}}, \mathrm{intent}) = 1{,}0$ sse $\mathrm{status}(d)=\text{validated}$ e $v_{\mathrm{from}}(d) \le t_{\mathrm{ref}} < v_{\mathrm{to}}^{*}(d)$ ($0{,}85$ em linhagem hist\'orica expl\'icita; $0{,}0$ caso contr\'ario no modo normativo estrito); (4)~$A(d, \text{normativa}) = 1{,}0 + 0{,}5(\mathrm{clamp}(a(d), 0{,}8, 1{,}5)-0{,}8)/0{,}7 \in [1{,}0; 1{,}5]$, e $A \equiv 1{,}0$ nas demais inten\c{c}\~oes; $C(d) \in [0,1]$; e (5)~o decaimento exponencial por classe cognitiva sobre $\Delta t$ dias \'e:
+\begin{equation}
+D(d, t_{\mathrm{ref}}) = \exp\!\left(-\frac{\ln 2}{T_{1/2}(\tau(d))} \Delta t\right),
+\end{equation}
+com $T_{1/2}(\text{canonical}) = +\infty \implies D \equiv 1{,}0$, $T_{1/2}(\text{project\_fact})=180\text{d}$, $T_{1/2}(\text{skill})=90\text{d}$, $T_{1/2}(\text{episodic/insight})=30\text{d}$ e $T_{1/2}(\text{log\_evidence})=3\text{d}$. Desempates seguem $(S_{\mathrm{final}} \downarrow, S_{\mathrm{rrf}} \downarrow, \mathrm{id}_{\mathrm{lex}} \uparrow)$.
+
+\subsection{Pilar 3: Sistemas Complementares (CLS) e Sono Idempotente}
+Apoiado em McClelland et al.~\cite{E09}, Diekelmann \& Born~\cite{E10} e HippoRAG~\cite{E11}, \texttt{backend/utils/dream\_scheduler.js} executa consolida\c{c}\~ao em ociosidade protegida contra deriva de suspens\~ao de SO ($>45\,\mathrm{s}$) e por um \emph{Delta Check} SQLite zero-token. Seja $\Sigma(S) = (R_{\mathrm{cog}}, L_{\mathrm{exp}}, F_{\mathrm{sem}})$ o estado l\'ogico can\^onico. Para $t_0$ fixo, o operador $f_{t_0}$ (\texttt{runIdempotentEpistemicDreamCycle}) rejeita artefatos contaminados, expira quarentenas transit\'orias $>48\,\mathrm{h}$ e marca registros com $v_{\mathrm{to}} \le t_0$ como \texttt{needs\_revalidation}, sem jamais autopromover itens em quarentena. Pela disjun\c{c}\~ao entre estados de entrada e destino:
+\begin{equation}
+\forall S, \forall t_0: \quad f_{t_0}\bigl(f_{t_0}(S)\bigr) = f_{t_0}(S),
+\end{equation}
+atestado pela igualdade criptogr\'afica $\mathcal{H}_{\mathrm{SHA256}}(\Sigma(f_{t_0}(f_{t_0}(S)))) = \mathcal{H}_{\mathrm{SHA256}}(\Sigma(f_{t_0}(S)))$.
+
+\subsection{Pilar 4: Bitemporalidade de Snodgrass e Aciclicidade de Tarjan}
+Fundamentado em Snodgrass \& Ahn~\cite{E12} e racioc\'inio din\^amico sobre grafos temporais~\cite{E14}, \texttt{backend/utils/fact\_history\_manager.js} modela \texttt{cognitive\_records} sobre intervalos semi-abertos $[v_{\mathrm{from}}, v_{\mathrm{to}}) \times [t_{\mathrm{from}}, t_{\mathrm{to}})$. A consulta \emph{Point-in-Time} em $(t_{\mathrm{ref}}, t_{\mathrm{tx}})$ retorna:
+\begin{equation}
+\begin{aligned}
+\mathcal{R}(t_{\mathrm{ref}}, t_{\mathrm{tx}}) &= \bigl\{ d \in \mathcal{D}_{\mathrm{cog}} \;\big|\; \mathrm{status}(d)=\text{validated} \\
+&\quad \land v_{\mathrm{from}}(d) \le t_{\mathrm{ref}} < v_{\mathrm{to}}^{*}(d) \land t_{\mathrm{from}}(d) \le t_{\mathrm{tx}} < t_{\mathrm{to}}^{*}(d) \bigr\}.
+\end{aligned}
+\end{equation}
+Sob isolamento SQLite \texttt{BEGIN IMMEDIATE}, vincular $d_{\mathrm{succ}}$ a $d_{\mathrm{pred}}$ fecha atomicamente $v_{\mathrm{to}}(d_{\mathrm{pred}}) \leftarrow v_{\mathrm{from}}(d_{\mathrm{succ}})$ e executa o algoritmo de Tarjan~\cite{E13} em $G=(V,E)$:
+\begin{equation}
+\begin{aligned}
+\mathrm{lowlink}[u] = \min\bigl(&\{\mathrm{index}[u]\} \cup \{\mathrm{lowlink}[w] \mid (u,w) \in E_{\mathrm{tree}}\} \\
+&\cup \{\mathrm{index}[w] \mid (u,w) \in E_{\mathrm{back}} \land w \in \mathrm{Stack}\}\bigr).
+\end{aligned}
+\end{equation}
+Qualquer SCC com $|C|>1$ ou auto-la\c{c}o $(u,u)\in E$ dispara \texttt{CyclicDependencyException} em $\Theta(|V|+|E|)$, preservando um DAG estrito.
+
+\subsection{Pilar 5: Mem\'oria N\~ao-Declarativa, Quarentena e \'Arvore de Merkle}
+Unindo sistemas n\~ao-declarativos de Squire~\cite{E15}, circuitos aversivos regulados de LeDoux~\cite{E16}, bibliotecas de skills Voyager~\cite{E17} e Reflexion~\cite{E18} \`as \'Arvores de Merkle~\cite{E19}, o \texttt{MemoryOS} limita \texttt{SKILLS.md} a $2.500$ tokens e governa li\c{c}\~oes experienciais sobre $Q = \{\text{quarantined}, \text{validated}, \text{rejected}, \text{expired}, \text{needs\_revalidation}\}$. Erros brutos ingressam em \texttt{quarantined}; a promo\c{c}\~ao a \texttt{validated} (\texttt{DEAD\_ENDS.md} $\le 1.000$ tokens) exige n\~ao-transitoriedade e recorr\^encia $\ge 2$ em sess\~oes distintas. Fora do prompt, \texttt{backend/utils/evidence\_store.js} higieniza segredos e PII M\'odulo-11~\cite{N01} e ancora registros JSONL com separa\c{c}\~ao criptogr\'afica de dom\'inio:
+\begin{align}
+h_i^{\mathrm{leaf}} &= \mathrm{SHA256}\bigl(\texttt{"mos:merkle:leaf:v1:"} \,\|\, \mathrm{canon}(r_i)\bigr), \\
+h_{u,v}^{\mathrm{node}} &= \mathrm{SHA256}\bigl(\texttt{"mos:merkle:node:v1:"} \,\|\, h_u \,\|\, \texttt{":"} \,\|\, h_v\bigr),
+\end{align}
+bloqueando ataques de \emph{second-preimage} e preservando provas de inclus\~ao em $\Theta(\log_2 N)$ mesmo ap\'os o expurgo legal de payloads expirados (\texttt{payload\_purged = 1}).
+
+\subsection{Pilares 6--10: Governan\c{c}a Tripartite de Stanovich, Matriz 8D (\texttt{dACC}), Auditoria Cega em 2 Fases, Conselho Cross-Family e \texttt{Barreira P4.1}}
+Refinando teorias de duplo processamento~\cite{E23,E24}, Stanovich~\cite{E20,E21,E22} distingue a Mente Aut\^onoma (Tipo~1) da Mente Algor\'itmica e da Mente Reflexiva (Tipo~2). Inspirado no monitoramento de conflito pelo \texttt{dACC}~\cite{E25}, na detec\c{c}\~ao r\'apida de conflito~\cite{E26} e em vieses indutivos de alto n\'ivel~\cite{E27}, \texttt{backend/maestro/council\_risk\_matrix.js} calcula em $<1\,\mathrm{ms}$:
+\begin{equation}
+R_{\mathrm{total}}(\mathbf{d}) = \sum_{j=1}^{8} w_j d_j, \quad d_j \in [0,4], \quad R_{\mathrm{total}} \in [0; 49{,}6],
+\end{equation}
+sobre Reversibilidade ($1{,}5$), Blast Radius ($1{,}2$), Sensibilidade de Dados ($2{,}0$), Privil\'egios/DDL ($1{,}8$), Persist\^encia Cognitiva ($1{,}6$), Impacto Financeiro/Jur\'idico ($1{,}8$), Quebra Contratual ($1{,}4$) e Aus\^encia de Testes ($1{,}2$), somados aos gatilhos absolutos $\mathcal{T}_{\mathrm{abs}} = \{\texttt{DDL\_MIGRATION}, \texttt{AUTH\_OR\_PRODUCTION\_CREDENTIALS}, \texttt{EVIDENCE\_STORE\_MUTATION}, \texttt{CORPORATE\_EPIC\_PRODUCTION\_RELEASE}\}$. As tarefas escalonam entre \textbf{N\'ivel~1} ($R_{\mathrm{total}} < 8{,}0 \to$ Anel~1 com or\'aculos AST/Mod-11/Git~\cite{E29}), \textbf{N\'ivel~2} ($8{,}0 \le R_{\mathrm{total}} < 16{,}0 \to$ An\'eis~1+2) e \textbf{N\'ivel~3} ($R_{\mathrm{total}} \ge 16{,}0 \lor \mathcal{T}\cap\mathcal{T}_{\mathrm{abs}}\neq\varnothing \to$ An\'eis~1+2+3).
+
+No \textbf{Anel~2} (\texttt{reflective\_monitor\_service.js}), para neutralizar ancoragem ret\'orica~\cite{E28}, a Fase~A (\texttt{evaluatePhysicalEvidenceBlind}) avalia exclusivamente provas f\'isicas em disco $\mathcal{E}_{\mathrm{phys}}$ (rejeitando qualquer prosa do agente) e congela $V_A$ com selo $\sigma_A = \mathrm{SHA256}(\texttt{"mos:shadow\_auditor:v1:"} \,\|\, \mathrm{JSON}(V_A))$; a Fase~B revalida $\sigma_A$ e confronta a alega\c{c}\~ao verbal $c_{\mathrm{verbal}}$, disparando \texttt{UnverifiedClaimException} em caso de diverg\^encia. No \textbf{Anel~3}, fam\'ilias independentes de modelos comerciais modernos de fronteira e compactos realizam debate colegiado~\cite{E31,E32}; o \emph{Emergency Bypass} exige dupla assinatura HMAC-SHA256 com chaves distintas ($k_A \neq k_B$), $\mathrm{TTL} \le 900\,\mathrm{s}$ e bloqueio absoluto para DDL e credenciais. Por fim, o \textbf{Pilar~10} (\texttt{biomimetic\_projector.js}) imp\~oe a \texttt{Barreira P4.1}~\cite{E21,N01}, filtrando entregas corporativas por uma \emph{allowlist} estrita de 9 chaves sem vazamento de telemetria interna.
+
+\begin{table*}[t]
+\centering
+\caption{Desempenho Global e Estratificado por Cluster no \emph{Golden Benchmark} Reprodut\'ivel ($N = 50$, \texttt{run\_epistemic\_benchmark.js}).}
+\label{tab:resultados}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}X c c c c c c c@{}}
+\toprule
+\textbf{Cluster Experimental ($10$ consultas cada)} & \textbf{$\mathrm{NDCG@5}$ Leg.} & \textbf{$\mathrm{MRR}$ Leg.} & \textbf{$\mathrm{OFR}$ Leg.} & \textbf{$\mathrm{NDCG@5}$ Epist.} & \textbf{$\mathrm{MRR}$ Epist.} & \textbf{$\mathrm{OFR}$ Epist.} & \textbf{Ganho Relativo} \\
+\midrule
+$C_1$: Sucess\~ao Normativa e Arquitetural (\texttt{Q01--Q10}) & $0{,}5000$ & $0{,}3333$ & $10/10$ & $\mathbf{1{,}0000}$ & $\mathbf{1{,}0000}$ & $\mathbf{0/10}$ & $+100{,}00\%$ \\
+$C_2$: Longevidade Can\^onica $2\text{a}$ vs. Logs (\texttt{Q11--Q20}) & $0{,}5413$ & $0{,}3333$ & $10/10$ & $\mathbf{1{,}0000}$ & $\mathbf{1{,}0000}$ & $\mathbf{0/10}$ & $+84{,}74\%$ \\
+$C_3$: Consultas \emph{Point-in-Time} Pr\'e/P\'os (\texttt{Q21--Q30}) & $0{,}6309$ & $0{,}5000$ & $10/10$ & $\mathbf{1{,}0000}$ & $\mathbf{1{,}0000}$ & $\mathbf{0/10}$ & $+58{,}50\%$ \\
+$C_4$: Gate Sem\^antico $\theta_{\min}$ \& Quarentena (\texttt{Q31--Q40}) & $0{,}5000$ & $0{,}3333$ & $10/10$ & $\mathbf{1{,}0000}$ & $\mathbf{1{,}0000}$ & $\mathbf{0/10}$ & $+100{,}00\%$ \\
+$C_5$: Diagn\'ostico Emp\'irico ($A=1{,}0$, \texttt{Q41--Q50}) & $0{,}7098$ & $0{,}5000$ & $0/10^*$ & $\mathbf{1{,}0000}$ & $\mathbf{1{,}0000}$ & $\mathbf{0/10}$ & $+40{,}88\%$ \\
+\midrule
+\textbf{Agregado Global ($N = 50$, Bootstrap $p < 0{,}001$)} & $\mathbf{0{,}5764}$ & $\mathbf{0{,}4000}$ & $\mathbf{40/50}$ & $\mathbf{1{,}0000}$ & $\mathbf{1{,}0000}$ & $\mathbf{0/50}$ & $\mathbf{+73{,}49\%}$ \\
+\bottomrule
+\end{tabularx}
+\vspace{0.25em}
+\par\raggedright\scriptsize $^*$Em $C_5$, o primeiro colocado no baseline legado foi um \emph{stack trace} antigo de 25 dias com relev\^ancia parcial ($\mathrm{rel}=1$), deslocando o fato de projeto verificado ($\mathrm{rel}=3$) para a 2\textordfeminine~posi\c{c}\~ao; as meias-vidas estratificadas ($180\text{d}$ vs. $3\text{d}$) restauraram a ordena\c{c}\~ao \'otima. Lat\^encia monot\^onica isolada: $\mathrm{P95} = 0{,}34\,\mathrm{ms}$; carga corporativa complexa E2E: $\mathrm{P95} = 0{,}44\,\mathrm{ms}$ (overhead mediano total $+5{,}43\,\mathrm{ms}$).
+\end{table*}
+
+\section{Protocolo Experimental ($N = 50$) e Resultados Emp\'iricos}
+
+Para verificar quantitativamente se o reranker epist\^emico elimina \emph{Override Failures} sem penalizar o caminho cr\'itico, o pacote \texttt{backend/benchmarks/run\_epistemic\_benchmark.js} avalia $N = 50$ consultas pareadas em cinco clusters ($C_1$--$C_5$) com julgamentos graduados $\mathrm{rel} \in \{0, 1, 3\}$ ($\mathrm{rel}=3$: regra can\^onica ou fato verificado vigente em $t_{\mathrm{ref}}$; $\mathrm{rel}=1$: contexto complementar vigente; $\mathrm{rel}=0$: revogado, pr\'e-vig\^encia, fora de t\'opico ou em quarentena). Avaliam-se $\mathrm{NDCG@5}$, $\mathrm{MRR}$ e a taxa de falha de sobreposi\c{c}\~ao $\mathrm{OFR}(Q) = |Q|^{-1}\sum_{q \in Q}\mathbb{I}(\mathrm{rel}(q,d_1)=0)$, comparando o baseline legado (\texttt{triad\_ranking\_engine.js}, $\lambda = 0{,}05$) contra \texttt{epistemic\_reranker.js}, com Bootstrap pareado de $1.000$ reamostragens (\texttt{Mulberry32}, \texttt{seed = 20261111}) e rel\'ogio monot\^onico em nanossegundos (\texttt{process.hrtime.bigint()}).
+
+Conforme detalhado na Tabela~\ref{tab:resultados}, o reranker epist\^emico elevou o $\mathrm{NDCG@5}$ global de $0{,}5764$ para $1{,}0000$ ($+73{,}49\%$, ganho absoluto $+0{,}4236$, IC $95\%$ Bootstrap estritamente $>0$, $p < 0{,}001$) e o $\mathrm{MRR}$ de $0{,}4000$ para $1{,}0000$ ($+150{,}00\%$), erradicando falhas de revoga\c{c}\~ao de $40/50$ ($80{,}00\%$) para $0/50$ ($0{,}00\%$) com zero regress\~oes can\^onicas e $\mathrm{P95} = 0{,}34\,\mathrm{ms}$. Em bateria corporativa multi-turno de 12 est\'agios, o reranker manteve $\mathrm{P95} = 0{,}44\,\mathrm{ms}$, a consulta bitemporal SQLite atingiu $\mathrm{P95} = 0{,}86\,\mathrm{ms}$ e o overhead mediano pareado foi de $+5{,}43\,\mathrm{ms}$ ($0{,}068\%$ de um turno LLM de $8\,\mathrm{s}$). Estatisticamente, $50/50$ corresponde a $\mathrm{IC}_{95\%}^{\mathrm{Wilson}} \approx [0{,}9289; 1{,}0000]$, comprovando verifica\c{c}\~ao determin\'istica sobre registros bitemporais estruturados, sem alegar infalibilidade sobre textos abertos desprovidos de metadados temporais.
+
+\section{Limites Epistemol\'ogicos e Amea\c{c}as \`a Validade}
+
+\subsection{Limites da Analogia Biomim\'etica}
+(1)~\emph{Isomorfismo Funcional, N\~ao Consci\^encia Fenomenal:} Correlatos cerebrais descrevem homomorfismos cibern\'eticos de controle e filtragem inibit\'oria, sem atribuir estados subjetivos biol\'ogicos ao software. (2)~\emph{Or\'aculos Determin\'isticos Obrigat\'orios:} A racionalidade epist\^emica apoia-se em verificadores simb\'olicos em c\'odigo (SQLite bitemporal, Tarjan SCC, \texttt{node --check}, su\'ites de testes e SHA-256/HMAC), nunca apenas em autocr\'itica verbal do LLM~\cite{E28}. (3)~\emph{Independ\^encia Condicionada ao Contexto:} O Anel~3 depende da integridade do \emph{Pre-Flight Context Assembly} para receber fatos privados p\'os-treinamento.
+
+\subsection{Amea\c{c}as \`a Validade Emp\'irica}
+\textbf{Validade de Construto:} $\mathrm{NDCG@5}$ e $\mathrm{MRR}$ aferem ordena\c{c}\~ao na recupera\c{c}\~ao (condi\c{c}\~ao necess\'aria, mas n\~ao suficiente caso o modelo gerador ignore o contexto); a lat\^encia $\mathrm{P95}$ local exclui chamadas de rede quando h\'a escalada ao Anel~3. \textbf{Validade Interna:} A precis\~ao de $F_{\mathrm{validade}}$ pressup\~oe preenchimento \'integro de $[\texttt{valid\_from}, \texttt{valid\_to})$ na ingest\~ao. \textbf{Validade Externa:} $N=50$ cobre governan\c{c}a t\'ecnica e normativa estruturada; mudan\c{c}as sem\^anticas t\'acitas em corpora abertos exigem conjuntos \emph{holdout} cegos multi-anotador. \textbf{Validade de Conclus\~ao e Ecol\'ogica:} Embora a signific\^ancia via Bootstrap seja robusta ($p<0{,}001$), $N=50$ limita o poder para eventos de cauda $<2\%$, raz\~ao pela qual o benchmark est\'atico \'e acoplado a baterias E2E multi-turno auditadas pelo \texttt{Shadow Auditor}.
+
+\section{Conclus\~ao}
+
+Ao unificar 5+1 camadas de mem\'oria bitemporal e quarentenada em \'Arvore de Merkle \`a governan\c{c}a executiva tripartite de Keith E. Stanovich, o \texttt{MemoryOS} estabelece um plano de controle matematicamente rigoroso e de lat\^encia sub-milissegundo que neutraliza \emph{Lost in the Middle}, \emph{Override Failure} e \emph{Contaminated Mindware} em sistemas aut\^onomos de longo horizonte.
+
+\section*{Declara\c{c}\~ao de Engenharia Simbi\'otica Humano-IA, Verifica\c{c}\~ao Determin\'istica e Mapeamento CRediT Adaptado (Conformidade ACM / IEEE / COPE)}
+
+Em estrita conformidade com as diretrizes de autoria e \'etica cient\'ifica do \textbf{COPE}, da \textbf{ACM} e do \textbf{IEEE} --- segundo as quais sistemas de IA generativa n\~ao det\^em autoria formal nem responsabilidade legal ou cient\'ifica ---, \textbf{Caio Gon\c{c}alves} (\emph{Principal Investigator \& Chief Systems Architect, VTI Research}) \'e o \'unico autor formal deste artigo, assumindo responsabilidade integral pelas formula\c{c}\~oes matem\'aticas, resultados emp\'iricos, cita\c{c}\~oes e artefatos de software (\emph{CRediT}: Conceptualization, Methodology, Software Architecture, Formal Analysis, Validation, Investigation, Data Curation, Writing --- Original Draft \& Review/Editing, Supervision). Sob o protocolo \emph{Human-in-the-Loop} do ecossistema \texttt{MemoryOS} / \texttt{VTI OS System}, fam\'ilias independentes de modelos comerciais modernos de fronteira e compactos atuaram exclusivamente como instrumentos audit\'aveis de revis\~ao adversarial de casos de borda, s\'intese assistida de c\'odigo verificada por or\'aculos de testes e revis\~ao editorial bil\'ingue. Todas as 33 refer\^encias (\cite{E01}--\cite{E32}, \cite{N01}) possuem identificadores DOI ou arXiv verificados, e 100\% das m\'etricas reportadas derivam de execu\c{c}\~ao determin\'istica (\texttt{run\_epistemic\_benchmark.js}, semente \texttt{20261111}).
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

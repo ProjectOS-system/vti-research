@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://projectos-system.github.io/vti-research/sitemap.xml

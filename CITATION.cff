@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use or reference these publications, please cite the corresponding VTI Research Technical Report DOI below."
+title: "VTI Research — Scientific Publications on Cognitive Harness Engineering, Bitemporal Agentic Memory, and Zero-Trust Multi-Agent Security"
+authors:
+  - family-names: "Gonçalves"
+    given-names: "Caio"
+    affiliation: "VTI Research (VTI, Brazil)"
+version: "1.0.0"
+date-released: "2026-11-16"
+license: "CC-BY-4.0"
+url: "https://projectos-system.github.io/vti-research/"
+repository-code: "https://github.com/ProjectOS-system/vti-research"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24290282"
+    description: "VTI-RES-2026-01: Cognitive Harness Parity Engine (HPE)"
+  - type: doi
+    value: "10.5281/zenodo.24290284"
+    description: "VTI-RES-2026-02: Dual-Axis Bitemporal Neuro-Cognitive Architecture (MemoryOS)"
+  - type: doi
+    value: "10.5281/zenodo.24290286"
+    description: "VTI-RES-2026-03: Zero-Trust Multi-Agent Security & Blast-Radius Containment"

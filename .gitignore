@@ -1,0 +1,7 @@
+node_modules/
+*.secret
+.env
+.env.*
+*.tmp.html
+.DS_Store
+Thumbs.db
