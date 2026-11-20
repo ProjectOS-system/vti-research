@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use or reference these publications, please cite the corresponding VTI Research Technical Report DOI below."
-title: "VTI Research — Scientific Publications on Cognitive Harness Engineering, Bitemporal Agentic Memory, and Zero-Trust Multi-Agent Security"
+title: "VTI Research — Scientific Publications on Cognitive Harness Engineering, Bitemporal Agentic Memory, Zero-Trust Multi-Agent Security, and Pull-Only Cyber Resilience"
 authors:
   - family-names: "Gonçalves"
     given-names: "Caio"
     affiliation: "VTI Research (VTI, Brazil)"
-version: "1.0.0"
-date-released: "2026-11-16"
+version: "1.1.0"
+date-released: "2026-11-20"
 license: "CC-BY-4.0"
 url: "https://projectos-system.github.io/vti-research/"
 repository-code: "https://github.com/ProjectOS-system/vti-research"
@@ -20,3 +20,6 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.24290286"
     description: "VTI-RES-2026-03: Zero-Trust Multi-Agent Security & Blast-Radius Containment"
+  - type: doi
+    value: "10.5281/zenodo.24406146"
+    description: "VTI-RES-2026-04: Provable Cyber Resilience in Hybrid Hypervisor Infrastructures via Pull-Only Immutable Vaults"
