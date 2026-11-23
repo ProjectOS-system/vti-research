@@ -1,0 +1,103 @@
+% Official VTI Research Technical Report VTI-RES-2026-05 (v1.0) | DOI: https://doi.org/10.5281/zenodo.24452824
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=0.72in,columnsep=0.24in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{enumitem}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\emergencystretch}{1.5em}
+
+\title{\Large\bfseries Single-Pass Bounded-Memory Forensic Reconstruction of Multi-OS \texttt{[MS-VHDX]} Virtual Disks Under Intermittent Encryption:\\[0.25em]
+\large \texttt{GF(2)} Linear Checksum Decoupling, Ambiguity-Vetoed Bipartite Bijection, and Deterministic Boot Surgery}
+
+\author{%
+  \textbf{Caio Gon\c{c}alves}\\
+  \textit{Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)}\\
+  \small Technical Paper ID: \texttt{VTI-RES-2026-05} (Edition \texttt{v1.0}) \quad|\quad DOI: \texttt{10.5281/zenodo.24452824} \quad|\quad \url{https://projectos-system.github.io/vti-research/}
+}
+
+\date{November 2026}
+
+\begin{document}
+\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28}
+
+\maketitle
+
+\begin{abstract}
+\noindent Intermittent encryption (\emph{First-N} / \emph{skip-step}) ransomware destroys \texttt{[MS-VHDX]} headers, circular logs, and Block Allocation Tables (\texttt{BAT}) in minutes while leaving most internal \texttt{32 MiB} payload blocks in plaintext. Conventional forensic utilities exhaust rescue RAM, suffer quadratic $O(K \cdot M \cdot n)$ cost re-hashing per-inode seeded \texttt{ext4} \texttt{CRC-32C} checksums, hallucinate over JSON magic collisions, \texttt{unwritten} extents, or symmetric \texttt{BAT} ties, and corrupt dirty \texttt{regf} hives or Active Directory (\texttt{NTDS.dit}) state. We formalize the deterministic single-pass, bounded-memory forensic machine $\mathcal{E}_{\mathrm{Rec}} = (\mathcal{V}_{\mathrm{src}}, B_{\mathrm{ram}}, \mathcal{F}, \mathcal{O}, \mathcal{G}_{\mathrm{veto}}, \mathcal{P}_{\mathrm{prov}}, \mathcal{V}_{\mathrm{out}})$ and evaluate its frozen implementation (\texttt{v3.0.6} C\#/PS and Python 3 stdlib) across six reproducible batteries (\texttt{B1}--\texttt{B6}): (1)~\texttt{GF(2)} linear decoupling of Castagnoli \texttt{CRC-32C} (\texttt{ext4} + affine \texttt{iSCSI}) achieving \texttt{0/10,000} divergences and \texttt{168.73x} mean speedup (\texttt{95\% CI [144.58x, 193.88x]}); (2)~single-pass read/write with zero \texttt{BAT} seek-back (\texttt{260.32--269.34 MiB} CLR WS reconciled with \texttt{221.18 MiB} analytical at \texttt{100 GiB}); (3)~4-way \texttt{ext4} conservation (\texttt{0/200} errors, Multi-FS \texttt{F1=1.000}, \texttt{0/25} JSON FPs); (4)~bipartite \texttt{SSAP/MCMF} with SPFA residual margin in single component $n \le 8192$ (\texttt{0/60} FAR, Wilson \texttt{95\% CI [0, 0.0602]}); and (5)~\texttt{20/20} dirty \texttt{regf} blocks and \texttt{30/30} Pre-FS hard vetoes. We transparently report two open boundaries in \texttt{v3.0.6}: silent read-failure skipping on \texttt{eh\_depth > 0} (\texttt{L10747} $\to$ \texttt{M-FUT-1}) and partial cross-OS \texttt{HardVetoes} agreement \texttt{25/30} ($\kappa=0.6667$ $\to$ \texttt{M-FUT-2}), grounded in 28 primary references.
+\end{abstract}
+
+\vspace{0.4em}
+\noindent\textbf{Keywords:} \texttt{[MS-VHDX]} Forensics; Intermittent Encryption; \texttt{GF(2)} \texttt{CRC-32C}; Bipartite \texttt{MCMF}; \texttt{ext4} Unwritten Extents; \texttt{regf} Surgery; Single-Pass Streaming.
+
+\section{Introduction and Demarcation From \texttt{VTI-RES-2026-04}}
+
+Intermittent encryption~\cite{R07,R08,R09} shatters \texttt{[MS-VHDX]} metadata~\cite{R16} while leaving plaintext data blocks detached from their logical offsets. Whereas companion systemic monograph \texttt{VTI-RES-2026-04 v3.0} exposes only the logical DR interface \texttt{O1}--\texttt{O4}, this autonomous work formalizes $\mathcal{E}_{\mathrm{Rec}}$, proves Theorems \texttt{T1}--\texttt{T2} (scoped) and Propositions \texttt{P3}--\texttt{P4}, executes batteries \texttt{B1}--\texttt{B6} in \texttt{os.tmpdir()}, and documents two concrete \texttt{v3.0.6} defects (\texttt{M-FUT-1}, \texttt{M-FUT-2}).
+
+\section{Formal Tuple $\mathcal{E}_{\mathrm{Rec}}$ and Six Invariants ($I_{R1}$--$I_{R6}$)}
+
+\begin{equation}
+\mathcal{E}_{\mathrm{Rec}} = \bigl(\mathcal{V}_{\mathrm{src}}, B_{\mathrm{ram}}, \mathcal{F}, \mathcal{O}, \mathcal{G}_{\mathrm{veto}}, \mathcal{P}_{\mathrm{prov}}, \mathcal{V}_{\mathrm{out}}\bigr)
+\end{equation}
+with seven deterministic operators $\mathcal{O} = (O_{\mathrm{Log}}, O_{\mathrm{Pass1}}, O_{\mathrm{GF2}}, O_{\mathrm{Probe}}, O_{\mathrm{MCMF}}, O_{\mathrm{Surg}}, O_{\mathrm{Pass2}})$ governed by: $I_{R1}$ (read-only evidence~\cite{R15}), $I_{R2}$ (single-pass read/write, zero \texttt{BAT} seek-back), $I_{R3}$ (4-way physical-virtual conservation with \texttt{UnwrittenOnly}), $I_{R4}$ (bit-exact \texttt{GF(2)} equivalence), $I_{R5}$ (epistemic non-hallucination capping \texttt{BootReadinessScore} $\le 39$ on ambiguity/veto), and $I_{R6}$ (transactional \texttt{regf} conservation).
+
+\section{Main Theoretical Results (\texttt{T1}, Scoped \texttt{T2}, \texttt{P3}, \texttt{P4})}
+
+\textbf{Theorem 1 (\texttt{T1} --- \texttt{GF(2)} Linear \texttt{CRC-32C}):} For Castagnoli~\cite{R01,R02,R03} with reflected transition matrix $A \in \mathbb{F}_2^{32\times 32}$,
+\begin{equation}
+\mathrm{CRC}_{\mathrm{ext4}}(s,X) = \mathrm{RawCrc32c}(0,X) \oplus A^{8n} s
+\end{equation}
+and in the affine \texttt{iSCSI}/\texttt{[MS-VHDX]} regime,
+\begin{equation}
+\mathrm{CRC}_{\mathrm{iSCSI}}(s_{\mathrm{init}},X) = \bigl(\mathrm{RawCrc32c}(0,X) \oplus \texttt{0xFFFFFFFF}\bigr) \oplus A^{8n} s_{\mathrm{init}}
+\end{equation}
+evaluated in $O(1)$ via four 256-word tables (\texttt{4 KiB})~\cite{R18}.
+
+\textbf{Theorem 2 (\texttt{T2} --- Scoped 4-Way Conservation):} When all traversed \texttt{0xF30A} extent-tree index nodes are readable, \texttt{ee\_len > 32768} cleanly partitions \texttt{RawAlloc} into $\mathrm{EffAlloc} \sqcup \mathrm{UnwrittenOnly}$ with zero unwritten extents counted as missing. \emph{Open defect (\texttt{L10747} $\to$ \texttt{M-FUT-1}):} \texttt{v3.0.6} skips unreadable \texttt{eh\_depth > 0} subtrees without emitting \texttt{INDETERMINATE}.
+
+\textbf{Proposition 3 (\texttt{P3} --- Residual \texttt{SSAP/MCMF} Margin):} Inside single component $n \le 8192$~\cite{R04,R05,R06}, unrouting $S \to u \to p^* \to T$ and running residual SPFA computes exact global alternating-cycle margin $\Delta_u = \mathrm{OPT}(E \setminus \{(u,p^*)\}) - \mathrm{OPT}(E) \ge 0$, firing \texttt{AMBIGUOUS\_BAT\_MAPPING} whenever $\Delta_u < \Delta_{\min}$. Above \texttt{8192} nodes, \texttt{v3.0.6} operates explicitly as \texttt{HEURISTIC\_WINDOWED}.
+
+\textbf{Proposition 4 (\texttt{P4} --- Transactional \texttt{regf} Surgery):} Mutating \texttt{regf}~\cite{R25} strictly under \texttt{seq1 == seq2}, invariant \texttt{cbData}, \texttt{DPAPI} sibling backup, preserved \texttt{seq1 == seq2}, and atomic \texttt{508 B} \texttt{XOR-32} recomputation guarantees zero dirty-hive corruption and zero \texttt{hbin} cell shift.
+
+\section{Empirical Results (\texttt{B1}--\texttt{B6}) and Roadmap (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
+
+\begin{table*}[t]
+\centering
+\caption{Summary of Reproducible Empirical Batteries \texttt{B1}--\texttt{B6} (\texttt{seed=20261122}, \texttt{os.tmpdir()}).}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}c l Y Y c@{}}
+\toprule
+\textbf{ID} & \textbf{Target} & \textbf{Measured Result} & \textbf{95\% CI / Holm--Bonferroni} & \textbf{Verdict} \\
+\midrule
+\texttt{B1} & \texttt{O\_GF2} & \texttt{0/10,000} (\texttt{ext4} \& \texttt{iSCSI}); \texttt{168.73x} speedup & \texttt{CP [0, 0.00037]}; boot \texttt{[144.58x, 193.88x]} & \textbf{PASS} \\
+\texttt{B2} & Single-Pass & \texttt{1R/1W}, \texttt{ZeroSeekBack}, WS \texttt{260--269 MiB}, trunc.\ log rej. & Reconciled vs.\ \texttt{221.18 MiB} analytical \texttt{100 GiB} & \textbf{PASS} \\
+\texttt{B3} & 4-Way / Multi-FS & \texttt{0/200} \texttt{ext4} err.; \texttt{F1=1.000} (\texttt{TP=60, TN=40, 0/25} JSON FP) & \texttt{p\_holm=7.91e-14} (\texttt{MagicCarver}), \texttt{2.21e-10} & \textbf{PASS} \\
+\texttt{B4} & \texttt{MCMF} $\Delta$ & \texttt{0/60} FAR on symmetric ties; alt.\ cycle caught; \texttt{0/100} random FP & \texttt{Wilson [0, 0.0602]} ($\le 6.02\%$); \texttt{p\_holm=4.89e-13} & \textbf{PASS} \\
+\texttt{B5} & \texttt{regf} / Pre-FS & \texttt{20/20} clean, \texttt{20/20} dirty blocked, \texttt{30/30} Pre-FS, \texttt{0/20} ELF FP & \texttt{p\_holm=4.35e-11} & \textbf{PASS} \\
+\texttt{B6} & Cross-OS $N=30$ & \texttt{30/30} \texttt{osFamily}/Pre-FS; \texttt{25/30} \texttt{HardVetoes} (Scen.\ 2 div.) & \texttt{CP [0.6528, 0.9436]}, $\kappa=0.6667$ & \textbf{Partial ($H_6$)} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Six milestones guide \texttt{v3.1+}: \texttt{M-FUT-1} (tri-state \texttt{INDETERMINATE} at \texttt{L10747}), \texttt{M-FUT-2} (unifying \texttt{AMBIGUOUS\_BAT\_MAPPING} across C\#/PS and Python), \texttt{M-FUT-3} (external \texttt{e2fsprogs} vectors \& live \texttt{100 GiB} tests), \texttt{M-FUT-4} (explicit inter-window cut flagging), \texttt{M-FUT-5} (crash-consistency fault injection \& deeper \texttt{ReFS}/\texttt{Btrfs}), and \texttt{M-FUT-6} (\texttt{hiberfil.sys} / Fast Startup warning).
+
+\section{Conclusion and Adapted CRediT Disclosure (COPE / ACM / IEEE)}
+
+$\mathcal{E}_{\mathrm{Rec}}$ combines exact \texttt{GF(2)} acceleration, bounded-memory single-pass I/O, 4-way accounting, residual \texttt{MCMF} ambiguity vetoes, and transactional \texttt{regf}/Pre-FS gates while transparently documenting \texttt{M-FUT-1} and \texttt{M-FUT-2}. Per COPE, ACM, and IEEE policies, \textbf{Caio Gon\c{c}alves} is the \textbf{sole formal author}, supported by non-authorial adversarial review rounds and deterministic benchmark scripts.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

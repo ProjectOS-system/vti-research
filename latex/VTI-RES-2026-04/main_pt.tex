@@ -1,4 +1,4 @@
-% Official VTI Research Technical Report VTI-RES-2026-04 | DOI: https://doi.org/10.5281/zenodo.24406146
+% Official VTI Research Technical Report VTI-RES-2026-04 (v3.0) | DOI: https://doi.org/10.5281/zenodo.24452820 | Concept DOI: https://doi.org/10.5281/zenodo.24406145
 \documentclass[10pt,twocolumn]{article}
 
 \usepackage[utf8]{inputenc}
@@ -11,7 +11,7 @@
 \usepackage{booktabs,tabularx,array}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usetikzlibrary{arrows.meta,positioning}
 \usepackage{enumitem}
 \usepackage{cite}
 \usepackage[hyphens]{url}
@@ -20,255 +20,73 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \setlength{\emergencystretch}{1.5em}
 
-\title{\Large\bfseries Resili\^{e}ncia Cibern\'{e}tica Comprov\'{a}vel em Infraestruturas de Hipervisores H\'{\i}bridos via Cofres Imut\'{a}veis \emph{Pull-Only}, \emph{Air-Gap} de Hardware e Telemetria Aut\^{o}noma \emph{Offsite}:\\[0.25em]
-\large Modelagem Formal, Invariantes de Dom\'{\i}nio de Falha, Confronto Adversarial e Valida\c{c}\~{a}o Frente \`{a} Literatura Cient\'{\i}fica}
+\title{\Large\bfseries Resili\^{e}ncia Cibern\'{e}tica Assimetricamente Limitada, Conten\c{c}\~{a}o Remota Zero-Inbound, Triagem Cognitiva Fora da TCB e Cofres Imut\'{a}veis Multi-Nuvem em Infraestruturas Cr\'{\i}ticas\\[0.25em]
+\large Especifica\c{c}\~{a}o Formal, Evid\^{e}ncia Execut\'{a}vel (\texttt{Bastion OS v1.3.0}), Baterias \texttt{B1}--\texttt{B20} e Valida\c{c}\~{a}o Frente a 63 Fontes Prim\'{a}rias}
 
 \author{%
   \textbf{Caio Gon\c{c}alves}\\
   \textit{Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)}\\
-  \small Identificador T\'{e}cnico: \texttt{VTI-RES-2026-04} (Edi\c{c}\~{a}o \texttt{v1.2}) \quad|\quad DOI: \texttt{10.5281/zenodo.24406146} \quad|\quad \url{https://projectos-system.github.io/vti-research/}
+  \small Identificador T\'{e}cnico: \texttt{VTI-RES-2026-04} (Edi\c{c}\~{a}o \texttt{v3.0}) \quad|\quad DOI: \texttt{10.5281/zenodo.24452820} (Concept: \texttt{10.5281/zenodo.24406145})
 }
 
 \date{Novembro de 2026}
 
 \begin{document}
-\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32}
+\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32,R33,R34,R35,R36,R37,R38,R39,R40,R41,R42,R43,R44,R45,R46,R47,R48,R49,R50,R51,R52,R53,R54,R55,R56,R57,R58,R59,R60,R61,R62,R63}
 
 \maketitle
 
 \begin{abstract}
-\noindent Campanhas modernas de ransomware corporativo evolu\'{\i}ram de criptografia oportunista de esta\c{c}\~{o}es para opera\c{c}\~{o}es coordenadas de \emph{Extin\c{c}\~{a}o Focada em Infraestrutura}: advers\'{a}rios pivotam para planos de gerenciamento de virtualiza\c{c}\~{a}o, colhem credenciais administrativas, sabotam ou eliminam reposit\'{o}rios de c\'{o}pia de seguran\c{c}a (\texttt{MITRE ATT\&CK T1490}), neutralizam alertas locais (\texttt{T1562}) e criptografam simultaneamente os \emph{datastores} do hipervisor. Arquiteturas tradicionais baseadas em envio (\emph{push}) colapsam estruturalmente sob esse modelo de amea\c{c}a porque qualquer servidor produtivo com credenciais de escrita ou exclus\~{a}o sobre o backup propaga o comprometimento diretamente para o acervo hist\'{o}rico. Adotando um estudo de caso arquitetural retrospectivo anonimizado com formula\c{c}\~{a}o hipot\'{e}tica generalizada, modelamos uma infraestrutura h\'{\i}brida $\mathcal{I} = (\mathcal{H}_{\mathrm{Prod}}, \mathcal{N}_{\mathrm{Sec}}, \mathcal{V}_{\mathrm{Vault}}, \mathcal{S}_{\mathrm{Cloud}}, \mathcal{M}_{\mathrm{Out}})$ integrando hipervisor \emph{bare-metal} de produ\c{c}\~{a}o (VMs Linux/Windows e cont\^{e}ineres Docker), malha de rede segregada \emph{Default-Deny}, cofre dedicado \emph{Pull-Only} Proxmox Backup Server (PBS) com \emph{snapshots} \texttt{ZFS} e privil\'{e}gios \emph{append-only}, camada de \emph{air-gap} f\'{\i}sico por m\'{\i}dia remov\'{\i}vel, nuvem \emph{offsite} imut\'{a}vel com \texttt{S3 Object Lock (COMPLIANCE WORM)} e telemetria externa aut\^{o}noma (\emph{Dead-Man's Switch}). Formalizamos oito invariantes falsific\'{a}veis ($I_1$--$I_8$), provamos um Teorema de Resili\^{e}ncia ($R_{\mathrm{VTI}}$) sobre dom\'{\i}nios disjuntos de confian\c{c}a, confrontamos cinco cen\'{a}rios adversariais ($C_1$--$C_5$) e auditamos fronteiras residuais contra 32 refer\^{e}ncias prim\'{a}rias verificadas~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32}, derivando seis evolu\c{c}\~{o}es futuras (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
+\noindent Opera\c{c}\~{o}es modernas de RaaS combinam explora\c{c}\~{a}o em appliances de borda sem agentes, intrus\~{o}es \emph{malware-free}, BYOVD, abuso de RMM comercial, dupla extors\~{a}o, criptografia intermitente \texttt{[MS-VHDX]} e destrui\c{c}\~{a}o acoplada de backups. Em contrapartida, arquiteturas puramente \emph{fail-closed} ou que acoplam LLMs ao bloqueio introduzem \emph{Self-DoS} e \emph{Indirect Prompt Injection}. Sob \emph{Design Science Research} estratificada (\texttt{E1}--\texttt{E4}), formalizamos a 8-tupla $\mathcal{E} = (\mathcal{S}_{\mathrm{Edge}}, \mathcal{S}_{\mathrm{Virt}}, \mathcal{S}_{\mathrm{Mesh}}, \mathcal{S}_{\mathrm{Ctrl}}, \mathcal{S}_{\mathrm{Desk}}, \mathcal{S}_{\mathrm{Vault}}, \mathcal{S}_{\mathrm{Clean}}, \mathcal{S}_{\mathrm{Cog}}; \mathcal{L}, \mathcal{T})$, treze hip\'{o}teses ($H_1$--$H_{13}$), treze controles \emph{fail-bounded} ($C_1$--$C_{13}$) e oito invariantes ($I_1$--$I_8$). A edi\c{c}\~{a}o \texttt{v3.0} verifica em c\'{o}digo execut\'{a}vel (\texttt{Bastion OS v1.3.0}: \texttt{301/301} testes backend, \texttt{254/254} E2E, \texttt{B1}--\texttt{B20}): (i)~conten\c{c}\~{a}o remota Zero-Inbound \texttt{BASTION-FLEET-CMD-V3} (\texttt{Bastion Approver} \emph{hardware-bound} \texttt{2-de-3}, sequenciador \texttt{ES256} TPM/CNG, barreira \texttt{START\_EXECUTION}, $B_{\mathrm{dom}} \ge Q_{\min}+1$, fallback $\le 90\text{ s}$); (ii)~Copiloto de Triagem IA Cont\'{\i}nua estritamente fora da TCB ($I_6$) sob LGPD Zero-Egress; (iii)~cofres \emph{Pull-Only} \texttt{BVLT1}/\texttt{BVPK1} com Google Drive Dual-Auth (\texttt{HTTP 308}/\texttt{206} + \texttt{pull-gdrive}) e Higiene Anti-\texttt{ENOSPC} $O(1)$; e (iv)~interface \texttt{O1}--\texttt{O4} demarcada da monografia aut\^{o}noma \texttt{VTI-RES-2026-05}, sob 63 refer\^{e}ncias verificadas.
 \end{abstract}
 
 \vspace{0.4em}
-\noindent\textbf{Palavras-chave:} Resili\^{e}ncia Cibern\'{e}tica; Cofre Imut\'{a}vel \emph{Pull-Only}; Proxmox Backup Server; \texttt{ZFS} Copy-on-Write; \texttt{S3 Object Lock (WORM)}; \emph{Air-Gap} de Hardware; \emph{Dead-Man's Switch}; MITRE ATT\&CK \texttt{T1490}; NIST SP 800-209.
+\noindent\textbf{Palavras-chave:} Ciber-Resili\^{e}ncia; \texttt{BASTION-FLEET-CMD-V3}; \emph{Safety Kernel Fail-Bounded}; Triagem IA Fora da TCB; LGPD Zero-Egress; Cofre \texttt{BVPK1} Multi-Nuvem; Higiene Anti-\texttt{ENOSPC}; \emph{Clean-Room DR}.
 
-\section{Introdu\c{c}\~{a}o e Motiva\c{c}\~{a}o Cient\'{\i}fica}
+\section{Introdu\c{c}\~{a}o e Estratifica\c{c}\~{a}o Epist\^{e}mica}
 
-Opera\c{c}\~{o}es contempor\^{a}neas de ransomware corporativo seguem uma cadeia determin\'{\i}stica multiest\'{a}gio~\cite{R05,R11,R16,R31}: acesso inicial via VPN/RDP/identidade, escalonamento para administrador de dom\'{\i}nio ou hipervisor, reconhecimento da infraestrutura de recupera\c{c}\~{a}o, \textbf{Inibi\c{c}\~{a}o da Recupera\c{c}\~{a}o do Sistema} (\texttt{MITRE ATT\&CK T1490}~\cite{R16}), \textbf{Sabotagem de Defesas} (\texttt{T1562}) e criptografia sincronizada de discos virtuais (\texttt{.vmdk}, \texttt{.qcow2}, \texttt{ZVOL}).
+Campanhas destrutivas exploram quatro assimetrias: sabotagem de virtualiza\c{c}\~{a}o fora de hor\'{a}rio~\cite{R01,R18,R22}, criptografia intermitente \texttt{[MS-VHDX]}~\cite{R13,R14,R34}, acoplamento de raio de explos\~{a}o entre produ\c{c}\~{a}o, diret\'{o}rio, controle e backups \emph{push}~\cite{R02,R05,R59,R60}, e \emph{Indirect Prompt Injection} / vazamento LGPD em copilotos SOC~\cite{R54,R55,R57,R58}. Aplicamos proporcionalidade epist\^{e}mica ($\mathrm{Escopo}(\mathrm{Alegacao}) \le \mathrm{Escopo}(\mathrm{Evidencia})$) separando verifica\c{c}\~{a}o execut\'{a}vel isolada (\texttt{E1}: \texttt{Bastion OS v1.3.0}, \texttt{301/301} backend, \texttt{254/254} E2E, \texttt{B1}--\texttt{B20}), observa\c{c}\~{a}o forense anonimizada ($\mathcal{I}_0, N=1$, \texttt{E2}), propriedades formais condicionais (\texttt{E3}) e homologa\c{c}\~{a}o longitudinal em produ\c{c}\~{a}o (\texttt{E4}: \texttt{60 min} \texttt{G-PERF} e \texttt{SHADOW} $N_{\mathrm{blk}} \ge 300$).
 
-Topologias corporativas convencionais apresentam tr\^{e}s defeitos estruturais acoplados diante de um advers\'{a}rio com controle \texttt{root}/\texttt{Domain Admin} sobre o ambiente produtivo:
-\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
-  \item \textbf{Dom\'{\i}nio de Falha Compartilhado (\emph{Push}):} Sempre que hosts de produ\c{c}\~{a}o empurram c\'{o}pias para compartilhamentos NAS/SMB/NFS ou armazenam chaves S3 localmente, a captura dessas credenciais concede ao invasor privil\'{e}gios imediatos de destrui\c{c}\~{a}o do acervo hist\'{o}rico~\cite{R01,R04,R12,R22}.
-  \item \textbf{Converg\^{e}ncia de Identidade e Plano de Controle:} Integrar o servidor de backup ao mesmo Active Directory/LDAP ou VLAN da produ\c{c}\~{a}o permite que uma \'{u}nica credencial comprometida apague c\'{o}pias locais e remotas~\cite{R04,R24}.
-  \item \textbf{Cegueira Silenciosa de Telemetria:} Hospedar alertas no pr\'{o}prio hipervisor produtivo permite suprimir notifica\c{c}\~{o}es de falha (\texttt{T1562}) enquanto janelas de reten\c{c}\~{a}o s\~{a}o envenenadas durante o tempo de perman\^{e}ncia (\emph{dwell time})~\cite{R05,R16,R27}.
-\end{enumerate}
+\section{Modelo $\mathcal{E}$ e Oito Invariantes ($I_1$--$I_8$)}
 
-Este artigo oferece tr\^{e}s contribui\c{c}\~{o}es: (a)~formaliza a topologia h\'{\i}brida anonimizada $\mathcal{I}$ e o modelo de advers\'{a}rio $\mathcal{A}$ com comprometimento \texttt{root} total da produ\c{c}\~{a}o; (b)~deriva oito invariantes \emph{fail-closed} ($I_1$--$I_8$) e o Teorema de Resili\^{e}ncia Cibern\'{e}tica ($R_{\mathrm{VTI}}$); e (c)~confronta controles verificados e lacunas residuais frente a 32 refer\^{e}ncias normativas e cient\'{\i}ficas prim\'{a}rias~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32}, especificando o roteiro \texttt{M-FUT-1}--\texttt{M-FUT-6}.
-
-\section{Modelo Formal $\mathcal{I}$, Demarca\c{c}\~{a}o Epistemol\'{o}gica e Modelo de Advers\'{a}rio}
-
-\subsection{Protocolo de Anonimiza\c{c}\~{a}o e Proporcionalidade Epist\^{e}mica}
-
-Em estrita observ\^{a}ncia \`{a} anonimiza\c{c}\~{a}o cient\'{\i}fica e \`{a} proporcionalidade epist\^{e}mica ($\text{Escopo da Alega\c{c}\~{a}o} \le \text{Escopo da Evid\^{e}ncia}$), todos os nomes corporativos, hostnames, sub-redes IP, identificadores de clientes, n\'{u}meros de s\'{e}rie e caminhos de buckets foram expurgados, preservando-se integralmente as fronteiras topol\'{o}gicas de confian\c{c}a, regras de ACL/firewall, propriedades \texttt{ZFS}/\texttt{PBS}/\texttt{S3 WORM} e par\^{a}metros operacionais (Tabela~\ref{tab:epistemic_pt}).
-
-\begin{table*}[t]
-\centering
-\caption{Demarca\c{c}\~{a}o Epistemol\'{o}gica e Limites Estritos de Infer\^{e}ncia ($\text{Escopo da Alega\c{c}\~{a}o} \le \text{Escopo da Evid\^{e}ncia}$).}
-\label{tab:epistemic_pt}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}l l Y Y@{}}
-\toprule
-\textbf{Elemento Formal} & \textbf{Natureza} & \textbf{Base de Evid\^{e}ncia neste Estudo} & \textbf{Limite Estrito de Infer\^{e}ncia} \\
-\midrule
-Topologia $\mathcal{I}$ & Arquitetura anonimizada & Hipervisor \emph{bare-metal} + cofre PBS/ZFS + S3 WORM + m\'{\i}dia remov\'{\i}vel & Representa uma classe real de topologias corporativas h\'{\i}bridas; n\~{a}o censo estat\'{\i}stico setorial. \\
-\addlinespace[2pt]
-Advers\'{a}rio $\mathcal{A}$ & Modelo de amea\c{c}a & MITRE ATT\&CK~\cite{R16}, NIST SP 800-209~\cite{R04}, NIST SP 800-184~\cite{R02} e estudos emp\'{\i}ricos~\cite{R05,R11} & Descreve cen\'{a}rio realista de pior caso; n\~{a}o alega intrus\~{a}o pr\'{e}via na infraestrutura avaliada. \\
-\addlinespace[2pt]
-Invariantes $I_1$--$I_8$ & Controles verificados & Regras de firewall, ACLs \emph{Pull-Only}, locks ZFS/S3 Compliance e \emph{heartbeats} externos & Comprovados sob as premissas de TCB declaradas; n\~{a}o implica imunidade sem c\'{o}pias \emph{offsite}. \\
-\addlinespace[2pt]
-Roteiro \texttt{M-FUT-1..6} & Especifica\c{c}\~{o}es futuras & Confronto com 32 fontes normativas e cient\'{\i}ficas~\cite{R01,R07,R13,R18,R26,R28} & Metas de engenharia para pr\'{o}ximos ciclos (ex.: testes automatizados em sandbox, TPM 2.0). \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\subsection{Topologia da Infraestrutura H\'{\i}brida $\mathcal{I}$}
-
-Modela-se a infraestrutura protegida como uma 5-tupla de dom\'{\i}nios de confian\c{c}a estritamente particionados:
 \begin{equation}
-\mathcal{I} = \left(\mathcal{H}_{\mathrm{Prod}}, \; \mathcal{N}_{\mathrm{Sec}}, \; \mathcal{V}_{\mathrm{Vault}}, \; \mathcal{S}_{\mathrm{Cloud}}, \; \mathcal{M}_{\mathrm{Out}}\right)
+\mathcal{E} = \bigl(\mathcal{S}_{\mathrm{Edge}}, \mathcal{S}_{\mathrm{Virt}}, \mathcal{S}_{\mathrm{Mesh}}, \mathcal{S}_{\mathrm{Ctrl}}, \mathcal{S}_{\mathrm{Desk}}, \mathcal{S}_{\mathrm{Vault}}, \mathcal{S}_{\mathrm{Clean}}, \mathcal{S}_{\mathrm{Cog}};\; \mathcal{L}, \mathcal{T}\bigr)
 \end{equation}
-composta por (Figura~\ref{fig:arch_pt}):
-\begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=3pt]
-  \item $\mathcal{H}_{\mathrm{Prod}}$ (\emph{Hipervisor Bare-Metal de Produ\c{c}\~{a}o}): Hipervisor Tipo-1 (Proxmox VE / KVM) executando VMs Linux/Windows, bancos relacionais e microsservi\c{c}os Docker sobre pools locais \texttt{NVMe/SAS RAID}.
-  \item $\mathcal{N}_{\mathrm{Sec}}$ (\emph{Malha Segregada de Controle e Seguran\c{c}a}): Filtragem \emph{stateful} em regime \emph{Default-Deny} entre VLANs, isolando gerenciamento (IPMI/iDRAC/Web UI) em VLAN fora de banda acessada somente via basti\~{a}o WireGuard com MFA~\cite{R03,R06,R25}.
-  \item $\mathcal{V}_{\mathrm{Vault}}$ (\emph{Cofre Imut\'{a}vel Pull-Only Dedicado}): Servidor f\'{\i}sico independente Proxmox Backup Server (PBS) com pools \texttt{ZFS} Copy-on-Write, deduplica\c{c}\~{a}o por blocos (\texttt{SHA-256}), criptografia autenticada (\texttt{AES-256-GCM}), permiss\~{o}es estritamente \emph{append-only} para ingest\~{a}o e sincroniza\c{c}\~{a}o unidirecional iniciada exclusivamente por $\mathcal{V}_{\mathrm{Vault}}$~\cite{R08,R10,R20}.
-  \item $\mathcal{S}_{\mathrm{Cloud}} \cup \mathcal{G}_{\mathrm{Air}}$ (\emph{Nuvem WORM Offsite \& Air-Gap de Hardware}): Camada dupla de sobreviv\^{e}ncia combinando (i)~armazenamento de objetos com \texttt{S3 Object Lock} em modo \texttt{COMPLIANCE} (\texttt{SEC 17a-4} / \texttt{WORM}~\cite{R15,R19,R23}), onde nem mesmo a conta raiz da nuvem encurta reten\c{c}\~{o}es, e (ii)~m\'{\i}dias f\'{\i}sicas remov\'{\i}veis rotacionadas desconectadas eletromagneticamente fora da janela de grava\c{c}\~{a}o~\cite{R04,R12}.
-  \item $\mathcal{M}_{\mathrm{Out}}$ (\emph{Telemetria Aut\^{o}noma Offsite}): Ponto de monitoramento externo independente operando em contrato \emph{Dead-Man's Switch}: a aus\^{e}ncia de \emph{heartbeat} assinado dentro da janela $\Delta t_{\max}$ dispara alertas cr\'{\i}ticos multicanal mesmo se todos os daemons locais forem abatidos~\cite{R16,R27}.
-\end{itemize}
+com seis zonas disjuntas garantindo $\mathcal{K}_{\mathrm{TCB}} \cap \mathcal{K}(\mathcal{S}_{\mathrm{Cog}}) = \emptyset$, particionadas em invariantes locais ($I_1^{\mathrm{loc}}$ fencing monot\^{o}nico, $I_2$ transi\c{c}\~{a}o conservadora a \texttt{RESTRICTED\_RECOVERY}, $I_5$ autonomia offline limitada, $I_6$ exclus\~{a}o criptogr\'{a}fica de $\mathcal{S}_{\mathrm{Cog}}$, $I_7$ rollback local) e distribu\'{\i}dos ($I_1^{\mathrm{dist}}$ or\c{c}amento $B_{\mathrm{dom}}=1$ + qu\'{o}rum \texttt{2-de-3}, $I_3$ sobreviv\^{e}ncia \texttt{STAGING\_RESTORE}, $I_4$ qu\'{o}rum versionado $\ge Q_{\min}+1$ anti-ABA~\cite{R60}, $I_8$ continuidade \emph{War-Room Offline} \texttt{SQLCipher 4}).
 
-\begin{figure*}[t]
-\centering
-\begin{tikzpicture}[
-  font=\scriptsize\sffamily,
-  box/.style={draw=black!65, rounded corners=3pt, fill=blue!4, minimum width=3.2cm, minimum height=0.95cm, align=center, inner sep=4pt},
-  vaultbox/.style={draw=teal!75!black, rounded corners=3pt, fill=teal!7, minimum width=3.5cm, minimum height=1.05cm, align=center, inner sep=4pt},
-  wormbox/.style={draw=orange!75!black, rounded corners=3pt, fill=orange!7, minimum width=3.2cm, minimum height=0.95cm, align=center, inner sep=4pt},
-  monbox/.style={draw=purple!70!black, rounded corners=3pt, fill=purple!6, minimum width=3.2cm, minimum height=0.88cm, align=center, inner sep=4pt},
-  arr/.style={-{Stealth[length=2.2mm]}, semithick, draw=black!75},
-  denyarr/.style={-{Stealth[length=2.2mm]}, dashed, thick, draw=red!75!black}
-]
-  \node[box] (prod) at (0, 1.0) {$\mathcal{H}_{\mathrm{Prod}}$: \textbf{Hipervisor Produ\c{c}\~{a}o}\\VMs + Docker + Bancos\\(\emph{Zero Chaves de Exclus\~{a}o})};
-  \node[box, fill=gray!8] (sec) at (4.4, 1.0) {$\mathcal{N}_{\mathrm{Sec}}$: \textbf{FW Default-Deny}\\VLAN Mgmt Isolada\\(Basti\~{a}o WireGuard MFA)};
-  \node[vaultbox] (vault) at (9.1, 1.0) {$\mathcal{V}_{\mathrm{Vault}}$: \textbf{Cofre Pull-Only PBS+ZFS}\\Append-Only + \texttt{AES-256-GCM}\\Dom\'{\i}nio Auth Independente};
-  \node[wormbox] (cloud) at (13.6, 1.85) {$\mathcal{S}_{\mathrm{Cloud}}$: \textbf{S3 Object Lock}\\\texttt{COMPLIANCE WORM}\\Blocos Criptografados};
-  \node[wormbox] (air) at (13.6, 0.15) {$\mathcal{G}_{\mathrm{Air}}$: \textbf{Air-Gap Hardware}\\M\'{\i}dia Rotacionada Offline\\Zero Caminho de Rede};
-  \node[monbox] (mon) at (9.1, -1.15) {$\mathcal{M}_{\mathrm{Out}}$: \textbf{Telemetria Offsite}\\Dead-Man's Switch ($\Delta t_{\max}$)\\Plano Externo Independente};
+\section{Treze Controles \emph{Fail-Bounded} ($C_1$--$C_{13}$)}
 
-  \draw[arr] (vault.west) -- node[above, font=\tiny\bfseries, text=teal!60!black] {Pull Sync (Unidirecional)} (sec.east);
-  \draw[arr] (sec.west) -- node[above, font=\tiny] {Snapshot Read-Only} (prod.east);
-  \draw[denyarr] (prod.south) to[bend right=14] node[below, font=\tiny, text=red!75!black] {SSH / Delete / Prune Bloqueados (Fail-Closed)} (vault.south west);
-  \draw[arr] (vault.east) -- node[above, sloped, font=\tiny] {Envio Criptografado} (cloud.west);
-  \draw[arr, dotted, thick] (vault.east) -- node[below, sloped, font=\tiny] {Janela F\'{\i}sica} (air.west);
-  \draw[arr, draw=purple!70!black] (vault.south) -- node[right, font=\tiny] {Heartbeat Assinado} (mon.north);
-\end{tikzpicture}
-\caption{Arquitetura h\'{\i}brida em 7 camadas $\mathcal{I}$ isolando a computa\c{c}\~{a}o produtiva ($\mathcal{H}_{\mathrm{Prod}}$) do cofre unidirecional Pull-Only PBS/ZFS ($\mathcal{V}_{\mathrm{Vault}}$), nuvem imut\'{a}vel WORM ($\mathcal{S}_{\mathrm{Cloud}}$), air-gap f\'{\i}sico ($\mathcal{G}_{\mathrm{Air}}$) e telemetria Dead-Man's Switch ($\mathcal{M}_{\mathrm{Out}}$).}
-\label{fig:arch_pt}
-\end{figure*}
+\textbf{$C_1$:} Capability \texttt{Ed25519} \'{u}nica, \texttt{EvtSubscribe} + 14 regras \texttt{Sigma} e \texttt{DiskHygieneEngine} $O(1)$ (6 travas inviol\'{a}veis, \texttt{Tier 3} din\^{a}mico, rollback \texttt{SHA-256})~\cite{R46,R47,R53}.
+\textbf{$C_2$:} Barramento Zero-Inbound \texttt{BASTION-FLEET-CMD-V3} (\texttt{F3}--\texttt{F7}) com 5 chaves \texttt{ES256} em TPM/CNG (proibindo \texttt{SOFTWARE\_KEY} em produ\c{c}\~{a}o), \texttt{Bastion Approver} Rust (\texttt{UP=1+UV=1}, \emph{hardware-bound} \texttt{2-de-3}), barreira \texttt{START\_EXECUTION} + journals \texttt{PRAGMA synchronous = FULL}, isolamento IPv4/IPv6/QUIC com fallback $\le 90\text{ s}$, $B_{\mathrm{dom}} \ge Q_{\min}+1$ e executor Hyper-V n\~{a}o-destrutivo proibindo \texttt{Remove-VM}~\cite{R04,R41,R44,R45,R49,R59,R61,R62}.
+\textbf{$C_3$:} Malha Viva Anti-\texttt{TOCTOU}, atribui\c{c}\~{a}o SMB/NFS, guardi\~{a}o \texttt{[MS-VHDX]} $< 1\text{ MiB}$ e interface sist\^{e}mica \texttt{O1}--\texttt{O4} remetendo a teoria alg\'{e}brica fechada a \texttt{VTI-RES-2026-05}.
+\textbf{$C_4$:} Cofre \emph{Pull-Only} (\texttt{nic\_prod} \texttt{100\% SYN DROP}), \texttt{BVLT1}/\texttt{BVPK1} (\texttt{scrypt}, \texttt{HKDF}, \texttt{AES-256-GCM}, \texttt{FASTCDC\_NC2}, \texttt{HTTP 206} estrito), \texttt{DR Zero-Touch} e \texttt{Google Drive Dual-Auth} (\texttt{JWT RS256} \texttt{canDelete=false} e \texttt{PKCE S256} \texttt{drive.file}, \texttt{HTTP 308}, \texttt{700 GiB/24h}, \texttt{pull-gdrive})~\cite{R02,R33,R35,R36,R37,R38,R50,R51}.
+\textbf{$C_5$--$C_7$:} Journal \texttt{TPM 2.0} em 2 fases + \texttt{NTS}/\texttt{RFC 3161} + Testemunha Anti-Rollback; \emph{Clean-Room DR} dupla trilha (\texttt{Ed25519}); e fila $R_{\mathrm{VTI}} \in [0,100]$.
+\textbf{$C_8$:} Copiloto IA Cont\'{\i}nua (\texttt{Onda 7-b}) fora da TCB ($I_6$) com roteamento 4-Tiers, compressor Ponytail, cercas anti-envenenamento, schema 7-chaves, 5 ferramentas \emph{read-only} isoladas, consenso dual fail-safe (\texttt{BENIGN\_LIKELY} n\~{a}o-autoritativo) e \texttt{LGPD Zero-Egress} por padr\~{a}o~\cite{R54,R55,R56,R57,R58}.
+\textbf{$C_9$--$C_{13}$:} Disjuntor de exfiltra\c{c}\~{a}o, manifesto RMM/t\'{u}neis, \texttt{WDAC} 4 an\'{e}is, coleta de borda + *honey-tokens*, \texttt{LOG\_GAP\_ALERT} anti-\texttt{ENOSPC}, \texttt{ZERO\_INSTANCE\_DATA\_BEFORE\_AUTH} e esta\c{c}\~{a}o *War-Room Offline* $\mathcal{S}_{\mathrm{Desk}}$~\cite{R29,R30,R31,R32}.
 
-\subsection{Modelo de Advers\'{a}rio $\mathcal{A}$ (Extin\c{c}\~{a}o de Infraestrutura)}
-
-Considera-se um advers\'{a}rio humano de ransomware $\mathcal{A}$ que obt\'{e}m \emph{dom\'{\i}nio total da produ\c{c}\~{a}o}: (1)~privil\'{e}gios \texttt{root}/\texttt{Domain Admin} em $\mathcal{H}_{\mathrm{Prod}}$, VMs, bancos e cont\^{e}ineres; (2)~execu\c{c}\~{a}o arbitr\'{a}ria de comandos destrutivos locais (\texttt{T1490}); (3)~perman\^{e}ncia silenciosa $T_{\mathrm{dwell}} \in [1, 30]\text{ dias}$ tentando envenenar c\'{o}pias e silenciar alertas locais (\texttt{T1562}); sob fronteiras expl\'{\i}citas de TCB (sem acesso f\'{\i}sico ao \emph{air-gap} \emph{offsite}, sem quebra de \texttt{AES-256-GCM}/\texttt{SHA-256}~\cite{R07,R14}, sem manipula\c{c}\~{a}o do rel\'{o}gio \texttt{S3 Object Lock COMPLIANCE}~\cite{R15,R19} e sem controle do dom\'{\i}nio MFA segregado de $\mathcal{V}_{\mathrm{Vault}}$~\cite{R03,R24}).
-
-\section{Invariantes Formais de Defesa ($I_1$--$I_8$) e Teorema de Resili\^{e}ncia}
-
-Os controles arquiteturais consolidam-se em oito invariantes falsific\'{a}veis:
-\begin{itemize}[leftmargin=1.3em,itemsep=3pt,topsep=3pt]
-  \item \textbf{$I_1$ (Assimetria Pull-Only — Privil\'{e}gio Zero na Produ\c{c}\~{a}o):} Nenhum host em $\mathcal{H}_{\mathrm{Prod}}$ possui conectividade ou credenciais para invocar \texttt{prune}, \texttt{forget}, \texttt{wipe} ou shell administrativo em $\mathcal{V}_{\mathrm{Vault}}$:
-  \begin{equation}
-  \mathrm{Cap}(\mathcal{H}_{\mathrm{Prod}} \to \mathcal{V}_{\mathrm{Vault}}) \cap \{\texttt{Delete}, \texttt{Prune}, \texttt{Admin}\} = \emptyset
-  \end{equation}
-  \item \textbf{$I_2$ (Disjun\c{c}\~{a}o Estrita de Identidade e Plano de Controle):} $\mathrm{Auth}(\mathcal{H}_{\mathrm{Prod}}) \cap \mathrm{Auth}(\mathcal{V}_{\mathrm{Vault}}) = \emptyset$, com MFA obrigat\'{o}rio FIDO2/TOTP sobre VLAN administrativa segregada~\cite{R03,R04,R24}.
-  \item \textbf{$I_3$ (Imutabilidade Copy-on-Write e Verifica\c{c}\~{a}o de Bit-Rot):} \emph{Snapshots} \texttt{ZFS} e verifica\c{c}\~{a}o \texttt{SHA-256} no PBS impedem altera\c{c}\~{a}o \emph{in-place} e detectam corrup\c{c}\~{a}o silenciosa de blocos~\cite{R08,R10,R20}.
-  \item \textbf{$I_4$ (Criptografia Autenticada no Cliente e Cust\'{o}dia Offline):} Blocos s\~{a}o cifrados em \texttt{AES-256-GCM} antes da sa\'{\i}da da fronteira local, com chaves mestras custodiadas exclusivamente \emph{offline}~\cite{R07,R14,R21}.
-  \item \textbf{$I_5$ (Reten\c{c}\~{a}o WORM Offsite Superior ao Dwell Time):} O reposit\'{o}rio \texttt{S3 Object Lock (COMPLIANCE)} imp\~{o}e janela de reten\c{c}\~{a}o inalter\'{a}vel satisfazendo:
-  \begin{equation}
-  T_{\mathrm{WORM}} > T_{\mathrm{dwell}} + T_{\mathrm{detect}}
-  \end{equation}
-  assegurando ao menos um ponto limpo pr\'{e}-infec\c{c}\~{a}o mesmo sob comprometimento de chaves IAM~\cite{R05,R15,R19,R23}.
-  \item \textbf{$I_6$ (Descontinuidade Eletromagn\'{e}tica — Air-Gap F\'{\i}sico):} Fora das janelas controladas de grava\c{c}\~{a}o, ao menos um acervo completo verificado permanece em m\'{\i}dia remov\'{\i}vel $\mathcal{G}_{\mathrm{Air}}$ sem caminho IP/PCIe/USB ativo~\cite{R04,R12}.
-  \item \textbf{$I_7$ (Telemetria Externa Dead-Man's Switch):} Tarefas de backup e verifica\c{c}\~{a}o emitem \emph{heartbeats} assinados para $\mathcal{M}_{\mathrm{Out}}$; silenciamento local (\texttt{T1562}) aciona alerta determin\'{\i}stico em $T_{\mathrm{detect}} \le \Delta t_{\max}$~\cite{R16,R27}.
-  \item \textbf{$I_8$ (Recuperabilidade Determin\'{\i}stica em Sala Limpa):} $\mathrm{RTO}$ e $\mathrm{RPO}$ ficam limitados exclusivamente a procedimentos validados de reconstru\c{c}\~{a}o \emph{bare-metal}, desacoplados do estado comprometido de $\mathcal{H}_{\mathrm{Prod}}$~\cite{R02,R17,R29}.
-\end{itemize}
-
-\subsection{Teorema 1 (Imunidade Limitada \`{a} Extin\c{c}\~{a}o sob Dom\'{\i}nios Disjuntos)}
-
-\noindent\textbf{Teorema 1.} \emph{Seja $\mathcal{I}$ satisfazendo $I_1$--$I_8$ diante do advers\'{a}rio $\mathcal{A}$ com controle sobre $\mathcal{H}_{\mathrm{Prod}}$ durante $T_{\mathrm{dwell}} < T_{\mathrm{WORM}} - T_{\mathrm{detect}}$. Definindo o \'{\i}ndice composto de Resili\^{e}ncia Cibern\'{e}tica VTI:}
-\begin{equation}
-R_{\mathrm{VTI}} = 1 - \Bigl(p_{\mathrm{vault}} \cdot p_{\mathrm{worm}} \cdot p_{\mathrm{airgap}}\Bigr) \cdot \mathbb{I}\bigl[T_{\mathrm{detect}} + T_{\mathrm{dwell}} \ge T_{\mathrm{WORM}}\bigr]
-\end{equation}
-\emph{Sob $I_1, I_2$ (aus\^{e}ncia de piv\^{o} de credenciais ou rede de $\mathcal{H}_{\mathrm{Prod}}$ para $\mathcal{V}_{\mathrm{Vault}}$), $I_5$ ($T_{\mathrm{WORM}} > T_{\mathrm{dwell}} + T_{\mathrm{detect}}$) e $I_6$ (descontinuidade f\'{\i}sica de $\mathcal{G}_{\mathrm{Air}}$), o comprometimento integral de $\mathcal{H}_{\mathrm{Prod}}$ implica $p_{\mathrm{vault}} \perp \mathcal{H}_{\mathrm{Prod}}$, $p_{\mathrm{worm}} \to 0$ em $[t_0, t_0 + T_{\mathrm{WORM}})$ e $p_{\mathrm{airgap}} = 0$ frente a advers\'{a}rios remotos, assegurando $R_{\mathrm{VTI}} \to 1$ e a exist\^{e}ncia de estado restaur\'{a}vel limpo e criptograficamente verific\'{a}vel $S_{\mathrm{clean}}$.}
-
-\section{Confronto Adversarial e An\'{a}lise Comparativa}
-
-A Tabela~\ref{tab:scenarios_pt} sintetiza o confronto contra cinco cen\'{a}rios de extin\c{c}\~{a}o ($C_1$--$C_5$) e a Tabela~\ref{tab:compare_pt} contrasta $\mathcal{I}$ frente a backups \emph{push} legados e sincroniza\c{c}\~{a}o em nuvem convencional.
+\section{Evid\^{e}ncia Execut\'{a}vel (\texttt{B1}--\texttt{B20}) e Roteiro (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
 
 \begin{table*}[t]
 \centering
-\caption{Confronto Adversarial em Cinco Cen\'{a}rios de Extin\c{c}\~{a}o de Infraestrutura ($C_1$--$C_5$).}
-\label{tab:scenarios_pt}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}c l l Y Y@{}}
-\toprule
-\textbf{ID} & \textbf{Cen\'{a}rio de Ataque (MITRE)} & \textbf{Invariantes} & \textbf{Mecanismo de Conten\c{c}\~{a}o Observado} & \textbf{Fronteira / Risco Residual} \\
-\midrule
-$C_1$ & Criptografia total de $\mathcal{H}_{\mathrm{Prod}}$ + destrui\c{c}\~{a}o de volumes (\texttt{T1486}, \texttt{T1490}) & $I_1, I_2, I_3, I_8$ & Produ\c{c}\~{a}o n\~{a}o det\'{e}m chaves de \texttt{prune}/\texttt{delete}; PBS Pull-Only preserva \emph{snapshots} ZFS verificados. & Prazo de reposi\c{c}\~{a}o f\'{\i}sica de hardware limita RTO se houver dano f\'{\i}sico. \\
-\addlinespace[2pt]
-$C_2$ & Colheita de credenciais + piv\^{o} lateral ao backup (\texttt{T1003}, \texttt{T1021}) & $I_1, I_2, I_4$ & Dom\'{\i}nio auth disjunto + basti\~{a}o WireGuard MFA + firewall Default-Deny bloqueiam sess\~{o}es laterais. & Esta\c{c}\~{a}o administrativa comprometida exige TTL curto e PAW (\texttt{M-FUT-3}). \\
-\addlinespace[2pt]
-$C_3$ & \emph{Dwell time} silencioso + supress\~{a}o de alertas (\texttt{T1562}, \texttt{T1490}) & $I_5, I_7$ & Dead-Man's Switch externo dispara em $\Delta t_{\max}$; S3 \texttt{COMPLIANCE} preserva pontos pr\'{e}-infec\c{c}\~{a}o. & Demanda varredura automatizada em sala limpa antes do retorno (\texttt{M-FUT-1}). \\
-\addlinespace[2pt]
-$C_4$ & Perda simult\^{a}nea do datacenter local (inc\^{e}ndio/alagamento/roubo) & $I_4, I_5, I_6$ & Nuvem S3 WORM cifrada + m\'{\i}dia \emph{air-gap} geograficamente apartada eliminam perda total. & Largura de banda WAN limita RTO de restaura\c{c}\~{a}o integral da nuvem. \\
-\addlinespace[2pt]
-$C_5$ & Amea\c{c}a interna / abuso de chave IAM na nuvem & $I_3, I_4, I_5, I_6$ & Modo \texttt{COMPLIANCE} recusa redu\c{c}\~{a}o de reten\c{c}\~{a}o at\'{e} para root; chaves \emph{offline} preservam sigilo. & Requer governan\c{c}a de cust\'{o}dia dividida quatro-olhos (\texttt{M-FUT-5}). \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\begin{table*}[t]
-\centering
-\caption{Comparativo Arquitetural: Backup Push NAS/SMB vs.\ Cloud Sync Comum vs.\ Arquitetura VTI em 7 Camadas ($\mathcal{I}$).}
-\label{tab:compare_pt}
+\caption{Certifica\c{c}\~{a}o Execut\'{a}vel em Laborat\'{o}rio (\texttt{Bastion OS v1.3.0}, \texttt{N\'{\i}vel E1}) vs.\ Homologa\c{c}\~{a}o em Campo (\texttt{N\'{\i}vel E4}).}
 \footnotesize
 \begin{tabularx}{\textwidth}{@{}l Y Y Y@{}}
 \toprule
-\textbf{Dimens\~{a}o de Resili\^{e}ncia} & \textbf{Backup Push NAS / SMB} & \textbf{Sincroniza\c{c}\~{a}o Cloud Comum} & \textbf{Arquitetura VTI em 7 Camadas ($\mathcal{I}$)} \\
+\textbf{Estrato} & \textbf{Escopo Verificado} & \textbf{Resultado Medido} & \textbf{Limite Expl\'{\i}cito} \\
 \midrule
-Inicia\c{c}\~{a}o da C\'{o}pia & \emph{Push} a partir da produ\c{c}\~{a}o & \emph{Push} com chaves locais & \textbf{Pull Unidirecional} do cofre PBS isolado ($I_1$) \\
-Isolamento de Identidade & AD / Domain Admin compartilhado & IAM / SSO compartilhado & \textbf{Auth Disjunto + Basti\~{a}o MFA} ($I_2$) \\
-Resist\^{e}ncia a Wipe (\texttt{T1490}) & Falha (compartilhamentos apagados) & Falha se chaves IAM vazarem & \textbf{ZFS CoW + S3 Object Lock COMPLIANCE} ($I_3, I_5$) \\
-Air-Gap F\'{\i}sico & Inexistente & Inexistente & \textbf{M\'{\i}dia Eletromagneticamente Desconectada} ($I_6$) \\
-Detec\c{c}\~{a}o de Sabotagem & Agente local (silenci\'{a}vel) & Logs passivos na nuvem & \textbf{Dead-Man's Switch Externo} ($\Delta t_{\max}$, $I_7$) \\
+\texttt{E1} Backend & \texttt{58} arquivos / \texttt{61} su\'{\i}tes (\texttt{B1}--\texttt{B20}) & \textbf{301/301 PASS} em \texttt{:memory:}/\texttt{os.tmpdir()} & Mocks locais p/ TPM/WFP/GDrive/LLM. \\
+\texttt{E1} E2E & \texttt{14} arquivos / \texttt{28} su\'{\i}tes (Tiers 1--5 + \texttt{v1.1..v1.3}) & \textbf{254/254 PASS} em \texttt{127.0.0.1:0} & Harnesses locais ef\^{e}meros. \\
+\texttt{E1} Gates & \texttt{G-CMD}, \texttt{G-AI-TRIAGE}, \texttt{G-GDRIVE}, \texttt{G-DISK-HYGIENE}, \texttt{vite}, \texttt{cargo} & \textbf{100\% PASS}, \texttt{0} warnings/CDNs & \texttt{G-PERF} janela CI sint\'{e}tica (\texttt{1,5 s}). \\
+\texttt{E4} Campo & \texttt{60 min} \texttt{G-PERF}, \texttt{SHADOW} ($N_{\mathrm{blk}} \ge 300$), TPM/nuvem reais & Aberto p/ promo\c{c}\~{a}o longitudinal & Block bootstrap \texttt{FP\_obs=0} + Holm-Bonferroni. \\
 \bottomrule
 \end{tabularx}
 \end{table*}
 
-\section{Valida\c{c}\~{a}o Frente \`{a} Literatura Prim\'{a}ria e Roteiro (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
+O roteiro evolutivo abrange \texttt{M-FUT-1} (\texttt{TLA+} de \texttt{BASTION-FLEET-CMD-V3}), \texttt{M-FUT-2} (driver HVCI/ELAM), \texttt{M-FUT-3} (atesta\c{c}\~{a}o remota \texttt{TPM 2.0}), \texttt{M-FUT-4} (*Cloud-of-Clouds* BFT~\cite{R23}), \texttt{M-FUT-5} (hidrata\c{c}\~{a}o automatizada de failover) e \texttt{M-FUT-6} (*Chaos Security Engineering* em hardware real).
 
-Cada mecanismo em $\mathcal{I}$ foi confrontado contra 32 fontes prim\'{a}rias verificadas cobrindo normas NIST de ciberseguran\c{c}a e armazenamento~\cite{R01,R02,R03,R04,R06,R07,R14,R17,R24,R25,R29}, matrizes adversariais~\cite{R05,R11,R16,R31}, engenharia criptogr\'{a}fica/storage~\cite{R08,R09,R10,R15,R19,R20,R21,R23} e sistemas resilientes~\cite{R12,R13,R18,R22,R26,R27,R28,R30,R32}. A Tabela~\ref{tab:trace_pt} apresenta a matriz completa de rastreabilidade e a Tabela~\ref{tab:mfut_pt} especifica seis evolu\c{c}\~{o}es prospectivas (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
+\section{Conclus\~{a}o e Declara\c{c}\~{a}o CRediT Adaptada (COPE / ACM / IEEE)}
 
-\begin{table*}[t]
-\centering
-\caption{Matriz de Rastreabilidade Cient\'{\i}fica Mapeando Invariantes ($I_1$--$I_8$) a Fontes Verificadas (\texttt{[R01]}--\texttt{[R32]}).}
-\label{tab:trace_pt}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}l l Y@{}}
-\toprule
-\textbf{Invariante} & \textbf{Fontes Prim\'{a}rias} & \textbf{Escopo T\'{e}cnico Fundamentado na Literatura} \\
-\midrule
-$I_1$ --- Assimetria Pull-Only & \cite{R01,R04,R12,R20,R22} & Menor privil\'{e}gio, redu\c{c}\~{a}o de superf\'{\i}cie de storage e elimina\c{c}\~{a}o do raio de explos\~{a}o \emph{push}. \\
-$I_2$ --- Isolamento Auth/VLAN & \cite{R03,R06,R24,R25} & Microsegmenta\c{c}\~{a}o Zero-Trust, planos fora de banda e MFA resistente a phishing. \\
-$I_3$ --- ZFS CoW & \texttt{SHA-256} & \cite{R08,R09,R10,R20} & Checksums fim-a-fim, imutabilidade Copy-on-Write e detec\c{c}\~{a}o de \emph{bit-rot}. \\
-$I_4$ --- \texttt{AES-256-GCM} Cliente & \cite{R07,R14,R21} & Cifra autenticada, cust\'{o}dia de chave \emph{offline} e confidencialidade \emph{zero-trust} na nuvem. \\
-$I_5$ --- S3 \texttt{COMPLIANCE WORM} & \cite{R05,R15,R19,R23,R31} & Sobreviv\^{e}ncia ao \emph{dwell time} e reten\c{c}\~{a}o regulat\'{o}ria irrevers\'{\i}vel (\texttt{SEC 17a-4}). \\
-$I_6$ --- Air-Gap de Hardware & \cite{R04,R12,R30} & Descontinuidade f\'{\i}sica/eletromagn\'{e}tica contra propaga\c{c}\~{a}o remota de ransomware/APT. \\
-$I_7$ --- Dead-Man's Switch & \cite{R16,R27,R32} & Contramedida a \texttt{T1562} por detec\c{c}\~{a}o determin\'{\i}stica de aus\^{e}ncia de \emph{heartbeat}. \\
-$I_8$ --- Recupera\c{c}\~{a}o Sala Limpa & \cite{R02,R17,R18,R29} & Playbooks NIST de recupera\c{c}\~{a}o cibern\'{e}tica, rebuild \emph{bare-metal} e garantia de RTO/RPO. \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\begin{table*}[t]
-\centering
-\caption{Seis Fronteiras Residuais e Evolu\c{c}\~{o}es Prospectivas de Engenharia (\texttt{M-FUT-1}--\texttt{M-FUT-6}).}
-\label{tab:mfut_pt}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}c Y l Y@{}}
-\toprule
-\textbf{C\'{o}digo} & \textbf{Fronteira Residual Identificada} & \textbf{Base} & \textbf{Especifica\c{c}\~{a}o Prospectiva de Pr\'{o}ximo Ciclo} \\
-\midrule
-\texttt{M-FUT-1} & Checksums de blocos confirmam integridade f\'{\i}sica, n\~{a}o aus\^{e}ncia de malware dormente em VMs. & NIST SP 800-184~\cite{R02}; \cite{R05} & \textbf{Testes automatizados em sandbox ef\^{e}mera} com varredura YARA/EDR e valida\c{c}\~{a}o de boot. \\
-\addlinespace[2pt]
-\texttt{M-FUT-2} & Persist\^{e}ncia em firmware/BMC de placas-m\~{a}e sobrevive \`{a} reinstala\c{c}\~{a}o do sistema operacional. & NIST SP 800-193~\cite{R13}; \cite{R26} & \textbf{Measured Boot com TPM 2.0} + atesta\c{c}\~{a}o criptogr\'{a}fica de firmware BMC/BIOS antes de reingresso. \\
-\addlinespace[2pt]
-\texttt{M-FUT-3} & Esta\c{c}\~{o}es administrativas com sess\~{o}es MFA abertas constituem piv\^{o} de alto valor. & NIST SP 800-207~\cite{R03}; \cite{R24} & \textbf{Privileged Access Workstations (PAW)} + chaves FIDO2 com certificados ef\^{e}meros de vida curta. \\
-\addlinespace[2pt]
-\texttt{M-FUT-4} & Restaura\c{c}\~{a}o massiva via nuvem pode alongar RTO em caso de perda f\'{\i}sica integral do site. & NIST SP 800-34~\cite{R17}; \cite{R29} & \textbf{Ondas Priorit\'{a}rias de Recupera\c{c}\~{a}o} (Tier-0 identidade/bancos primeiro em standby aquecido). \\
-\addlinespace[2pt]
-\texttt{M-FUT-5} & Acesso f\'{\i}sico individual \`{a} m\'{\i}dia \emph{air-gap} concentra risco de amea\c{c}a interna. & \cite{R01,R04,R28} & \textbf{Cust\'{o}dia dividida quatro-olhos / Shamir $M$-de-$N$} para chaves \emph{offline} e manuseio do cofre f\'{\i}sico. \\
-\addlinespace[2pt]
-\texttt{M-FUT-6} & Deriva silenciosa em regras de firewall ou reten\c{c}\~{a}o PBS pode degradar invariantes ao longo do tempo. & \cite{R18,R27,R32} & \textbf{Asser\c{c}\~{o}es cont\'{\i}nuas Policy-as-Code} enviando provas criptogr\'{a}ficas de conformidade para $\mathcal{M}_{\mathrm{Out}}$. \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\section{Amea\c{c}as \`{a} Validade}
-
-\textbf{Validade de Construto:} $R_{\mathrm{VTI}} \to 1$ expressa elimina\c{c}\~{a}o matem\'{a}tica de caminhos remotos de extin\c{c}\~{a}o por ponto \'{u}nico sob primitivas criptogr\'{a}ficas \'{\i}ntegras e cust\'{o}dia administrativa disjunta~\cite{R03,R04}, n\~{a}o imunidade absoluta a destrui\c{c}\~{a}o f\'{\i}sica coordenada com conluio interno.
-
-\textbf{Validade Interna:} Como as camadas $I_1$--$I_8$ atuam sinergicamente, a manuten\c{c}\~{a}o da resili\^{e}ncia ao longo do ciclo de vida exige preven\c{c}\~{a}o de deriva operacional (\texttt{M-FUT-6}).
-
-\textbf{Validade Externa:} Taxas de I/O, deduplica\c{c}\~{a}o e RTO \emph{bare-metal} refletem implanta\c{c}\~{o}es h\'{\i}bridas Proxmox VE / PBS / ZFS; clusters multi-petabyte requerem recalibra\c{c}\~{a}o proporcional mantendo-se os mesmos invariantes \emph{Pull-Only} e \texttt{WORM}.
-
-\textbf{Validade de Conclus\~{a}o e Reprodutibilidade:} Preservando a anonimiza\c{c}\~{a}o de identificadores corporativos, todos os predicados arquiteturais, desigualdades de reten\c{c}\~{a}o ($T_{\mathrm{WORM}} > T_{\mathrm{dwell}} + T_{\mathrm{detect}}$) e 32 cita\c{c}\~{o}es prim\'{a}rias s\~{a}o publicados abertamente para auditoria independente.
-
-\section{Conclus\~{a}o}
-
-Atingir resili\^{e}ncia cibern\'{e}tica comprov\'{a}vel contra ransomware direcionado a infraestrutura exige desmantelar o dom\'{\i}nio compartilhado de confian\c{c}a entre computa\c{c}\~{a}o produtiva e cust\'{o}dia de backup. A composi\c{c}\~{a}o de ingest\~{a}o unidirecional \emph{Pull-Only} ($I_1$), identidades e VLANs disjuntas ($I_2$), \texttt{ZFS} Copy-on-Write com verifica\c{c}\~{a}o \texttt{SHA-256} ($I_3$), criptografia \texttt{AES-256-GCM} no cliente com chaves \emph{offline} ($I_4$), reten\c{c}\~{a}o \texttt{S3 Object Lock COMPLIANCE} superior ao \emph{dwell time} ($I_5$), \emph{air-gap} eletromagn\'{e}tico ($I_6$) e telemetria externa \emph{Dead-Man's Switch} ($I_7$) converte ataques catastr\'{o}ficos de extin\c{c}\~{a}o em incidentes operacionais limitados e recuper\'{a}veis ($I_8$), sustentados pelo roteiro evolutivo \texttt{M-FUT-1}--\texttt{M-FUT-6}.
-
-\section*{Declara\c{c}\~{a}o Transparente de Engenharia Simbi\'{o}tica Humano-IA, Verifica\c{c}\~{a}o Determin\'{\i}stica e Mapeamento CRediT Adaptado (Conformidade ACM / IEEE / COPE)}
-
-Em estrita observ\^{a}ncia \`{a}s pol\'{\i}ticas internacionais do \textbf{COPE}, \textbf{ACM} (\emph{Policy on Authorship}, 2023) e \textbf{IEEE} (\emph{PSPB Operations Manual}), sistemas automatizados e modelos generativos n\~{a}o podem deter autoria nem responsabilidade \'{e}tica ou jur\'{\i}dica. \textbf{Caio Gon\c{c}alves} figura como \textbf{autor formal exclusivo}, assumindo integral responsabilidade pelas formula\c{c}\~{o}es, especifica\c{c}\~{o}es arquiteturais, alega\c{c}\~{o}es operacionais e conclus\~{o}es. Sob governan\c{c}a estrita \emph{Human-in-the-Loop}: (1)~\textbf{Caio Gon\c{c}alves} (\emph{Principal Investigator \& Chief Systems Architect, VTI Research}) conduziu \emph{Conceitua\c{c}\~{a}o, Metodologia, Arquitetura de Sistemas e Seguran\c{c}a, Supervis\~{a}o, Valida\c{c}\~{a}o, Administra\c{c}\~{a}o do Projeto e Reda\c{c}\~{a}o Final}; (2)~rodadas estruturadas de revis\~{a}o adversarial n\~{a}o-autoral assistidas por modelos independentes auxiliaram no escrut\'{\i}nio das desigualdades de \emph{dwell time}, fronteiras de dom\'{\i}nio de falha e lacunas do roteiro prospectivo, sendo cada refinamento auditado e validado pelo autor humano; e (3)~todas as 32 refer\^{e}ncias bibliogr\'{a}ficas e invariantes de anonimiza\c{c}\~{a}o foram verificados deterministicamente antes da publica\c{c}\~{a}o.
+A edi\c{c}\~{a}o \texttt{v3.0} consolida a \emph{Seguran\c{c}a Assimetricamente Limitada} com evid\^{e}ncia execut\'{a}vel em \texttt{Bastion OS v1.3.0}. Conforme COPE, ACM e IEEE, \textbf{Caio Gon\c{c}alves} \'{e} o \textbf{\'{u}nico autor formal}, assumindo integral responsabilidade intelectual. Rodadas n\~{a}o-autorais de cr\'{\i}tica adversarial e scripts determin\'{\i}sticos de auditoria constam registrados nas atas t\'{e}cnicas do projeto.
 
 \bibliographystyle{unsrt}
 \bibliography{references}

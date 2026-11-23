@@ -1,0 +1,104 @@
+% Official VTI Research Technical Report VTI-RES-2026-05 (v1.0) | DOI: https://doi.org/10.5281/zenodo.24452824
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=0.72in,columnsep=0.24in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{enumitem}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\emergencystretch}{1.5em}
+
+\title{\Large\bfseries Reconstru\c{c}\~{a}o Forense em Passagem \'{U}nica e Mem\'{o}ria Limitada de Discos Virtuais \texttt{[MS-VHDX]} Multi-Sistema sob Criptografia Intermitente:\\[0.25em]
+\large Desacoplamento Linear em \texttt{GF(2)} de Checksums, Bije\c{c}\~{a}o Bipartida com Veto de Ambiguidade e Cirurgia Determin\'{\i}stica de Inicializa\c{c}\~{a}o}
+
+\author{%
+  \textbf{Caio Gon\c{c}alves}\\
+  \textit{Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)}\\
+  \small Identificador T\'{e}cnico: \texttt{VTI-RES-2026-05} (Edi\c{c}\~{a}o \texttt{v1.0}) \quad|\quad DOI: \texttt{10.5281/zenodo.24452824} \quad|\quad \url{https://projectos-system.github.io/vti-research/}
+}
+
+\date{Novembro de 2026}
+
+\begin{document}
+\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28}
+
+\maketitle
+
+\begin{abstract}
+\noindent Ransomwares com criptografia intermitente (\emph{First-N} / \emph{skip-step}) destroem cabe\c{c}alhos, logs circulares e a \texttt{BAT} de cont\^{e}ineres \texttt{[MS-VHDX]} em minutos, deixando grande fra\c{c}\~{a}o dos blocos de \texttt{32 MiB} em texto claro. Recuperadores convencionais esgotam a RAM de resgate, incorrem em custo quadr\'{a}tico $O(K \cdot M \cdot n)$ ao revalidar \texttt{CRC-32C} com semente por inode em \texttt{ext4}, alucinam sobre colis\~{o}es JSON, \emph{extents unwritten} ou empates na \texttt{BAT}, e corrompem colmeias \texttt{regf} sujas ou o Active Directory (\texttt{NTDS.dit}). Formalizamos a m\'{a}quina determin\'{\i}stica de passagem \'{u}nica e mem\'{o}ria limitada $\mathcal{E}_{\mathrm{Rec}} = (\mathcal{V}_{\mathrm{src}}, B_{\mathrm{ram}}, \mathcal{F}, \mathcal{O}, \mathcal{G}_{\mathrm{veto}}, \mathcal{P}_{\mathrm{prov}}, \mathcal{V}_{\mathrm{out}})$ e avaliamos sua implementa\c{c}\~{a}o congelada (\texttt{v3.0.6} C\#/PS e Python 3 stdlib) nas baterias \texttt{B1}--\texttt{B6}: (1)~desacoplamento linear \texttt{GF(2)} de \texttt{CRC-32C} (\texttt{ext4} + \texttt{iSCSI} afim) com \texttt{0/10.000} diverg\^{e}ncias e speedup \texttt{168,73x} (\texttt{IC 95\% [144,58x, 193,88x]}); (2)~passagem \'{u}nica sem \emph{seek-back} na \texttt{BAT} (\texttt{260,32--269,34 MiB} WS CLR reconciliado com \texttt{221,18 MiB} anal\'{\i}tico a \texttt{100 GiB}); (3)~contabilidade 4-vias \texttt{ext4} (\texttt{0/200} erros, Multi-FS \texttt{F1=1,000}, \texttt{0/25} FP JSON); (4)~\texttt{SSAP/MCMF} bipartido com margem residual SPFA em componente $n \le 8192$ (\texttt{0/60} FAR, Wilson \texttt{95\% [0, 0,0602]}); e (5)~bloqueio de \texttt{20/20} \texttt{regf} sujas e \texttt{30/30} vetos Pr\'{e}-FS. Reportamos com transpar\^{e}ncia duas lacunas abertas na \texttt{v3.0.6}: salto silencioso em erro de leitura de \texttt{eh\_depth > 0} (\texttt{L10747} $\to$ \texttt{M-FUT-1}) e concord\^{a}ncia parcial \texttt{25/30} ($\kappa=0,6667$ $\to$ \texttt{M-FUT-2}) em \texttt{HardVetoes}, sob 28 refer\^{e}ncias prim\'{a}rias verificadas.
+\end{abstract}
+
+\vspace{0.4em}
+\noindent\textbf{Palavras-chave:} Forense \texttt{[MS-VHDX]}; Criptografia Intermitente; \texttt{GF(2)} \texttt{CRC-32C}; \texttt{MCMF} Bipartido; \emph{Extents Unwritten} \texttt{ext4}; Cirurgia \texttt{regf}; Passagem \'{U}nica.
+
+\section{Introdu\c{c}\~{a}o e Demarca\c{c}\~{a}o com \texttt{VTI-RES-2026-04}}
+
+A criptografia intermitente~\cite{R07,R08,R09} destr\'{o}i metadados \texttt{[MS-VHDX]}~\cite{R16} deixando blocos de payload desconectados. Enquanto \texttt{VTI-RES-2026-04 v3.0} apresenta apenas a interface sist\^{e}mica \texttt{O1}--\texttt{O4}, este estudo aut\^{o}nomo formaliza $\mathcal{E}_{\mathrm{Rec}}$, demonstra \texttt{T1}--\texttt{T2} (escopado) e \texttt{P3}--\texttt{P4}, executa \texttt{B1}--\texttt{B6} em \texttt{os.tmpdir()} e documenta abertamente \texttt{M-FUT-1} e \texttt{M-FUT-2}.
+
+\section{Tupla Formal $\mathcal{E}_{\mathrm{Rec}}$ e Seis Invariantes ($I_{R1}$--$I_{R6}$)}
+
+\begin{equation}
+\mathcal{E}_{\mathrm{Rec}} = \bigl(\mathcal{V}_{\mathrm{src}}, B_{\mathrm{ram}}, \mathcal{F}, \mathcal{O}, \mathcal{G}_{\mathrm{veto}}, \mathcal{P}_{\mathrm{prov}}, \mathcal{V}_{\mathrm{out}}\bigr)
+\end{equation}
+com sete operadores $\mathcal{O} = (O_{\mathrm{Log}}, O_{\mathrm{Pass1}}, O_{\mathrm{GF2}}, O_{\mathrm{Probe}}, O_{\mathrm{MCMF}}, O_{\mathrm{Surg}}, O_{\mathrm{Pass2}})$ regidos por $I_{R1}$ (evid\^{e}ncia somente-leitura~\cite{R15}), $I_{R2}$ (passagem \'{u}nica sem \emph{seek-back} na \texttt{BAT}), $I_{R3}$ (conserva\c{c}\~{a}o cont\'{a}bil 4-vias com \texttt{UnwrittenOnly}), $I_{R4}$ (equival\^{e}ncia bit-a-bit \texttt{GF(2)}), $I_{R5}$ (n\~{a}o-alucina\c{c}\~{a}o epist\^{e}mica limitando \texttt{BootReadinessScore} $\le 39$) e $I_{R6}$ (conserva\c{c}\~{a}o transacional \texttt{regf}).
+
+\section{Resultados Te\'{o}ricos Principais (\texttt{T1}, \texttt{T2} Escopado, \texttt{P3}, \texttt{P4})}
+
+\textbf{Teorema 1 (\texttt{T1} --- Linearidade \texttt{GF(2)} do \texttt{CRC-32C}):} Para o polin\^{o}mio Castagnoli~\cite{R01,R02,R03} com matriz refletida $A \in \mathbb{F}_2^{32\times 32}$,
+\begin{equation}
+\mathrm{CRC}_{\mathrm{ext4}}(s,X) = \mathrm{RawCrc32c}(0,X) \oplus A^{8n} s
+\end{equation}
+e no regime afim \texttt{iSCSI}/\texttt{[MS-VHDX]},
+\begin{equation}
+\mathrm{CRC}_{\mathrm{iSCSI}}(s_{\mathrm{init}},X) = \bigl(\mathrm{RawCrc32c}(0,X) \oplus \texttt{0xFFFFFFFF}\bigr) \oplus A^{8n} s_{\mathrm{init}}
+\end{equation}
+avaliado em $O(1)$ via 4 sub-tabelas de 256 palavras (\texttt{4 KiB})~\cite{R18}.
+
+\textbf{Teorema 2 (\texttt{T2} --- Conserva\c{c}\~{a}o 4-Vias Escopada):} Sob legibilidade integral dos n\'{o}s de \'{\i}ndice \texttt{0xF30A}, \texttt{ee\_len > 32768} particiona \texttt{RawAlloc} em $\mathrm{EffAlloc} \sqcup \mathrm{UnwrittenOnly}$ sem contar \emph{unwritten} como ausente. \emph{Defeito aberto (\texttt{L10747} $\to$ \texttt{M-FUT-1}):} a \texttt{v3.0.6} ignora sub\'{a}rvores \texttt{eh\_depth > 0} ileg\'{\i}veis sem propagar \texttt{INDETERMINATE}.
+
+\textbf{Proposi\c{c}\~{a}o 3 (\texttt{P3} --- Margem Residual \texttt{SSAP/MCMF}):} Em componente \'{u}nica $n \le 8192$~\cite{R04,R05,R06}, desfazer $S \to u \to p^* \to T$ e executar SPFA residual calcula exatamente a margem de ciclos alternantes $\Delta_u = \mathrm{OPT}(E \setminus \{(u,p^*)\}) - \mathrm{OPT}(E) \ge 0$, disparando \texttt{AMBIGUOUS\_BAT\_MAPPING} quando $\Delta_u < \Delta_{\min}$. Acima de \texttt{8192} n\'{o}s, o janelamento opera como \texttt{HEURISTIC\_WINDOWED}.
+
+\textbf{Proposi\c{c}\~{a}o 4 (\texttt{P4} --- Cirurgia Transacional \texttt{regf}):} Mutar colmeias \texttt{regf}~\cite{R25} somente com \texttt{seq1 == seq2} preservados, \texttt{cbData} invariante, backup \texttt{DPAPI} e rec\'{a}lculo at\^{o}mico do checksum \texttt{XOR-32} (\texttt{508 B}) garante zero corrup\c{c}\~{a}o de colmeias sujas e zero deslocamento em \texttt{hbin}.
+
+\section{Resultados Emp\'{\i}ricos (\texttt{B1}--\texttt{B6}) e Roteiro (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
+
+\begin{table*}[t]
+\centering
+\caption{S\'{\i}ntese das Baterias Emp\'{\i}ricas Reprodut\'{\i}veis \texttt{B1}--\texttt{B6} (\texttt{seed=20261122}, \texttt{os.tmpdir()}).}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}c l Y Y c@{}}
+\toprule
+\textbf{ID} & \textbf{Alvo} & \textbf{Resultado Medido} & \textbf{IC 95\% / Holm--Bonferroni} & \textbf{Veredito} \\
+\midrule
+\texttt{B1} & \texttt{O\_GF2} & \texttt{0/10.000} (\texttt{ext4} e \texttt{iSCSI}); speedup \texttt{168,73x} & \texttt{CP [0, 0,00037]}; boot \texttt{[144,58x, 193,88x]} & \textbf{PASS} \\
+\texttt{B2} & Passagem \'{U}nica & \texttt{1L/1E}, \texttt{ZeroSeekBack}, WS \texttt{260--269 MiB}, log trunc.\ rej. & Reconciliado c/ \texttt{221,18 MiB} anal\'{\i}tico \texttt{100 GiB} & \textbf{PASS} \\
+\texttt{B3} & 4-Vias / Multi-FS & \texttt{0/200} erros \texttt{ext4}; \texttt{F1=1,000} (\texttt{TP=60, TN=40, 0/25} FP JSON) & \texttt{p\_holm=7,91e-14} (\texttt{MagicCarver}), \texttt{2,21e-10} & \textbf{PASS} \\
+\texttt{B4} & \texttt{MCMF} $\Delta$ & \texttt{0/60} FAR em empates; ciclo alternante pego; \texttt{0/100} FP aleat. & \texttt{Wilson [0, 0,0602]} ($\le 6,02\%$); \texttt{p\_holm=4,89e-13} & \textbf{PASS} \\
+\texttt{B5} & \texttt{regf} / Pr\'{e}-FS & \texttt{20/20} limpas, \texttt{20/20} sujas vet., \texttt{30/30} Pr\'{e}-FS, \texttt{0/20} FP ELF & \texttt{p\_holm=4,35e-11} & \textbf{PASS} \\
+\texttt{B6} & Cross-OS $N=30$ & \texttt{30/30} \texttt{osFamily}/Pr\'{e}-FS; \texttt{25/30} \texttt{HardVetoes} (Cen.\ 2) & \texttt{CP [0,6528, 0,9436]}, $\kappa=0,6667$ & \textbf{Parcial ($H_6$)} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+O roteiro \texttt{v3.1+} compreende \texttt{M-FUT-1} (propaga\c{c}\~{a}o \texttt{INDETERMINATE} em \texttt{L10747}), \texttt{M-FUT-2} (unifica\c{c}\~{a}o \texttt{AMBIGUOUS\_BAT\_MAPPING} entre C\#/PS e Python), \texttt{M-FUT-3} (vetores externos \texttt{e2fsprogs} e escala real \texttt{100 GiB}), \texttt{M-FUT-4} (sinaliza\c{c}\~{a}o expl\'{\i}cita de corte inter-janelas), \texttt{M-FUT-5} (inje\c{c}\~{a}o de falhas de crash e \texttt{ReFS}/\texttt{Btrfs}) e \texttt{M-FUT-6} (alerta \texttt{hiberfil.sys} / *Fast Startup*).
+
+\section{Conclus\~{a}o e Declara\c{c}\~{a}o CRediT Adaptada (COPE / ACM / IEEE)}
+
+$\mathcal{E}_{\mathrm{Rec}}$ une acelera\c{c}\~{a}o \texttt{GF(2)}, passagem \'{u}nica em RAM limitada, contabilidade 4-vias, veto \texttt{MCMF} residual e portas \texttt{regf}/Pr\'{e}-FS documentando abertamente \texttt{M-FUT-1} e \texttt{M-FUT-2}. Conforme COPE, ACM e IEEE, \textbf{Caio Gon\c{c}alves} figura como \textbf{\'{u}nico autor formal}, apoiado por rodadas n\~{a}o-autorais de revis\~{a}o adversarial e scripts determin\'{\i}sticos de benchmark.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

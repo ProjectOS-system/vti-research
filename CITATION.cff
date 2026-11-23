@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use or reference these publications, please cite the corresponding VTI Research Technical Report DOI below."
-title: "VTI Research — Scientific Publications on Cognitive Harness Engineering, Bitemporal Agentic Memory, Zero-Trust Multi-Agent Security, and Pull-Only Cyber Resilience"
+title: "VTI Research — Scientific Publications on Cognitive Harness Engineering, Bitemporal Agentic Memory, Zero-Trust Multi-Agent Security, Fail-Bounded Cyber Resilience, and Single-Pass [MS-VHDX] Forensics"
 authors:
   - family-names: "Gonçalves"
     given-names: "Caio"
     affiliation: "VTI Research (VTI, Brazil)"
-version: "1.1.0"
-date-released: "2026-11-20"
+version: "1.2.0"
+date-released: "2026-11-22"
 license: "CC-BY-4.0"
 url: "https://projectos-system.github.io/vti-research/"
 repository-code: "https://github.com/ProjectOS-system/vti-research"
@@ -21,5 +21,8 @@ identifiers:
     value: "10.5281/zenodo.24290286"
     description: "VTI-RES-2026-03: Zero-Trust Multi-Agent Security & Blast-Radius Containment"
   - type: doi
-    value: "10.5281/zenodo.24406146"
-    description: "VTI-RES-2026-04: Provable Cyber Resilience in Hybrid Hypervisor Infrastructures via Pull-Only Immutable Vaults"
+    value: "10.5281/zenodo.24452820"
+    description: "VTI-RES-2026-04 (v3.0, Concept DOI 10.5281/zenodo.24406145): Asymmetrically Bounded Cyber Resilience, Zero-Inbound Containment & Non-TCB Cognitive Triage (Bastion OS v1.3.0)"
+  - type: doi
+    value: "10.5281/zenodo.24452824"
+    description: "VTI-RES-2026-05 (v1.0): Single-Pass Bounded-Memory Forensic Reconstruction of Multi-OS [MS-VHDX] Virtual Disks Under Intermittent Encryption"

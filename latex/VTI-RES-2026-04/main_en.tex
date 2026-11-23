@@ -1,4 +1,4 @@
-% Official VTI Research Technical Report VTI-RES-2026-04 | DOI: https://doi.org/10.5281/zenodo.24406146
+% Official VTI Research Technical Report VTI-RES-2026-04 (v3.0) | DOI: https://doi.org/10.5281/zenodo.24452820 | Concept DOI: https://doi.org/10.5281/zenodo.24406145
 \documentclass[10pt,twocolumn]{article}
 
 \usepackage[utf8]{inputenc}
@@ -10,7 +10,7 @@
 \usepackage{booktabs,tabularx,array}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usetikzlibrary{arrows.meta,positioning}
 \usepackage{enumitem}
 \usepackage{cite}
 \usepackage[hyphens]{url}
@@ -19,262 +19,78 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \setlength{\emergencystretch}{1.5em}
 
-\title{\Large\bfseries Provable Cyber Resilience in Hybrid Hypervisor Infrastructures via Pull-Only Immutable Vaults, Hardware Air-Gap, and Autonomous Offsite Telemetry:\\[0.25em]
-\large Formal Modeling, Failure-Domain Invariants, Adversarial Confrontation, and Validation Against Peer-Reviewed Literature}
+\title{\Large\bfseries Asymmetrically Bounded Cyber Resilience, Zero-Inbound Remote Containment, Non-TCB Cognitive Triage, and Multi-Cloud Immutable Vaults in Critical Infrastructures\\[0.25em]
+\large Formal Specification, Executable Verification (\texttt{Bastion OS v1.3.0}), Batteries \texttt{B1}--\texttt{B20}, and Validation Against 63 Primary Sources}
 
 \author{%
   \textbf{Caio Gon\c{c}alves}\\
   \textit{Principal Investigator \& Chief Systems Architect, VTI Research (VTI, Brazil)}\\
-  \small Technical Paper ID: \texttt{VTI-RES-2026-04} (Edition \texttt{v1.2}) \quad|\quad DOI: \texttt{10.5281/zenodo.24406146} \quad|\quad \url{https://projectos-system.github.io/vti-research/}
+  \small Technical Paper ID: \texttt{VTI-RES-2026-04} (Edition \texttt{v3.0}) \quad|\quad DOI: \texttt{10.5281/zenodo.24452820} (Concept: \texttt{10.5281/zenodo.24406145})
 }
 
 \date{November 2026}
 
 \begin{document}
-\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32}
+\nocite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32,R33,R34,R35,R36,R37,R38,R39,R40,R41,R42,R43,R44,R45,R46,R47,R48,R49,R50,R51,R52,R53,R54,R55,R56,R57,R58,R59,R60,R61,R62,R63}
 
 \maketitle
 
 \begin{abstract}
-\noindent Modern enterprise ransomware campaigns have evolved from opportunistic workstation encryption into coordinated \emph{Infrastructure-Targeted Extinction} operations: adversaries pivot into virtualization management planes, harvest administrative credentials, silently tamper with or purge backup repositories (\texttt{MITRE ATT\&CK T1490}), disable local monitoring daemons (\texttt{T1562}), and encrypt hypervisor datastores simultaneously. Traditional \emph{push-based} backup architectures collapse structurally under this threat model because any production host holding write or delete credentials over the backup repository converts host compromise into total data-loss propagation. Employing a retrospective anonymized architectural case study with generalized hypothetical formulation, we model a hybrid corporate virtualization infrastructure $\mathcal{I} = (\mathcal{H}_{\mathrm{Prod}}, \mathcal{N}_{\mathrm{Sec}}, \mathcal{V}_{\mathrm{Vault}}, \mathcal{S}_{\mathrm{Cloud}}, \mathcal{M}_{\mathrm{Out}})$ comprising a bare-metal hypervisor running production Linux/Windows VMs and Docker workloads, segregated Layer-2/Layer-3 management fabrics, a dedicated \emph{Pull-Only} Proxmox Backup Server (PBS) vault executing \texttt{ZFS} snapshots and append-only retention, a hardware-enforced \emph{air-gap} tier via physically removable media, an immutable offsite cloud S3 Object Lock (\texttt{WORM}) tier, and an autonomous out-of-band external telemetry plane (\emph{Dead-Man's Switch}). We formalize eight falsifiable architectural invariants ($I_1$--$I_8$), prove a bounded resilience theorem over disjoint trust domains, evaluate five adversarial extinction scenarios ($C_1$--$C_5$) under bounded operational evidence, and audit residual frontiers against 32 verified primary scientific and normative references~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32}, culminating in six prospective engineering milestones (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
+\noindent Modern Ransomware-as-a-Service (RaaS) and multi-phase extortion operations combine zero-day exploitation on agentless edge appliances, malware-free credential abuse, BYOVD driver neutralization, Living-off-RMM persistence, double extortion, intermittent \texttt{[MS-VHDX]} encryption, and coupled backup destruction. Conversely, purely fail-closed defensive designs or LLM-coupled enforcement engines risk Self-DoS and Indirect Prompt Injection. Adopting Design Science Research stratified across four epistemic levels (\texttt{E1}--\texttt{E4}), we formalize a typed 8-tuple infrastructure model $\mathcal{E} = (\mathcal{S}_{\mathrm{Edge}}, \mathcal{S}_{\mathrm{Virt}}, \mathcal{S}_{\mathrm{Mesh}}, \mathcal{S}_{\mathrm{Ctrl}}, \mathcal{S}_{\mathrm{Desk}}, \mathcal{S}_{\mathrm{Vault}}, \mathcal{S}_{\mathrm{Clean}}, \mathcal{S}_{\mathrm{Cog}}; \mathcal{L}, \mathcal{T})$, thirteen threat hypotheses ($H_1$--$H_{13}$), thirteen fail-bounded controls ($C_1$--$C_{13}$), and eight local/distributed invariants ($I_1$--$I_8$). Consolidated edition \texttt{v3.0} verifies in executable code (\texttt{Bastion OS v1.3.0}: \texttt{301/301} backend tests, \texttt{254/254} E2E tests, \texttt{B1}--\texttt{B20}): (i)~Zero-Inbound remote containment \texttt{BASTION-FLEET-CMD-V3} (\texttt{Bastion Approver} hardware-bound \texttt{2-of-3} WebAuthn, \texttt{ES256} TPM/CNG sequencer, \texttt{START\_EXECUTION} barrier, $B_{\mathrm{dom}} \ge Q_{\min}+1$, $\le 90\text{ s}$ fallback); (ii)~Continuous AI Triage Copilot strictly outside the TCB ($I_6$) under LGPD Zero-Egress; (iii)~Pull-Only \texttt{BVLT1}/\texttt{BVPK1} vaults with Google Drive Dual-Auth (\texttt{HTTP 308}/\texttt{206} + \texttt{pull-gdrive}) and $O(1)$ Anti-\texttt{ENOSPC} Disk Hygiene; and (iv)~systemic \texttt{[MS-VHDX]} interface \texttt{O1}--\texttt{O4} demarcated cleanly from companion monograph \texttt{VTI-RES-2026-05}, grounded in 63 primary references.
 \end{abstract}
 
 \vspace{0.4em}
-\noindent\textbf{Keywords:} Cyber Resilience; Pull-Only Immutable Vault; Proxmox Backup Server; ZFS Copy-on-Write; S3 Object Lock (\texttt{WORM}); Hardware Air-Gap; Dead-Man's Switch; MITRE ATT\&CK \texttt{T1490}; NIST SP 800-209.
+\noindent\textbf{Keywords:} Cyber Resilience; \texttt{BASTION-FLEET-CMD-V3}; Fail-Bounded Safety Kernel; Non-TCB AI Triage; LGPD Zero-Egress; \texttt{BVPK1} Multi-Cloud Vault; Anti-\texttt{ENOSPC} Disk Hygiene; Clean-Room DR.
 
-\section{Introduction and Scientific Motivation}
+\section{Introduction and Epistemic Stratification}
 
-Contemporary ransomware adversaries no longer rely on indiscriminate endpoint infection. Empirically documented extortion operations follow a deterministic multi-stage kill chain~\cite{R05,R11,R16,R31}: initial access via exposed VPN/RDP/identity flaws, privilege escalation to domain or hypervisor administrator, reconnaissance of recovery infrastructure, \textbf{Inhibit System Recovery} (\texttt{MITRE ATT\&CK T1490}~\cite{R16}), \textbf{Impair Defenses} (\texttt{T1562}), and synchronized encryption of virtual machine disks (\texttt{.vmdk}, \texttt{.qcow2}, \texttt{ZVOL}).
+Destructive ransomware attacks exploit four structural asymmetries: off-hours virtualization sabotage~\cite{R01,R18,R22}, intermittent \texttt{[MS-VHDX]} header encryption~\cite{R13,R14,R34}, blast-radius coupling across production, directory, control plane, and push backups~\cite{R02,R05,R59,R60}, and Indirect Prompt Injection plus privacy leakage in LLM triage pipelines~\cite{R54,R55,R57,R58}. We enforce epistemic proportionality ($\mathrm{Scope}(\mathrm{Claim}) \le \mathrm{Scope}(\mathrm{Evidence})$) separating isolated executable verification (\texttt{E1}: \texttt{Bastion OS v1.3.0}, \texttt{301/301} backend, \texttt{254/254} E2E, \texttt{B1}--\texttt{B20} using controlled TPM/WFP/GDrive/LLM harnesses), anonymized retrospective forensics ($\mathcal{I}_0, N=1$, \texttt{E2}), conditional formal properties (\texttt{E3}), and longitudinal production field prospection (\texttt{E4}: \texttt{60 min} \texttt{G-PERF} and \texttt{SHADOW} $N_{\mathrm{blk}} \ge 300$).
 
-Conventional corporate backup topologies exhibit three coupled structural defects when facing an adversary possessing full \texttt{root}/\texttt{Domain Admin} control over production infrastructure:
-\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
-  \item \textbf{Shared Failure Domain via Push Semantics:} Whenever production hosts push backups to a NAS/SMB/NFS target or store S3/API keys locally, credential harvesting immediately grants the attacker write and delete privileges over historical snapshots~\cite{R01,R04,R12,R22}.
-  \item \textbf{Control-Plane \& Identity Convergence:} Joining backup appliances to the production Active Directory / LDAP domain or routing backup management over the corporate LAN allows a single compromised administrative credential to wipe local and remote archives simultaneously~\cite{R04,R24}.
-  \item \textbf{Silent Telemetry Blindness:} Hosting alerting daemons inside the same production hypervisor allows attackers to suppress failed-backup notifications (\texttt{T1562}) while silently poisoning retention windows across weeks (\emph{dwell time})~\cite{R05,R16,R27}.
-\end{enumerate}
+\section{System Model $\mathcal{E}$ and Eight Invariants ($I_1$--$I_8$)}
 
-This paper makes three contributions: (a)~we formalize an anonymized hybrid hypervisor and vault topology $\mathcal{I}$ alongside an explicit adversary model $\mathcal{A}$ encompassing total production \texttt{root} compromise and extended dwell time; (b)~we derive eight fail-closed structural invariants ($I_1$--$I_8$) and prove a bounded Cyber Resilience Theorem ($R_{\mathrm{VTI}}$) over disjoint authentication, network, and physical trust domains; and (c)~we confront both bounded operational verifications and residual limits against 32 verified normative and peer-reviewed references~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32}, deriving six prospective enhancements (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
-
-\section{Formal System Model $\mathcal{I}$, Epistemic Demarcation, and Adversary Model}
-
-\subsection{Anonymization Protocol and Epistemic Proportionality}
-
-Following strict scholarly anonymization and epistemic proportionality ($\text{Claim Scope} \le \text{Evidence Scope}$), all corporate names, hostnames, internal IP subnets, tenant identifiers, serial numbers, and cloud bucket paths were purged, preserving exact topological trust boundaries, network port restrictions, \texttt{ZFS}/\texttt{PBS}/\texttt{S3 WORM} invariants, and empirical storage/recovery parameters. Table~\ref{tab:epistemic} strictly separates verified controls from prospective engineering milestones.
-
-\begin{table*}[t]
-\centering
-\caption{Epistemological Demarcation and Strict Inference Boundaries ($\text{Claim Scope} \le \text{Evidence Scope}$).}
-\label{tab:epistemic}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}l l Y Y@{}}
-\toprule
-\textbf{Formal Element} & \textbf{Nature} & \textbf{Evidentiary Basis in This Study} & \textbf{Strict Inference Boundary} \\
-\midrule
-Topology $\mathcal{I}$ & Anonymized architecture & Production bare-metal hypervisor + dedicated PBS/ZFS vault + S3 WORM + removable media & Represents a concrete hybrid SME/enterprise topology; not a sector-wide statistical census. \\
-\addlinespace[2pt]
-Adversary $\mathcal{A}$ & Threat specification & MITRE ATT\&CK~\cite{R16}, NIST SP 800-209~\cite{R04}, NIST SP 800-184~\cite{R02}, empirical ransomware studies~\cite{R05,R11} & Models realistic worst-case compromise; does not allege prior external breach of the evaluated infrastructure. \\
-\addlinespace[2pt]
-Invariants $I_1$--$I_8$ & Verified controls & Firewall rules, unidirectional pull ACLs, ZFS/S3 Compliance locks, out-of-band dead-man heartbeats & Proven under stated hardware/TCB assumptions; does not claim immunity to physical site destruction without offsite copies. \\
-\addlinespace[2pt]
-Roadmap \texttt{M-FUT-1..6} & Prospective specs & Cross-examination against 32 primary normative and scientific sources~\cite{R01,R07,R13,R18,R26,R28} & Next-cycle engineering targets (e.g., automated sandbox restore verification, TPM 2.0 attestation); not yet benchmarked here. \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\subsection{Hybrid Infrastructure Topology $\mathcal{I}$}
-
-We model the protected corporate infrastructure as a 5-tuple of strictly partitioned trust domains:
 \begin{equation}
-\mathcal{I} = \left(\mathcal{H}_{\mathrm{Prod}}, \; \mathcal{N}_{\mathrm{Sec}}, \; \mathcal{V}_{\mathrm{Vault}}, \; \mathcal{S}_{\mathrm{Cloud}}, \; \mathcal{M}_{\mathrm{Out}}\right)
+\mathcal{E} = \bigl(\mathcal{S}_{\mathrm{Edge}}, \mathcal{S}_{\mathrm{Virt}}, \mathcal{S}_{\mathrm{Mesh}}, \mathcal{S}_{\mathrm{Ctrl}}, \mathcal{S}_{\mathrm{Desk}}, \mathcal{S}_{\mathrm{Vault}}, \mathcal{S}_{\mathrm{Clean}}, \mathcal{S}_{\mathrm{Cog}};\; \mathcal{L}, \mathcal{T}\bigr)
 \end{equation}
-where (illustrated in Figure~\ref{fig:arch}):
+with six disjoint trust zones ensuring $\mathcal{K}_{\mathrm{TCB}} \cap \mathcal{K}(\mathcal{S}_{\mathrm{Cog}}) = \emptyset$.
+
 \begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=3pt]
-  \item $\mathcal{H}_{\mathrm{Prod}}$ (\emph{Production Bare-Metal Hypervisor}): Type-1 hypervisor (Proxmox VE / KVM) executing mission-critical Linux/Windows VMs, relational databases, and containerized microservices over local \texttt{NVMe/SAS RAID} pools.
-  \item $\mathcal{N}_{\mathrm{Sec}}$ (\emph{Segregated Security \& Control Fabric}): Stateful packet filtering enforcing \emph{Default-Deny} inter-VLAN segmentation, isolating management interfaces (IPMI/iDRAC/Proxmox Web UI) on a non-routable out-of-band VLAN accessed solely via MFA-enforced WireGuard/Zero-Trust bastions~\cite{R03,R06,R25}.
-  \item $\mathcal{V}_{\mathrm{Vault}}$ (\emph{Dedicated Pull-Only Immutable Vault}): Physically independent bare-metal Proxmox Backup Server (PBS) running \texttt{ZFS} Copy-on-Write pools with chunk-level deduplication (\texttt{SHA-256}), authenticated client encryption (\texttt{AES-256-GCM}), append-only datastore privileges (\texttt{Datastore.Backup} only for ingestion, zero prune/delete rights for external clients), and scheduled \emph{Pull-Only} sync jobs initiated strictly from $\mathcal{V}_{\mathrm{Vault}}$~\cite{R08,R10,R20}.
-  \item $\mathcal{S}_{\mathrm{Cloud}} \cup \mathcal{G}_{\mathrm{Air}}$ (\emph{Offsite Immutable Cloud \& Hardware Air-Gap}): Dual-tier survival layer combining (i)~an immutable offsite object store enforcing \texttt{S3 Object Lock} in \texttt{COMPLIANCE} mode (\texttt{SEC 17a-4} / \texttt{WORM} semantics~\cite{R15,R19,R23}) where even the cloud root account cannot shorten retention, and (ii)~physically rotated removable drives (\emph{Hardware Air-Gap}) disconnected electromagnetically outside scheduled write windows~\cite{R04,R12}.
-  \item $\mathcal{M}_{\mathrm{Out}}$ (\emph{Autonomous Out-of-Band Offsite Telemetry}): Independent external monitoring endpoint operating outside $\mathcal{H}_{\mathrm{Prod}}$ and $\mathcal{V}_{\mathrm{Vault}}$ under a \emph{Dead-Man's Switch} heartbeat contract: absence of a cryptographically signed completion ping within window $\Delta t_{\max}$ triggers high-priority multi-channel incident alerts regardless of local daemon tampering~\cite{R16,R27}.
+  \item \textbf{Local Invariants ($I_1^{\mathrm{loc}}, I_2, I_5, I_6, I_7$):} Per-resource monotonic epoch fencing ($c.\mathrm{epoch} > \mathrm{lastAcceptedEpoch}_r$); conservative FSM transitions to \texttt{RESTRICTED\_RECOVERY} on lease expiry, reboot, journal corruption, or \texttt{90 s} \texttt{INGEST\_CONFIRM} timeout; fail-bounded offline autonomy; cryptographic exclusion of $\mathcal{S}_{\mathrm{Cog}}$ with \texttt{deny\_unknown\_fields}; and local watchdog rollback.
+  \item \textbf{Distributed Invariants ($I_1^{\mathrm{dist}}, I_3, I_4, I_8$):} Linearizable domain budget $B_{\mathrm{dom}}(D)=1$ without \texttt{2-of-3} distinct FIDO2 quorum; vault \texttt{STAGING\_RESTORE} survival under clock freeze; versioned quorum preservation ($\ge Q_{\min}+1$) with anti-ABA \texttt{fencingToken}~\cite{R60}; and War-Room Offline continuity via $\mathcal{S}_{\mathrm{Desk}}$ (\texttt{SQLCipher 4} + \texttt{nic\_oob}).
 \end{itemize}
 
-\begin{figure*}[t]
-\centering
-\begin{tikzpicture}[
-  font=\scriptsize\sffamily,
-  box/.style={draw=black!65, rounded corners=3pt, fill=blue!4, minimum width=3.2cm, minimum height=0.95cm, align=center, inner sep=4pt},
-  vaultbox/.style={draw=teal!75!black, rounded corners=3pt, fill=teal!7, minimum width=3.5cm, minimum height=1.05cm, align=center, inner sep=4pt},
-  wormbox/.style={draw=orange!75!black, rounded corners=3pt, fill=orange!7, minimum width=3.2cm, minimum height=0.95cm, align=center, inner sep=4pt},
-  monbox/.style={draw=purple!70!black, rounded corners=3pt, fill=purple!6, minimum width=3.2cm, minimum height=0.88cm, align=center, inner sep=4pt},
-  arr/.style={-{Stealth[length=2.2mm]}, semithick, draw=black!75},
-  denyarr/.style={-{Stealth[length=2.2mm]}, dashed, thick, draw=red!75!black}
-]
-  \node[box] (prod) at (0, 1.0) {$\mathcal{H}_{\mathrm{Prod}}$: \textbf{Production Hypervisor}\\VMs + Docker + DBs\\(\emph{Zero Vault Delete Keys})};
-  \node[box, fill=gray!8] (sec) at (4.4, 1.0) {$\mathcal{N}_{\mathrm{Sec}}$: \textbf{Default-Deny FW}\\Isolated Mgmt VLAN\\(MFA WireGuard Bastion)};
-  \node[vaultbox] (vault) at (9.1, 1.0) {$\mathcal{V}_{\mathrm{Vault}}$: \textbf{Pull-Only PBS + ZFS}\\Append-Only + \texttt{AES-256-GCM}\\Independent Auth Domain};
-  \node[wormbox] (cloud) at (13.6, 1.85) {$\mathcal{S}_{\mathrm{Cloud}}$: \textbf{S3 Object Lock}\\\texttt{COMPLIANCE WORM}\\Offsite Encrypted Chunks};
-  \node[wormbox] (air) at (13.6, 0.15) {$\mathcal{G}_{\mathrm{Air}}$: \textbf{Hardware Air-Gap}\\Offline Rotated Media\\Zero Network Path};
-  \node[monbox] (mon) at (9.1, -1.15) {$\mathcal{M}_{\mathrm{Out}}$: \textbf{Offsite Telemetry}\\Dead-Man's Switch ($\Delta t_{\max}$)\\Independent Cloud Plane};
+\section{Thirteen Fail-Bounded Controls ($C_1$--$C_{13}$)}
 
-  \draw[arr] (vault.west) -- node[above, font=\tiny\bfseries, text=teal!60!black] {Pull Sync (Unidirectional)} (sec.east);
-  \draw[arr] (sec.west) -- node[above, font=\tiny] {Read-Only Snapshot} (prod.east);
-  \draw[denyarr] (prod.south) to[bend right=14] node[below, font=\tiny, text=red!75!black] {SSH / Delete / Prune Blocked (Fail-Closed)} (vault.south west);
-  \draw[arr] (vault.east) -- node[above, sloped, font=\tiny] {Encrypted Push} (cloud.west);
-  \draw[arr, dotted, thick] (vault.east) -- node[below, sloped, font=\tiny] {Physical Window} (air.west);
-  \draw[arr, draw=purple!70!black] (vault.south) -- node[right, font=\tiny] {Signed Heartbeat} (mon.north);
-\end{tikzpicture}
-\caption{Seven-layer hybrid cyber-resilience topology $\mathcal{I}$ isolating production compute ($\mathcal{H}_{\mathrm{Prod}}$) from the unidirectional Pull-Only PBS/ZFS vault ($\mathcal{V}_{\mathrm{Vault}}$), immutable offsite WORM ($\mathcal{S}_{\mathrm{Cloud}}$), physical air-gap ($\mathcal{G}_{\mathrm{Air}}$), and out-of-band Dead-Man's Switch telemetry ($\mathcal{M}_{\mathrm{Out}}$).}
-\label{fig:arch}
-\end{figure*}
+\textbf{$C_1$:} Single-use \texttt{Ed25519} capability, \texttt{EvtSubscribe} + 14 signed \texttt{Sigma} rules, and $O(1)$ \texttt{DiskHygieneEngine} (6 inviolable locks, dynamic \texttt{Tier 3} protection, \texttt{SHA-256} rollback)~\cite{R46,R47,R53}.
+\textbf{$C_2$:} Zero-Inbound \texttt{BASTION-FLEET-CMD-V3} (\texttt{F3}--\texttt{F7}) with 5 hardware \texttt{ES256} TPM/CNG keys (zero \texttt{SOFTWARE\_KEY} in prod), \texttt{Bastion Approver} (\texttt{UP=1+UV=1}, hardware-bound \texttt{2-of-3}), \texttt{START\_EXECUTION} barrier + \texttt{PRAGMA synchronous = FULL} journals, IPv4/IPv6/QUIC \texttt{WFP}/\texttt{nftables} isolation with $\le 90\text{ s}$ fallback, $B_{\mathrm{dom}} \ge Q_{\min}+1$, and non-destructive Hyper-V executor forbidding \texttt{Remove-VM}~\cite{R04,R41,R44,R45,R49,R59,R61,R62}.
+\textbf{$C_3$:} Anti-\texttt{TOCTOU} Living Decoy Mesh, SMB/NFS attribution, \texttt{[MS-VHDX]} $< 1\text{ MiB}$ guardian, and systemic interface \texttt{O1}--\texttt{O4} (delegating closed-form \texttt{GF(2)}/\texttt{MCMF}/Multi-FS/\texttt{regf} theory to \texttt{VTI-RES-2026-05}).
+\textbf{$C_4$:} Pull-Only \texttt{nic\_prod} (\texttt{100\% SYN DROP}), \texttt{BVLT1}/\texttt{BVPK1} (\texttt{scrypt}, \texttt{HKDF}, \texttt{AES-256-GCM}, opt-in \texttt{FASTCDC\_NC2}, strict \texttt{HTTP 206}), \texttt{DR Zero-Touch}, and \texttt{Google Drive Dual-Auth} (\texttt{JWT RS256} Shared Drive \texttt{canDelete=false} \& \texttt{PKCE S256} \texttt{drive.file}, \texttt{HTTP 308}, \texttt{700 GiB/24h}, \texttt{pull-gdrive})~\cite{R02,R33,R35,R36,R37,R38,R50,R51}.
+\textbf{$C_5$--$C_7$:} Idempotent 2-phase \texttt{TPM 2.0} journal + \texttt{NTS}/\texttt{RFC 3161} + External Freshness Witness; zero-network Dual-Track Clean-Room DR (\texttt{Ed25519}); and deterministic queue score $R_{\mathrm{VTI}} \in [0,100]$.
+\textbf{$C_8$:} Non-TCB Continuous AI Triage Copilot (\texttt{Wave 7-b}) with 4-Tier routing (\texttt{free\_only}), Ponytail dual-stage compressor, anti-poisoning fences, closed 7-key schema, 5 read-only host/tenant-scoped tools, fail-safe dual consensus (\texttt{AI\_CONSENSUS\_UNAVAILABLE}, non-authoritative \texttt{BENIGN\_LIKELY}), \texttt{T9} corpus, and \texttt{LGPD Zero-Egress} by default (\texttt{Ollama} local; cloud gated by Step-Up MFA + DPA + 6-field \texttt{HKDF+HMAC})~\cite{R54,R55,R56,R57,R58}.
+\textbf{$C_9$--$C_{13}$:} Egress breaker, Zero-Trust RMM/tunnel manifest, 4-ring \texttt{WDAC} anti-\texttt{BYOVD}, agentless edge telemetry + honey-tokens, \texttt{LOG\_GAP\_ALERT} in \texttt{sentinel\_gap\_slot.bin}, \texttt{ZERO\_INSTANCE\_DATA\_BEFORE\_AUTH}, and War-Room Offline $\mathcal{S}_{\mathrm{Desk}}$~\cite{R29,R30,R31,R32}.
 
-\subsection{Adversary Model $\mathcal{A}$ (Infrastructure-Targeted Extinction)}
-
-We consider a computationally bounded, human-operated ransomware adversary $\mathcal{A}$ who achieves \emph{worst-case production takeover}:
-\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=3pt]
-  \item Full \texttt{root} / \texttt{Domain Admin} compromise over $\mathcal{H}_{\mathrm{Prod}}$ and all production virtual machines, databases, and containers;
-  \item Arbitrary execution of local destructive commands (\texttt{rm -rf}, \texttt{zfs destroy}, \texttt{vssadmin delete shadows}, hypervisor API wipe) on $\mathcal{H}_{\mathrm{Prod}}$ (\texttt{T1490});
-  \item Silent dwell time $T_{\mathrm{dwell}} \in [1, 30]\text{ days}$ attempting to poison snapshots or suppress local alerting (\texttt{T1562});
-  \item \textbf{Explicit TCB Boundaries:} $\mathcal{A}$ does not possess physical access to the locked offsite air-gap media, cannot break \texttt{AES-256-GCM} or \texttt{SHA-256}~\cite{R07,R14}, cannot coerce the cloud provider's hardware-enforced \texttt{S3 Object Lock COMPLIANCE} clock~\cite{R15,R19}, and does not control the separate out-of-band MFA/hardware-token root of $\mathcal{V}_{\mathrm{Vault}}$~\cite{R03,R24}.
-\end{enumerate}
-
-\section{Formal Defense-in-Depth Invariants ($I_1$--$I_8$) and Resilience Theorem}
-
-We synthesize the 7-layer architecture into eight formal, falsifiable security invariants:
-
-\begin{itemize}[leftmargin=1.3em,itemsep=3pt,topsep=3pt]
-  \item \textbf{$I_1$ (Zero-Privilege Production Ingestion — Pull-Only Asymmetry):} No host in $\mathcal{H}_{\mathrm{Prod}}$ holds network reachability or API tokens capable of invoking \texttt{prune}, \texttt{forget}, \texttt{wipe}, or administrative shell access on $\mathcal{V}_{\mathrm{Vault}}$:
-  \begin{equation}
-  \mathrm{Cap}(\mathcal{H}_{\mathrm{Prod}} \to \mathcal{V}_{\mathrm{Vault}}) \cap \{\texttt{Delete}, \texttt{Prune}, \texttt{Admin}\} = \emptyset
-  \end{equation}
-  \item \textbf{$I_2$ (Strict Identity \& Management Plane Disjointness):} Authentication realms and cryptographic keys are strictly disjoint: $\mathrm{Auth}(\mathcal{H}_{\mathrm{Prod}}) \cap \mathrm{Auth}(\mathcal{V}_{\mathrm{Vault}}) = \emptyset$, enforced with mandatory FIDO2/TOTP MFA on separate out-of-band bastion VLANs~\cite{R03,R04,R24}.
-  \item \textbf{$I_3$ (Copy-on-Write Immutability \& Bit-Rot Verification):} Within $\mathcal{V}_{\mathrm{Vault}}$, \texttt{ZFS} Copy-on-Write snapshots and PBS \texttt{SHA-256} chunk verification guarantee that already committed backup blocks cannot be mutated in place and silent storage corruption is deterministically detected~\cite{R08,R10,R20}.
-  \item \textbf{$I_4$ (Client-Side Authenticated Encryption with Key Segregation):} Backup payloads are encrypted via \texttt{AES-256-GCM} prior to leaving the local trust boundary, with master recovery keys stored exclusively offline (paper/hardware security custody), preventing both cloud-side data disclosure and unauthorized key substitution~\cite{R07,R14,R21}.
-  \item \textbf{$I_5$ (Offsite WORM Retention Exceeding Dwell Time):} The offsite object store enforces \texttt{S3 Object Lock (COMPLIANCE)} with retention period $T_{\mathrm{WORM}}$ strictly exceeding expected adversarial dwell time $T_{\mathrm{dwell}}$:
-  \begin{equation}
-  T_{\mathrm{WORM}} > T_{\mathrm{dwell}} + T_{\mathrm{detect}}
-  \end{equation}
-  guaranteeing at least one clean, pre-infection restore point remains unerasable even if an attacker compromises cloud IAM tokens~\cite{R05,R15,R19,R23}.
-  \item \textbf{$I_6$ (Electromagnetic Discontinuity — Hardware Air-Gap):} At any time $t$ outside bounded operator mount windows, at least one full verified archive resides on disconnected physical media $\mathcal{G}_{\mathrm{Air}}$ with zero addressable IP/PCIe/USB path from $\mathcal{H}_{\mathrm{Prod}}$ or $\mathcal{V}_{\mathrm{Vault}}$~\cite{R04,R12}.
-  \item \textbf{$I_7$ (Out-of-Band Dead-Man's Switch Telemetry):} Backup completion and integrity verification jobs emit signed heartbeats to $\mathcal{M}_{\mathrm{Out}}$. If $\mathcal{A}$ disables local daemons or halts sync jobs (\texttt{T1562}), the absence of a valid heartbeat within $\Delta t_{\max}$ deterministically escalates alerts within $T_{\mathrm{detect}} \le \Delta t_{\max}$~\cite{R16,R27}.
-  \item \textbf{$I_8$ (Deterministic Clean-Room Recoverability):} Recovery Time Objective ($\mathrm{RTO}$) and Recovery Point Objective ($\mathrm{RPO}$) are bounded only by verified restore procedures over clean bare-metal targets, strictly decoupling bare-metal rebuild from compromised production hypervisor firmware/state~\cite{R02,R17,R29}.
-\end{itemize}
-
-\subsection{Theorem 1 (Bounded Extinction Immunity under Disjoint Failure Domains)}
-
-\noindent\textbf{Theorem 1.} \emph{Let $\mathcal{I}$ satisfy invariants $I_1$--$I_8$ and let $P_{\mathrm{ext}}(\mathcal{A})$ denote the probability of unrecoverable total data extinction by adversary $\mathcal{A}$ controlling $\mathcal{H}_{\mathrm{Prod}}$ for dwell time $T_{\mathrm{dwell}} < T_{\mathrm{WORM}} - T_{\mathrm{detect}}$. Define the composite VTI Cyber Resilience index:}
-\begin{equation}
-R_{\mathrm{VTI}} = 1 - \Bigl(p_{\mathrm{vault}} \cdot p_{\mathrm{worm}} \cdot p_{\mathrm{airgap}}\Bigr) \cdot \mathbb{I}\bigl[T_{\mathrm{detect}} + T_{\mathrm{dwell}} \ge T_{\mathrm{WORM}}\bigr]
-\end{equation}
-\emph{Under $I_1, I_2$ (no credential or network pivot from $\mathcal{H}_{\mathrm{Prod}}$ to $\mathcal{V}_{\mathrm{Vault}}$), $I_5$ ($T_{\mathrm{WORM}} > T_{\mathrm{dwell}} + T_{\mathrm{detect}}$), and $I_6$ (physical discontinuity of $\mathcal{G}_{\mathrm{Air}}$), total compromise of $\mathcal{H}_{\mathrm{Prod}}$ yields $p_{\mathrm{vault}} \perp \mathcal{H}_{\mathrm{Prod}}$, $p_{\mathrm{worm}} \to 0$ over $[t_0, t_0 + T_{\mathrm{WORM}})$, and $p_{\mathrm{airgap}} = 0$ against remote network adversaries, establishing $R_{\mathrm{VTI}} \to 1$ and guaranteeing existence of a clean, cryptographically verifiable restore state $S_{\mathrm{clean}}$ with bounded $\mathrm{RPO}$ and $\mathrm{RTO}$.}
-
-\section{Adversarial Evaluation and Comparative Analysis}
-
-Table~\ref{tab:scenarios} summarizes five structured extinction attack scenarios ($C_1$--$C_5$) evaluated against $\mathcal{I}$, while Table~\ref{tab:compare} contrasts $\mathcal{I}$ against legacy NAS/SMB push backups and standard cloud-sync architectures.
+\section{Executable Evidence (\texttt{B1}--\texttt{B20}) and Roadmap (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
 
 \begin{table*}[t]
 \centering
-\caption{Adversarial Confrontation Across Five Infrastructure-Targeted Extinction Scenarios ($C_1$--$C_5$).}
-\label{tab:scenarios}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}c l l Y Y@{}}
-\toprule
-\textbf{ID} & \textbf{Attack Scenario (MITRE)} & \textbf{Active Invariants} & \textbf{Observed Containment Mechanism} & \textbf{Residual Risk / Boundary} \\
-\midrule
-$C_1$ & Total $\mathcal{H}_{\mathrm{Prod}}$ encryption + datastore wipe (\texttt{T1486}, \texttt{T1490}) & $I_1, I_2, I_3, I_8$ & Production host holds zero prune/delete tokens; Pull-Only PBS retains verified ZFS snapshots for bare-metal restore. & Hardware replacement lead time bounds physical RTO if server boards are damaged. \\
-\addlinespace[2pt]
-$C_2$ & Credential harvesting + lateral pivot to backup plane (\texttt{T1003}, \texttt{T1021}) & $I_1, I_2, I_4$ & Disjoint local auth realm + MFA WireGuard bastion + Default-Deny firewall block lateral management sessions. & Compromised admin endpoint with unlocked session requires short session TTL (\texttt{M-FUT-3}). \\
-\addlinespace[2pt]
-$C_3$ & Silent dwell-time poisoning + alert suppression (\texttt{T1562}, \texttt{T1490}) & $I_5, I_7$ & Offsite Dead-Man's Switch triggers alert within $\Delta t_{\max}$; S3 \texttt{COMPLIANCE} lock preserves pre-dwell points. & Requires automated clean-room malware scanning before restore (\texttt{M-FUT-1}). \\
-\addlinespace[2pt]
-$C_4$ & Simultaneous local datacenter compromise or fire/flood & $I_4, I_5, I_6$ & Offsite encrypted S3 WORM tier + geographically separated air-gap media guarantee zero total-loss path. & WAN bandwidth constrains large-volume cloud egress RTO. \\
-\addlinespace[2pt]
-$C_5$ & Insider threat / rogue cloud IAM key abuse & $I_3, I_4, I_5, I_6$ & S3 \texttt{COMPLIANCE} mode rejects root-level retention shortening; offline keys prevent unauthorized decryption. & Requires dual-custody (four-eyes) governance for physical vault access (\texttt{M-FUT-5}). \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\begin{table*}[t]
-\centering
-\caption{Architectural Comparison: Legacy Push Backup vs.\ Standard Cloud Sync vs.\ VTI 7-Layer Pull-Only Immutable Architecture ($\mathcal{I}$).}
-\label{tab:compare}
+\caption{Executable Laboratory Certification (\texttt{Bastion OS v1.3.0}, \texttt{Level E1}) vs.\ Longitudinal Field Gate (\texttt{Level E4}).}
 \footnotesize
 \begin{tabularx}{\textwidth}{@{}l Y Y Y@{}}
 \toprule
-\textbf{Resilience Dimension} & \textbf{Legacy Push NAS / SMB} & \textbf{Standard Cloud Sync} & \textbf{VTI 7-Layer Architecture ($\mathcal{I}$)} \\
+\textbf{Stratum} & \textbf{Scope Verified} & \textbf{Observed Result} & \textbf{Explicit Boundary} \\
 \midrule
-Backup Initiation & Push from production host & Push with stored cloud keys & \textbf{Unidirectional Pull} from isolated PBS vault ($I_1$) \\
-Identity Isolation & Shared AD / Domain Admin & Shared IAM / SSO & \textbf{Disjoint Auth + MFA Bastion} ($I_2$) \\
-Ransomware Wipe Resistance & Fails (\texttt{T1490} deletes shares) & Fails if IAM keys harvested & \textbf{ZFS CoW + S3 Object Lock COMPLIANCE} ($I_3, I_5$) \\
-Physical Air-Gap & None & None & \textbf{Electromagnetically Disconnected Media} ($I_6$) \\
-Silent Sabotage Detection & Local agent (suppressible) & Provider logs (passive) & \textbf{External Dead-Man's Switch} ($\Delta t_{\max}$, $I_7$) \\
+\texttt{E1} Backend & \texttt{58} files / \texttt{61} suites (\texttt{B1}--\texttt{B20}) & \textbf{301/301 PASS} in \texttt{:memory:}/\texttt{os.tmpdir()} & Local mocks for TPM/WFP/GDrive/LLM. \\
+\texttt{E1} E2E & \texttt{14} files / \texttt{28} suites (Tiers 1--5 + \texttt{v1.1..v1.3}) & \textbf{254/254 PASS} on \texttt{127.0.0.1:0} & Ephemeral loopback harnesses. \\
+\texttt{E1} Gates & \texttt{G-CMD}, \texttt{G-AI-TRIAGE}, \texttt{G-GDRIVE}, \texttt{G-DISK-HYGIENE}, \texttt{vite}, \texttt{cargo} & \textbf{100\% PASS}, \texttt{0} warnings/CDNs & \texttt{G-PERF} synthetic CI window (\texttt{1.5 s}). \\
+\texttt{E4} Field & \texttt{60 min} \texttt{G-PERF}, \texttt{SHADOW} ($N_{\mathrm{blk}} \ge 300$), live TPM/cloud & Open longitudinal promotion gate & Block bootstrap \texttt{FP\_obs=0} + Holm-Bonferroni. \\
 \bottomrule
 \end{tabularx}
 \end{table*}
 
-\section{Validation Against Primary Literature and Prospective Roadmap (\texttt{M-FUT-1}--\texttt{M-FUT-6})}
+Six next-cycle milestones close remaining frontiers: \texttt{M-FUT-1} (\texttt{TLA+} verification of \texttt{BASTION-FLEET-CMD-V3}), \texttt{M-FUT-2} (HVCI/ELAM filter driver), \texttt{M-FUT-3} (continuous \texttt{TPM 2.0} PCR attestation), \texttt{M-FUT-4} (BFT Cloud-of-Clouds~\cite{R23}), \texttt{M-FUT-5} (automated clean-room failover hydration), and \texttt{M-FUT-6} (Chaos Security Engineering on live hardware).
 
-Every architectural mechanism in $\mathcal{I}$ was cross-examined against 32 primary normative and peer-reviewed sources spanning NIST cybersecurity and storage security guidelines~\cite{R01,R02,R03,R04,R06,R07,R14,R17,R24,R25,R29}, adversarial threat frameworks~\cite{R05,R11,R16,R31}, cryptographic/storage engineering~\cite{R08,R09,R10,R15,R19,R20,R21,R23}, and resilient systems design~\cite{R12,R13,R18,R22,R26,R27,R28,R30,R32}. Table~\ref{tab:trace} maps invariants $I_1$--$I_8$ to their primary literature grounding, while Table~\ref{tab:mfut} defines six prospective engineering enhancements addressing residual operational boundaries.
+\section{Conclusion and Adapted CRediT Disclosure (COPE / ACM / IEEE)}
 
-\begin{table*}[t]
-\centering
-\caption{Scientific Traceability Matrix Mapping Architectural Invariants ($I_1$--$I_8$) to Verified Primary Sources (\texttt{[R01]}--\texttt{[R32]}).}
-\label{tab:trace}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}l l Y@{}}
-\toprule
-\textbf{Invariant} & \textbf{Primary Sources} & \textbf{Exact Technical Scope Substantiated} \\
-\midrule
-$I_1$ --- Pull-Only Asymmetry & \cite{R01,R04,R12,R20,R22} & Least-privilege separation, storage attack-surface reduction, elimination of push-credential blast radius. \\
-$I_2$ --- Identity \& VLAN Isolation & \cite{R03,R06,R24,R25} & Zero-Trust microsegmentation, out-of-band management planes, phishing-resistant MFA boundaries. \\
-$I_3$ --- ZFS CoW & \texttt{SHA-256} Verify & \cite{R08,R09,R10,R20} & End-to-end storage checksums, Copy-on-Write snapshot immutability, silent bit-rot detection. \\
-$I_4$ --- Client-Side \texttt{AES-256-GCM} & \cite{R07,R14,R21} & Authenticated encryption bounds, offline key custody, zero-trust cloud confidentiality. \\
-$I_5$ --- S3 \texttt{COMPLIANCE WORM} & \cite{R05,R15,R19,R23,R31} & Dwell-time survival math, regulatory \texttt{WORM} lock semantics (\texttt{SEC 17a-4}), irreversible retention. \\
-$I_6$ --- Hardware Air-Gap & \cite{R04,R12,R30} & Physical/electromagnetic discontinuity against remote APT/ransomware propagation. \\
-$I_7$ --- Offsite Dead-Man's Switch & \cite{R16,R27,R32} & Countering defense impairment (\texttt{T1562}) via independent heartbeat absence detection. \\
-$I_8$ --- Clean-Room Recoverability & \cite{R02,R17,R18,R29} & NIST cyber-recovery playbooks, verified bare-metal rebuild, bounded RTO/RPO assurance. \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\begin{table*}[t]
-\centering
-\caption{Six Residual Boundaries and Prospective Engineering Milestones (\texttt{M-FUT-1}--\texttt{M-FUT-6}).}
-\label{tab:mfut}
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}c Y l Y@{}}
-\toprule
-\textbf{Code} & \textbf{Residual Boundary Identified} & \textbf{Grounding} & \textbf{Prospective Next-Cycle Engineering Specification} \\
-\midrule
-\texttt{M-FUT-1} & Verified chunk checksums confirm integrity, not absence of dormant malware inside VM images. & NIST SP 800-184~\cite{R02}; \cite{R05} & Automated ephemeral \textbf{clean-room sandbox restore drills} with YARA/EDR scanning and boot-health probes. \\
-\addlinespace[2pt]
-\texttt{M-FUT-2} & Firmware/BMC supply-chain persistence on hypervisor motherboards survives OS reinstall. & NIST SP 800-193~\cite{R13}; \cite{R26} & Hardware \textbf{TPM 2.0 measured boot} + cryptographic BMC/BIOS firmware attestation prior to rejoining clusters. \\
-\addlinespace[2pt]
-\texttt{M-FUT-3} & Administrative workstations represent a high-value pivot point if MFA sessions persist. & NIST SP 800-207~\cite{R03}; \cite{R24} & Dedicated \textbf{Privileged Access Workstations (PAW)} + FIDO2 hardware keys with short-lived ephemeral certificates. \\
-\addlinespace[2pt]
-\texttt{M-FUT-4} & Large cloud-egress restores can stretch RTO during complete local site loss. & NIST SP 800-34~\cite{R17}; \cite{R29} & Tiered \textbf{Priority Recovery Waves} (Tier-0 identity/DBs first via pre-staged warm standby) + bandwidth reservation. \\
-\addlinespace[2pt]
-\texttt{M-FUT-5} & Single-operator physical access to removable air-gap media concentrates insider risk. & \cite{R01,R04,R28} & \textbf{Four-eyes / M-of-N Shamir Secret Sharing} split custody for offline decryption keys and air-gap vault handling. \\
-\addlinespace[2pt]
-\texttt{M-FUT-6} & Configuration drift in firewall rules or PBS retention schedules degrades invariants silently. & \cite{R18,R27,R32} & Continuous \textbf{Policy-as-Code compliance assertions} emitting cryptographic drift proofs to $\mathcal{M}_{\mathrm{Out}}$. \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\section{Threats to Validity}
-
-\textbf{Construct Validity:} $R_{\mathrm{VTI}} \to 1$ expresses mathematical elimination of single-point remote extinction paths under intact cryptographic primitives and disjoint administrative custody~\cite{R03,R04}, not absolute immunity against coordinated physical destruction coupled with insider collusion.
-
-\textbf{Internal Validity:} Because layers $I_1$--$I_8$ operate synergistically (e.g., firewall isolation + Pull-Only ACLs + ZFS snapshots + S3 WORM), resilience requires maintaining configuration fidelity across updates, motivating \texttt{M-FUT-6}.
-
-\textbf{External Validity:} Storage I/O throughput, deduplication ratios, and bare-metal RTO figures reflect a hybrid Proxmox VE / PBS / ZFS deployment; hyperscale multi-petabyte clusters or proprietary SAN fabrics require proportional capacity recalibration while preserving the underlying Pull-Only and WORM invariants.
-
-\textbf{Conclusion Validity and Reproducibility:} While corporate host identifiers remain anonymized, every architectural predicate, port/ACL boundary, retention inequality ($T_{\mathrm{WORM}} > T_{\mathrm{dwell}} + T_{\mathrm{detect}}$), and citation across~\cite{R01,R02,R03,R04,R05,R06,R07,R08,R09,R10,R11,R12,R13,R14,R15,R16,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32} is published openly for independent audit and replication.
-
-\section{Conclusion}
-
-Achieving provable cyber resilience against modern infrastructure-targeted ransomware requires dismantling the shared trust domain between production compute and backup custody. By combining unidirectional \emph{Pull-Only} ingestion ($I_1$), disjoint identity and management VLANs ($I_2$), \texttt{ZFS} Copy-on-Write with \texttt{SHA-256} verification ($I_3$), client-side \texttt{AES-256-GCM} encryption with offline key custody ($I_4$), offsite \texttt{S3 Object Lock COMPLIANCE} retention exceeding adversarial dwell time ($I_5$), electromagnetic hardware air-gap ($I_6$), and autonomous out-of-band \emph{Dead-Man's Switch} telemetry ($I_7$), organizations convert catastrophic extinction attacks into bounded, recoverable operational incidents ($I_8$) with a clear six-step evolutionary path (\texttt{M-FUT-1}--\texttt{M-FUT-6}).
-
-\section*{Transparent Disclosure of Symbiotic Human-AI Engineering, Deterministic Verification, and Adapted CRediT Mapping (ACM / IEEE / COPE Compliance)}
-
-In strict compliance with \textbf{COPE}, \textbf{ACM} (\emph{Policy on Authorship}, 2023), and \textbf{IEEE} (\emph{PSPB Operations Manual}) policies, automated systems and generative models cannot hold authorship or bear ethical/legal accountability. \textbf{Caio Gon\c{c}alves} stands as the \textbf{sole formal author}, assuming undivided responsibility for all formulations, architectural specifications, operational claims, and conclusions. Under strict \emph{Human-in-the-Loop} governance: (1)~\textbf{Caio Gon\c{c}alves} (\emph{Principal Investigator \& Chief Systems Architect, VTI Research}) led \emph{Conceptualization, Methodology, Systems & Security Architecture, Supervision, Validation, Project Administration, and Final Writing}; (2)~structured non-authorial adversarial stress-testing using independent frontier and reasoning models assisted in probing dwell-time retention inequalities, failure-domain boundaries, and residual roadmap gaps, with every refinement audited and verified by the human author; and (3)~all 32 bibliographic references and strict anonymization invariants were deterministically verified prior to publication.
+Edition \texttt{v3.0} demonstrates verifiable resilience under \emph{Asymmetrically Bounded Security} backed by executable verification in \texttt{Bastion OS v1.3.0}. Per COPE, ACM, and IEEE authorship rules, \textbf{Caio Gon\c{c}alves} is the \textbf{sole formal author}, retaining full intellectual accountability across Conceptualization, Methodology, Architecture, Validation, and Writing. Non-authorial cross-family adversarial reviews and deterministic audit scripts are transparently recorded in the project's review logs.
 
 \bibliographystyle{unsrt}
 \bibliography{references}
